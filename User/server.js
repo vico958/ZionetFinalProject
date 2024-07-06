@@ -14,7 +14,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use("/user", user)
 const port = process.env.port || "3002";
 
-
 app.listen(port, () =>{
     console.log("Server started on port", port)
 })
