@@ -10,4 +10,4 @@ RUN npm install
 
 copy . /NewsApp/
 
-CMD ["npm", "start"]
+CMD ["npm", "start"] 
