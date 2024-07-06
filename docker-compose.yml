@@ -19,7 +19,8 @@ services:
       - newsApp
 
   mongodb:
-    image: mongo
+    image: mongo:latest
+    container_name: mongoDb
     ports:
       - 27018:27017
     networks:
