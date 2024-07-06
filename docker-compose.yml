@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  newsapp:
+    build: ./NewsApp
+    container_name: newsApp
+    ports:
+      - "3001:3001"
+    restart: on-failure
+    networks:
+      - newsApp
+  
+  user:
+    build: ./User
+    container_name: user
+    ports:
+      - "3002:3002"
+    restart: on-failure
+    networks:
+      - newsApp
+
+  mongodb:
+    image: mongo
+    ports:
+      - 27018:27017
+    networks:
+      - newsApp 
+
+networks:
+  newsApp:
