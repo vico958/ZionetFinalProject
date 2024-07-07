@@ -26,9 +26,8 @@ async function userRegister(req, res){
             {userToRegister} ,
             { headers: { 'Content-Type': 'application/json' } },
           );
-
-         //TODO : Handle returnedData
-        res.status(200).send(JSON.stringify({returnedData}));
+        const message = `${userRegister.fullName} you signed to the news app, we will send to you via email the news`
+        res.status(200).send(message);
         res.end();
     }catch(error){
         console.log(error)
