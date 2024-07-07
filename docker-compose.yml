@@ -9,6 +9,28 @@ services:
     networks:
       - newsApp
   
+  newapp-dapr:
+    image: "daprio/daprd:edge"
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 10
+        window: 120s
+    command: ["./daprd",
+        "-app-port", "3001",
+        "-app-id", "newsApp",
+        "-app-protocol", "http",
+        "-dapr-http-port", "3501",
+        "-components-path", "./dapr/components",
+        "-config", "./dapr/config.yaml",
+        ]
+    volumes:
+      - "./dapr/:/dapr"
+    depends_on:
+      - newsApp
+    network_mode: "service:newsApp"
+  
   user:
     build: ./User
     container_name: user
@@ -17,6 +39,28 @@ services:
     restart: on-failure
     networks:
       - newsApp
+
+  user-dapr:
+    image: "daprio/daprd:edge"
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 10
+        window: 120s
+    command: ["./daprd",
+        "-app-port", "3002",
+        "-app-id", "user",
+        "-app-protocol", "http",
+        "-dapr-http-port", "3502",
+        "-components-path", "./dapr/components",
+        "-config", "./dapr/config.yaml",
+        ]
+    volumes:
+      - "./dapr/:/dapr"
+    depends_on:
+      - user
+    network_mode: "service:user"
   
   userAccessor:
     build: ./userAccessor
@@ -26,6 +70,28 @@ services:
     restart: on-failure
     networks:
       - newsApp
+
+  userAccessor-dapr:
+    image: "daprio/daprd:edge"
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 10
+        window: 120s
+    command: ["./daprd",
+        "-app-port", "3003",
+        "-app-id", "userAccessor",
+        "-app-protocol", "http",
+        "-dapr-http-port", "3503",
+        "-components-path", "./dapr/components",
+        "-config", "./dapr/config.yaml",
+        ]
+    volumes:
+      - "./dapr/:/dapr"
+    depends_on:
+      - userAccessor
+    network_mode: "service:userAccessor"
 
   mongodb:
     image: mongo:latest
