@@ -1,20 +1,17 @@
-const userManger = require("../../services/user/userManger")
-
+require("dotenv").config()
+const userAccessorUrl = process.env.userAccessorUrl;
 async function userRegister(req, res){
     try{
         const { userToRegister} = req.body;
-        const emailInLowerCase = userToRegister.email.toLowerCase()
-        const isAlreadyInSytem = await userManger.getUserByEmail(emailInLowerCase);
-        if(isAlreadyInSytem){
-        res.status(400).send(JSON.stringify("Email already use"));
+        const returnedData = await fetch(`${userAccessorUrl}/register`,{
+            method:"POST",
+            headers:{
+                'Content-Type': 'application/json',
+            },
+            body : userToRegister,
+        }) //TODO : Handle returnedData
+        res.status(200).send(JSON.stringify({returnedData}));
         res.end();
-        }
-        else{
-            userToRegister.email = emailInLowerCase;
-            const returnedData = await userManger.register(userToRegister);
-            res.status(200).send(JSON.stringify({returnedData}));
-            res.end();
-        }
     }catch(error){
         console.log(error)
     }
