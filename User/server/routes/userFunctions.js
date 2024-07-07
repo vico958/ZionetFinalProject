@@ -1,5 +1,5 @@
 require("dotenv").config()
-const { DaprClient, DaprServer, HttpMethod, CommunicationProtocolEnum } = require("@dapr/dapr");
+const { DaprClient, HttpMethod } = require("@dapr/dapr");
 const daprHostAndServiceAppId = "useraccessor"; // Dapr Sidecar Host
 const daprPort = "3500"; // Dapr Sidecar Port for user service
 const client = new DaprClient({ daprHostAndServiceAppId, daprPort });
@@ -34,7 +34,7 @@ async function userLogin(req, res){
 }
 
 async function changePassword(req, res) {
-    try{
+    try{ // TODO:
         const {newPassword, oldPassword} = req.body.user;
         const userId = req.user.id;
         const user = await userManger.getUserById(userId)
