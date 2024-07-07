@@ -75,8 +75,7 @@ class userDatabaseManager {
     }
 
     changeUserDataHelper = async(userId, newData, dataField) => {
-        return await user.findByIdAndUpdate({_id:userId}, {dataField: newData}, {new:true})
-
+        return await user.findByIdAndUpdate({_id:userId}, {[dataField]: newData}, {new:true})
     }
 }
 
