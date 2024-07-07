@@ -17,6 +17,15 @@ services:
     restart: on-failure
     networks:
       - newsApp
+  
+  userAccessor:
+    build: ./userAccessor
+    container_name: userAccessor
+    ports:
+      - "3003:3003"
+    restart: on-failure
+    networks:
+      - newsApp
 
   mongodb:
     image: mongo:latest
