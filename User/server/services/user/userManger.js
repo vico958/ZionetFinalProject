@@ -1,8 +1,8 @@
-const userDatabaseManage = require("./userDatabaseMange")
+const userDatabaseManager = require("./userDatabaseManger")
 
 class userManger{
     constructor(){
-        this.userDatabase = new userDatabaseManage();
+        this.userDatabase = new userDatabaseManager();
     }
 
     async register (userToRegister) {
@@ -37,7 +37,7 @@ class userManger{
             console.log(error)
         }
     }
-    
+
     async changeFullName(userId, newFullName){
         try{
             return await this.userDatabase.changeFullName(userId, newFullName)

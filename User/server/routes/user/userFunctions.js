@@ -1,3 +1,5 @@
+const userManger = require("../../services/user/userManger")
+
 async function userRegister(req, res){
     try{
         const { userToRegister} = req.body;
@@ -44,8 +46,26 @@ async function changePassword(req, res) {
     }
 }
 
+async function check(req, res){
+    try{
+        const userToRegister={
+            email:"viko@gmail.com",
+            password:"1234",
+            fullName: "viko dabush",
+            preferences:"love",
+            categories:"love2"
+        }
+        const returnedData = await userManger.register(userToRegister);
+        res.status(200).send(JSON.stringify({returnedData}));
+        res.end();
+    }catch(error){
+        console.log(error)
+    }
+}
+
 module.exports = {
     userLogin,
     userRegister,
     changePassword,
+    check
 }

@@ -1,6 +1,13 @@
 const { user } = require("../../storages/models/user")
+const mongoose = require('mongoose');
+const dbUri = 'mongodb://mongoDb:27017/userDb';
 
-class userDatabaseManage {
+mongoose.connect(dbUri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+class userDatabaseManager {
     register = async (userToRegister) => {
         const newUser = new user({
             email:userToRegister.email,
@@ -73,4 +80,4 @@ class userDatabaseManage {
     }
 }
 
-module.exports = userDatabaseManage
+module.exports = userDatabaseManager
