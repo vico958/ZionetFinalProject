@@ -1,6 +1,7 @@
 
+
 async function getNews(req, res){
-    
+
 }
 
 
