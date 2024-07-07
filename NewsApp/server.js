@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const {logger} = require("./server/middleware/logger");
-const news = require("./server/routes/news/news");
+const news = require("./server/routes/news");
 const bodyParser = require("body-parser");
 const app = express();
 app.use(logger);

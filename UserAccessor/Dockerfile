@@ -8,6 +8,6 @@ WORKDIR /UserAccessor
 
 RUN npm install
 
-copy . /UserAccessor/
+COPY . /UserAccessor/
 
 CMD ["npm", "start"]
