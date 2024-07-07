@@ -1,6 +1,6 @@
-const userDatabaseManager = require("./userDatabaseManger")
+const userDatabaseManager = require("./userAccessorDatabaseManger")
 
-class userManger{
+class userAccessorManger{
     constructor(){
         this.userDatabase = new userDatabaseManager();
     }
@@ -63,4 +63,4 @@ class userManger{
     }
 }
 
-module.exports = new userManger();
+module.exports = new userAccessorManger();

@@ -9,7 +9,7 @@ async function userRegister(req, res){
                 'Content-Type': 'application/json',
             },
             body : userToRegister,
-        });
+        }) //TODO : Handle returnedData
         res.status(200).send(JSON.stringify({returnedData}));
         res.end();
     }catch(error){

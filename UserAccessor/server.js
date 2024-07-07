@@ -20,5 +20,5 @@ app.listen(port, () =>{
 })
 
 app.get("/", (req, res) =>{
-    res.send("hello world user service")
+    res.send("hello world user accessor service")
 })
