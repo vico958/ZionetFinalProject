@@ -19,27 +19,3 @@ app.listen(port, () => {
 app.get("/", (req, res) =>{
     res.send("hello world news data engine")
 })
-
-
-// {
-//     "categories": [
-//       "business",
-//       "crime",
-//       "domestic",
-//       "education",
-//       "entertainment",
-//       "environment",
-//       "food",
-//       "health",
-//       "lifestyle",
-//       "other",
-//       "politics",
-//       "science",
-//       "sports",
-//       "technology",
-//       "top",
-//       "tourism",
-//       "world"
-//     ]
-//   }
-  
