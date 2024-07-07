@@ -1,5 +1,5 @@
 require("dotenv").config()
-const userAccessorUrl = process.env.userAccessorUrl;
+const userAccessorUrl = process.env.userAccessorUrl || "http://userAccessor:3003/user-accessor";
 async function userRegister(req, res){
     try{
         const { userToRegister} = req.body;
@@ -8,7 +8,7 @@ async function userRegister(req, res){
             headers:{
                 'Content-Type': 'application/json',
             },
-            body : userToRegister,
+            body : JSON.stringify({userToRegister:userToRegister}),
         }) //TODO : Handle returnedData
         res.status(200).send(JSON.stringify({returnedData}));
         res.end();

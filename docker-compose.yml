@@ -28,8 +28,8 @@ services:
     volumes:
       - "./dapr/:/dapr"
     depends_on:
-      - newsApp
-    network_mode: "service:newsApp"
+      - newsapp
+    network_mode: "service:newsapp"
   
   user:
     build: ./User
@@ -62,7 +62,7 @@ services:
       - user
     network_mode: "service:user"
   
-  userAccessor:
+  useraccessor:
     build: ./userAccessor
     container_name: userAccessor
     ports:
@@ -71,7 +71,7 @@ services:
     networks:
       - newsApp
 
-  userAccessor-dapr:
+  useraccessor-dapr:
     image: "daprio/daprd:edge"
     deploy:
       restart_policy:
@@ -81,7 +81,7 @@ services:
         window: 120s
     command: ["./daprd",
         "-app-port", "3003",
-        "-app-id", "userAccessor",
+        "-app-id", "useraccessor",
         "-app-protocol", "http",
         "-dapr-http-port", "3503",
         "-components-path", "./dapr/components",
@@ -90,8 +90,8 @@ services:
     volumes:
       - "./dapr/:/dapr"
     depends_on:
-      - userAccessor
-    network_mode: "service:userAccessor"
+      - useraccessor
+    network_mode: "service:useraccessor"
 
   mongodb:
     image: mongo:latest

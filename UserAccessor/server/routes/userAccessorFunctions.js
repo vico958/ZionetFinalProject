@@ -2,8 +2,13 @@ const userAccessorManger = require("../services/userAccessorManger")
 
 async function userRegister(req, res){
     try{
+        console.log("1111");
+        console.log(req.body);
         const { userToRegister} = req.body;
+        console.log("email is :", userToRegister.email);
+        console.log("222222")
         const emailInLowerCase = userToRegister.email.toLowerCase()
+        console.log("email is :", emailInLowerCase);
         const isAlreadyInSytem = await userAccessorManger.getUserByEmail(emailInLowerCase);
         if(isAlreadyInSytem){
         res.status(400).send(JSON.stringify("Email already use"));
@@ -48,9 +53,9 @@ async function changePassword(req, res) {
 
 async function check(req, res){
     try{
-        const returnedData = {d:"k",
-            b:"C"
-        };
+        const { userToRegister} = req.body;
+        const emailInLowerCase = userToRegister.email.toLowerCase()
+        const returnedData = await userAccessorManger.getUserByEmail(emailInLowerCase)
         res.status(500).send(JSON.stringify({returnedData}));
         res.end();
     }catch(error){
