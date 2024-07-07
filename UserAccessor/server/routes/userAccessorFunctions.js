@@ -48,9 +48,9 @@ async function changePassword(req, res) {
 
 async function check(req, res){
     try{
-        const returnedData = {d:"k",
-            b:"C"
-        };
+        const { userToRegister} = req.body;
+        const emailInLowerCase = userToRegister.email.toLowerCase()
+        const returnedData = await userAccessorManger.getUserByEmail(emailInLowerCase)
         res.status(500).send(JSON.stringify({returnedData}));
         res.end();
     }catch(error){

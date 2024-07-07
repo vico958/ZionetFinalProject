@@ -9,6 +9,29 @@ services:
     networks:
       - newsApp
   
+  newapp-dapr:
+    image: "daprio/daprd:edge"
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 10
+        window: 120s
+    command: ["./daprd",
+        "-app-port", "3001",
+        "-app-id", "newsApp",
+        "-app-protocol", "http",
+        "-dapr-http-port", "3500",
+        "--resources-path", "./dapr/components",
+        "-config", "./dapr/config.yaml",
+        "--log-level", "debug",
+        ]
+    volumes:
+      - "./dapr/:/dapr"
+    depends_on:
+      - newsapp
+    network_mode: "service:newsapp"
+  
   user:
     build: ./User
     container_name: user
@@ -17,8 +40,31 @@ services:
     restart: on-failure
     networks:
       - newsApp
+
+  user-dapr:
+    image: "daprio/daprd:edge"
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 10
+        window: 120s
+    command: ["./daprd",
+        "-app-port", "3002",
+        "-app-id", "user",
+        "-app-protocol", "http",
+        "-dapr-http-port", "3500",
+        "--resources-path", "./dapr/components",
+        "-config", "./dapr/config.yaml",
+        "--log-level", "debug",
+        ]
+    volumes:
+      - "./dapr/:/dapr"
+    depends_on:
+      - user
+    network_mode: "service:user"
   
-  userAccessor:
+  useraccessor:
     build: ./userAccessor
     container_name: userAccessor
     ports:
@@ -26,6 +72,29 @@ services:
     restart: on-failure
     networks:
       - newsApp
+
+  useraccessor-dapr:
+    image: "daprio/daprd:edge"
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 10
+        window: 120s
+    command: ["./daprd",
+        "-app-port", "3003",
+        "-app-id", "useraccessor",
+        "-app-protocol", "http",
+        "-dapr-http-port", "3500",
+        "--resources-path", "./dapr/components",
+        "-config", "./dapr/config.yaml",
+        "--log-level", "debug",
+        ]
+    volumes:
+      - "./dapr/:/dapr"
+    depends_on:
+      - useraccessor
+    network_mode: "service:useraccessor"
 
   mongodb:
     image: mongo:latest
@@ -37,3 +106,4 @@ services:
 
 networks:
   newsApp:
+    driver: bridge
