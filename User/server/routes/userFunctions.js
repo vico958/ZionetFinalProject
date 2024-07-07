@@ -1,15 +1,23 @@
 require("dotenv").config()
-const userAccessorUrl = process.env.userAccessorUrl || "http://userAccessor:3003/user-accessor";
+const { DaprClient, DaprServer, HttpMethod, CommunicationProtocolEnum } = require("@dapr/dapr");
+const daprHostAndServiceAppId = "useraccessor"; // Dapr Sidecar Host
+const daprPort = "3500"; // Dapr Sidecar Port for user service
+const client = new DaprClient({ daprHostAndServiceAppId, daprPort });
+
+const urlMethodBeggining = "user-accessor"
 async function userRegister(req, res){
     try{
+        const serviceMethod = `${urlMethodBeggining}/register`;
         const { userToRegister} = req.body;
-        const returnedData = await fetch(`${userAccessorUrl}/register`,{
-            method:"POST",
-            headers:{
-                'Content-Type': 'application/json',
-            },
-            body : JSON.stringify({userToRegister:userToRegister}),
-        }) //TODO : Handle returnedData
+        const returnedData = await client.invoker.invoke(
+            daprHostAndServiceAppId,
+            serviceMethod,
+            HttpMethod.POST,
+            {userToRegister} ,
+            { headers: { 'Content-Type': 'application/json' } },
+          );
+
+         //TODO : Handle returnedData
         res.status(200).send(JSON.stringify({returnedData}));
         res.end();
     }catch(error){

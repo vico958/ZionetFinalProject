@@ -21,9 +21,10 @@ services:
         "-app-port", "3001",
         "-app-id", "newsApp",
         "-app-protocol", "http",
-        "-dapr-http-port", "3501",
-        "-components-path", "./dapr/components",
+        "-dapr-http-port", "3500",
+        "--resources-path", "./dapr/components",
         "-config", "./dapr/config.yaml",
+        "--log-level", "debug",
         ]
     volumes:
       - "./dapr/:/dapr"
@@ -52,9 +53,10 @@ services:
         "-app-port", "3002",
         "-app-id", "user",
         "-app-protocol", "http",
-        "-dapr-http-port", "3502",
-        "-components-path", "./dapr/components",
+        "-dapr-http-port", "3500",
+        "--resources-path", "./dapr/components",
         "-config", "./dapr/config.yaml",
+        "--log-level", "debug",
         ]
     volumes:
       - "./dapr/:/dapr"
@@ -83,9 +85,10 @@ services:
         "-app-port", "3003",
         "-app-id", "useraccessor",
         "-app-protocol", "http",
-        "-dapr-http-port", "3503",
-        "-components-path", "./dapr/components",
+        "-dapr-http-port", "3500",
+        "--resources-path", "./dapr/components",
         "-config", "./dapr/config.yaml",
+        "--log-level", "debug",
         ]
     volumes:
       - "./dapr/:/dapr"
@@ -103,3 +106,4 @@ services:
 
 networks:
   newsApp:
+    driver: bridge
