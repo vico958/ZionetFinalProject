@@ -15,11 +15,11 @@ const userSchema = new schema({
         required:true
     },
     preferences:{
-        type:String,
+        type: [String],
         required:true
     },
     categories:{
-        type:String,
+        type: [String],
         required:true
     }
 }, {timestamps:true})
