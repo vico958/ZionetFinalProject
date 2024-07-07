@@ -3,7 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const {logger} = require("./server/middleware/logger");
 const bodyParser = require("body-parser");
-const user = require("./server/routes/user/user")
+const userAccessor = require("./server/routes/userAccessor")
 
 const app = express();
 app.use(logger);
@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use("/user", user)
+app.use("/user-accessor", userAccessor)
 const port = process.env.port || "3003";
 
 
