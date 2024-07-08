@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use("/news-ai", newsAi);
 const port = process.env.port || "3005";
 
-app.listen(port, () => {
+app.listen(port, async () => {
     console.log("Server started on port", port)
 })
 app.get("/", (req, res) =>{
