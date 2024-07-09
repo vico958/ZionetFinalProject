@@ -1,4 +1,5 @@
-const { registerUserUsingAccessor, getNews, bestFitNewsWithAi, userDeleteHelper, changeCategoriesAndPreferencesHelper, changePreferencesHelper } = require("./newsFunctionsHelper");
+const { registerUserUsingAccessor, getNews, bestFitNewsWithAi, userDeleteHelper, 
+    changeCategoriesAndPreferencesHelper, changePreferencesHelper, changeEmailHelper } = require("./newsFunctionsHelper");
 
 async function userRegister(req, res){
     try{
@@ -54,9 +55,22 @@ async function changePreferences(req, res){
     }
 }
 
+async function changeEmail(req, res){
+    try{
+        const userWithNewEmail = req.body.userWithNewEmail;
+        const answer = await changeEmailHelper(userWithNewPreferences)//TODO:TO TEST
+        const message = `you'r email has been change`
+        res.status(200).send(message);
+        res.end();
+    }catch(error){
+        console.log(error);
+    }
+}
+
 module.exports = {
     userRegister,
     userDelete,
     changeCategoriesAndPreferences,
-    changePreferences
+    changePreferences,
+    changeEmail
 }
