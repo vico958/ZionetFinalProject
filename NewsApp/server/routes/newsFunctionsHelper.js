@@ -1,15 +1,18 @@
 require("dotenv").config()
 const { DaprClient, HttpMethod } = require("@dapr/dapr");
 const userDaprHost = "user"; // Dapr Sidecar Host
+const newsDataDaprHost = "newsdata"
 const daprPort = "3500"; // Dapr Sidecar Port for user service
-const useClientDapr = new DaprClient({ userDaprHost, daprPort });
+const userClientDapr = new DaprClient({ userDaprHost, daprPort });
+const newsDataClientDapr = new DaprClient({ newsDataDaprHost, daprPort });
 const userUrlMethodBeggining = "user"
+const newsDataUrlMethodBeggining = "news-data"
 
 async function registerUserUsingAccessor(userToRegister){
     try{
 
         const serviceMethod = `${userUrlMethodBeggining}/register`;
-        return await useClientDapr.invoker.invoke(
+        return await userClientDapr.invoker.invoke(
             userDaprHost,
             serviceMethod,
             HttpMethod.POST,
@@ -24,7 +27,7 @@ async function registerUserUsingAccessor(userToRegister){
 async function userDeleteHelper(userToDelete){
     try{
         const serviceMethod = `${userUrlMethodBeggining}/delete-user`;
-        const asnwer = await useClientDapr.invoker.invoke(
+        const asnwer = await userClientDapr.invoker.invoke(
             userDaprHost,
             serviceMethod,
             HttpMethod.DELETE,
@@ -37,17 +40,20 @@ async function userDeleteHelper(userToDelete){
     }
 }
 
-async function getNewsUsingEngine(categories){
-    const news = await fetch("http://localhost:3004/news-data/getNews",{
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-          },
-        body: JSON.stringify({
-        categories:[categories]
-  }),
-    })
-    return news;
+async function getNews(categories){
+    try{
+        const serviceMethod = `${newsDataUrlMethodBeggining}/getNews`;
+        const news = await newsDataClientDapr.invoker.invoke(
+            newsDataDaprHost,
+            serviceMethod,
+            HttpMethod.POST,
+            {categories} ,
+            { headers: { 'Content-Type': 'application/json' } },
+        );
+        return news;
+    }catch(error){
+        console.log(error);
+    }
 }
 
 async function bestFitNewsWithAi(news, preferences){
@@ -57,7 +63,7 @@ async function bestFitNewsWithAi(news, preferences){
 async function chageCategoriesAndPreferencesHelper(userWithNewSettings){
     try{
         const serviceMethod = `${userUrlMethodBeggining}/change-categories-and-preferences`;
-        const asnwer = await useClientDapr.invoker.invoke(
+        const asnwer = await userClientDapr.invoker.invoke(
             userDaprHost,
             serviceMethod,
             HttpMethod.PUT,
@@ -73,7 +79,7 @@ async function chageCategoriesAndPreferencesHelper(userWithNewSettings){
 async function chagePreferencesHelper(userWithNewPreferences){
     try{
         const serviceMethod = `${userUrlMethodBeggining}/change-preferences`;
-        const asnwer = await useClientDapr.invoker.invoke(
+        const asnwer = await userClientDapr.invoker.invoke(
             userDaprHost,
             serviceMethod,
             HttpMethod.PUT,
@@ -88,7 +94,7 @@ async function chagePreferencesHelper(userWithNewPreferences){
 
 module.exports = {
     registerUserUsingAccessor,
-    getNewsUsingEngine,
+    getNews,
     bestFitNewsWithAi,
     userDeleteHelper,
     chageCategoriesAndPreferencesHelper,
