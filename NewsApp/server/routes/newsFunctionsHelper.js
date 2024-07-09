@@ -1,12 +1,12 @@
 require("dotenv").config()
 const { DaprClient, HttpMethod } = require("@dapr/dapr");
-const userDaprHost = "user"; // Dapr Sidecar Host
-const newsDataDaprHost = "newsdata"
-const newsAiDaprHost = "newsai"
+const userDaprHostAndServiceAppId = "user"; // Dapr Sidecar Host
+const newsDaprHostAndServiceAppId = "newsdata"
+const newsAiDaprHostAndServiceAppId = "newsai"
 const daprPort = "3500"; // Dapr Sidecar Port for user service
-const userClientDapr = new DaprClient({ userDaprHost, daprPort });
-const newsDataClientDapr = new DaprClient({ newsDataDaprHost, daprPort });
-const newsAiClientDapr = new DaprClient({ newsAiDaprHost, daprPort });
+const userClientDapr = new DaprClient({ userDaprHostAndServiceAppId, daprPort });
+const newsDataClientDapr = new DaprClient({ newsDaprHostAndServiceAppId, daprPort });
+const newsAiClientDapr = new DaprClient({ newsAiDaprHostAndServiceAppId, daprPort });
 const userUrlMethodBeggining = "user"
 const newsDataUrlMethodBeggining = "news-data"
 const newsAiUrlMethodBeggining = "news-ai"
@@ -15,7 +15,7 @@ async function registerUserUsingAccessor(userToRegister){
     try{
         const serviceMethod = `${userUrlMethodBeggining}/register`;
         return await userClientDapr.invoker.invoke(
-            userDaprHost,
+            userDaprHostAndServiceAppId,
             serviceMethod,
             HttpMethod.POST,
             {userToRegister} ,
@@ -30,7 +30,7 @@ async function userDeleteHelper(userToDelete){
     try{
         const serviceMethod = `${userUrlMethodBeggining}/delete-user`;
         const asnwer = await userClientDapr.invoker.invoke(
-            userDaprHost,
+            userDaprHostAndServiceAppId,
             serviceMethod,
             HttpMethod.DELETE,
             {userToDelete} ,
@@ -46,7 +46,7 @@ async function getNews(categories, preferences){
     try{
         const serviceMethod = `${newsDataUrlMethodBeggining}/get-news`;
         const news = await newsDataClientDapr.invoker.invoke(
-            newsDataDaprHost,
+            newsDaprHostAndServiceAppId,
             serviceMethod,
             HttpMethod.POST,
             {categories, preferences} ,
@@ -66,7 +66,7 @@ async function bestFitNewsWithAi(articles, preferences){
     try{
         const serviceMethod = `${newsAiUrlMethodBeggining}/best-articles`;
         return await newsAiClientDapr.invoker.invoke(
-            newsAiDaprHost,
+            newsAiDaprHostAndServiceAppId,
             serviceMethod,
             HttpMethod.POST,
             {articles, preferences} ,
@@ -81,7 +81,7 @@ async function changeCategoriesAndPreferencesHelper(userWithNewSettings){
     try{
         const serviceMethod = `${userUrlMethodBeggining}/change-categories-and-preferences`;
         const asnwer = await userClientDapr.invoker.invoke(
-            userDaprHost,
+            userDaprHostAndServiceAppId,
             serviceMethod,
             HttpMethod.PUT,
             {userWithNewSettings} ,
@@ -97,7 +97,7 @@ async function changePreferencesHelper(userWithNewPreferences){
     try{
         const serviceMethod = `${userUrlMethodBeggining}/change-preferences`;
         const asnwer = await userClientDapr.invoker.invoke(
-            userDaprHost,
+            userDaprHostAndServiceAppId,
             serviceMethod,
             HttpMethod.PUT,
             {userWithNewPreferences} ,
@@ -113,10 +113,26 @@ async function changeEmailHelper(userWithNewEmail){
     try{
         const serviceMethod = `${userUrlMethodBeggining}/change-email`;
         const asnwer = await userClientDapr.invoker.invoke(
-            userDaprHost,
+            userDaprHostAndServiceAppId,
             serviceMethod,
             HttpMethod.PUT,
             {userWithNewEmail} ,
+            { headers: { 'Content-Type': 'application/json' } },
+        );
+        return asnwer;
+    }catch(error){
+        console.log(error);
+    }
+}
+
+async function changePasswordHelper(userWithNewPassword){
+    try{
+        const serviceMethod = `${userUrlMethodBeggining}/change-password`;
+        const asnwer = await userClientDapr.invoker.invoke(
+            userDaprHostAndServiceAppId,
+            serviceMethod,
+            HttpMethod.PUT,
+            {userWithNewPassword} ,
             { headers: { 'Content-Type': 'application/json' } },
         );
         return asnwer;
@@ -132,5 +148,6 @@ module.exports = {
     userDeleteHelper,
     changeCategoriesAndPreferencesHelper,
     changePreferencesHelper,
-    changeEmailHelper
+    changeEmailHelper,
+    changePasswordHelper
 }
