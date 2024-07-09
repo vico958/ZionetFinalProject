@@ -22,7 +22,7 @@ async function registerUserUsingAccessor(userToRegister){
     }
 }
 
-async function userDelete(userToDelete){
+async function userDeleteHelper(userToDelete){
     try{
         const serviceMethod = `${userUrlMethodBeggining}/delete-user`;
         const asnwer = await useClientDapr.invoker.invoke(
@@ -59,5 +59,5 @@ module.exports = {
     registerUserUsingAccessor,
     getNewsUsingEngine,
     bestFitNewsWithAi,
-    userDelete
+    userDeleteHelper
 }
