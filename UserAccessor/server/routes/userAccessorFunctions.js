@@ -20,7 +20,7 @@ async function userRegister(req, res){
 
 async function changePassword(req, res) {
     try{//TODO :TEST
-        const {newPassword, oldPassword, email} = req.body.user;
+        const {newPassword, oldPassword, email} = req.body.userWithNewPassword;
         const user = await userAccessorManger.getUserByEmail(email)
         if(oldPassword === user.password){
             await userAccessorManger.changePassword(user.userId, newPassword)
