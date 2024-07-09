@@ -18,7 +18,7 @@ async function userRegister(req, res){
           );
 
          //TODO : Handle returnedData
-        res.status(200).send(JSON.stringify({returnedData}));
+        res.status(200).send(JSON.stringify(returnedData));
         res.end();
     }catch(error){
         console.log(error)
@@ -64,7 +64,7 @@ async function deleteUser(req, res){
           );
 
          //TODO : Handle returnedData
-        res.status(200).send(JSON.stringify({returnedData}));
+        res.status(200).send(JSON.stringify(returnedData));
         res.end();
     }catch(error){
         console.log(error)
