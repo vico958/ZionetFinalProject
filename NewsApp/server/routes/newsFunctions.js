@@ -1,10 +1,4 @@
-require("dotenv").config()
-const { DaprClient, HttpMethod } = require("@dapr/dapr");
-const userDaprHost = "user"; // Dapr Sidecar Host
-const daprPort = "3500"; // Dapr Sidecar Port for user service
-const useClientDapr = new DaprClient({ userDaprHost, daprPort });
-
-const userUrlMethodBeggining = "user"
+const { registerUserUsingAccessor, getNewsUsingEngine, bestFitNewsWithAi } = require("./newsFunctionsHelper");
 
 async function getNews(req, res){
     try{
@@ -17,18 +11,16 @@ async function getNews(req, res){
 
 async function userRegister(req, res){
     try{
-        const serviceMethod = `${userUrlMethodBeggining}/register`;
         const { userToRegister} = req.body;
-        const returnedData = await useClientDapr.invoker.invoke(
-            userDaprHost,
-            serviceMethod,
-            HttpMethod.POST,
-            {userToRegister} ,
-            { headers: { 'Content-Type': 'application/json' } },
-          );
-        const message = `${userRegister.fullName} you signed to the news app, we will send to you via email the news`
+        const returnedUser = await registerUserUsingAccessor(userToRegister)
+        const {categories, preferences, fullName } = returnedUser;
+        const message = `${fullName} you signed to the news app, we will send to you via email the news`
         res.status(200).send(message);
         res.end();
+
+        const news = await getNewsUsingEngine(categories).then(async (res) =>await res.json())
+        const bestNews = await bestFitNewsWithAi(news, preferences) // TODO: need to do that
+
     }catch(error){
         console.log(error)
     }

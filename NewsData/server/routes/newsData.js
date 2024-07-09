@@ -3,7 +3,7 @@ const {getNews, getCategoriesRules} = require("./newsDataFunctions");
 
 const newsDataRouter = express.Router();
 
-newsDataRouter.get("/getNews", getNews);
-newsDataRouter.get("/categoriesRules", getCategoriesRules);
+newsDataRouter.post("/get-news", getNews);
+newsDataRouter.get("/categories-rules", getCategoriesRules);
 
 module.exports = newsDataRouter;
