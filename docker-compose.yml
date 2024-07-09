@@ -96,6 +96,70 @@ services:
       - useraccessor
     network_mode: "service:useraccessor"
 
+  newsdata:
+    build: ./NewsData
+    container_name: newsData
+    ports:
+      - "3004:3004"
+    restart: on-failure
+    networks:
+      - newsApp
+  
+  newsdata-dapr:
+    image: "daprio/daprd:edge"
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 10
+        window: 120s
+    command: ["./daprd",
+        "-app-port", "3004",
+        "-app-id", "newsdata",
+        "-app-protocol", "http",
+        "-dapr-http-port", "3500",
+        "--resources-path", "./dapr/components",
+        "-config", "./dapr/config.yaml",
+        "--log-level", "debug",
+        ]
+    volumes:
+      - "./dapr/:/dapr"
+    depends_on:
+      - newsdata
+    network_mode: "service:newsdata"
+
+    newsai:
+    build: ./NewsAi
+    container_name: newsAi
+    ports:
+      - "3005:3005"
+    restart: on-failure
+    networks:
+      - newsApp
+  
+  newsai-dapr:
+    image: "daprio/daprd:edge"
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 10
+        window: 120s
+    command: ["./daprd",
+        "-app-port", "3005",
+        "-app-id", "newsai",
+        "-app-protocol", "http",
+        "-dapr-http-port", "3500",
+        "--resources-path", "./dapr/components",
+        "-config", "./dapr/config.yaml",
+        "--log-level", "debug",
+        ]
+    volumes:
+      - "./dapr/:/dapr"
+    depends_on:
+      - newsdata
+    network_mode: "service:newsai"
+
   mongodb:
     image: mongo:latest
     container_name: mongoDb
