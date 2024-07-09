@@ -9,14 +9,13 @@ async function registerUserUsingAccessor(userToRegister){
     try{
 
         const serviceMethod = `${userUrlMethodBeggining}/register`;
-        const returnedUser = await useClientDapr.invoker.invoke(
+        return await useClientDapr.invoker.invoke(
             userDaprHost,
             serviceMethod,
             HttpMethod.POST,
             {userToRegister} ,
             { headers: { 'Content-Type': 'application/json' } },
         );
-        return returnedUser;
     }catch(error){
         console.log(error);
     }
