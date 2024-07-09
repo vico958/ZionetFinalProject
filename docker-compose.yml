@@ -6,6 +6,8 @@ services:
     ports:
       - "3001:3001"
     restart: on-failure
+    env_file:
+      - ./NewsApp/.env
     networks:
       - newsApp
   
@@ -38,6 +40,8 @@ services:
     ports:
       - "3002:3002"
     restart: on-failure
+    env_file:
+      - ./User/.env
     networks:
       - newsApp
 
@@ -65,11 +69,13 @@ services:
     network_mode: "service:user"
   
   useraccessor:
-    build: ./userAccessor
+    build: ./UserAccessor
     container_name: userAccessor
     ports:
       - "3003:3003"
     restart: on-failure
+    env_file:
+      - ./UserAccessor/.env
     networks:
       - newsApp
 
@@ -102,6 +108,8 @@ services:
     ports:
       - "3004:3004"
     restart: on-failure
+    env_file:
+      - ./NewsData/.env
     networks:
       - newsApp
   
@@ -134,6 +142,8 @@ services:
     ports:
       - "3005:3005"
     restart: on-failure
+    env_file:
+      - ./NewsAi/.env
     networks:
       - newsApp
   
@@ -159,6 +169,40 @@ services:
     depends_on:
       - newsai
     network_mode: "service:newsai"
+
+    email:
+    build: ./Email
+    container_name: email
+    ports:
+      - "3006:3006"
+    restart: on-failure
+    env_file:
+      - ./Email/.env
+    networks:
+      - newsApp
+  
+  email-dapr:
+    image: "daprio/daprd:edge"
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 10
+        window: 120s
+    command: ["./daprd",
+        "-app-port", "3006",
+        "-app-id", "email",
+        "-app-protocol", "http",
+        "-dapr-http-port", "3500",
+        "--resources-path", "./dapr/components",
+        "-config", "./dapr/config.yaml",
+        "--log-level", "debug",
+        ]
+    volumes:
+      - "./dapr/:/dapr"
+    depends_on:
+      - email
+    network_mode: "service:email"
 
   mongodb:
     image: mongo:latest
