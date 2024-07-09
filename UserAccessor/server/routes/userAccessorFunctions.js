@@ -66,7 +66,7 @@ async function chagePreferences(req, res){
 
 async function chageCategoriesAndPreferences(req, res){
     try{
-        const {email, password, categories, preferences} = req.body.userWithNewPreferences;
+        const {email, password, categories, preferences} = req.body.userWithNewSettings;
         const user = await userAccessorManger.getUserByEmail(email) // TODO: if there is no such user
         if(password === user.password){//TODO: check first categories change and only then change preferences
             const answerCategories = await userAccessorManger.changeUserCategories(user._id, categories)
