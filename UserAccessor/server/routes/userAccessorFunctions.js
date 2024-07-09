@@ -20,11 +20,10 @@ async function userRegister(req, res){
 
 async function changePassword(req, res) {
     try{//TODO :TEST
-        const {newPassword, oldPassword} = req.body.user;
-        const userId = req.user.id;
-        const user = await userAccessorManger.getUserById(userId)
+        const {newPassword, oldPassword, email} = req.body.user;
+        const user = await userAccessorManger.getUserByEmail(email)
         if(oldPassword === user.password){
-            await userAccessorManger.changePassword(userId, newPassword)
+            await userAccessorManger.changePassword(user.userId, newPassword)
             res.status(200).send(JSON.stringify("Password changed"));
         }else{
             res.status(400).send(JSON.stringify("old password doesnt match"));
