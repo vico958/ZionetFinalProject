@@ -8,6 +8,6 @@ WORKDIR /NewsAi
 
 RUN npm install
 
-copy . /NewsAi/
+COPY . /NewsAi/
 
 CMD ["npm", "start"]
