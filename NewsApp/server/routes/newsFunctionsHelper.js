@@ -10,7 +10,6 @@ const newsDataUrlMethodBeggining = "news-data"
 
 async function registerUserUsingAccessor(userToRegister){
     try{
-
         const serviceMethod = `${userUrlMethodBeggining}/register`;
         return await userClientDapr.invoker.invoke(
             userDaprHost,
@@ -42,7 +41,7 @@ async function userDeleteHelper(userToDelete){
 
 async function getNews(categories){
     try{
-        const serviceMethod = `${newsDataUrlMethodBeggining}/getNews`;
+        const serviceMethod = `${newsDataUrlMethodBeggining}/get-news`;
         const news = await newsDataClientDapr.invoker.invoke(
             newsDataDaprHost,
             serviceMethod,
