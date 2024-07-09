@@ -2,7 +2,7 @@ const { user } = require("../storages/models/user")
 const mongoose = require('mongoose');
 const dbUri = 'mongodb://mongoDb:27017/userDb';
 
-mongoose.connect(dbUri, {
+mongoose.connect(dbUri, { //TODO: change location of connect and try catch and so ...
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
