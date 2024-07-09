@@ -22,6 +22,22 @@ async function registerUserUsingAccessor(userToRegister){
     }
 }
 
+async function userDelete(userToDelete){
+    try{
+        const serviceMethod = `${userUrlMethodBeggining}/delete-user`;
+        const asnwer = await useClientDapr.invoker.invoke(
+            userDaprHost,
+            serviceMethod,
+            HttpMethod.DELETE,
+            {userToDelete} ,
+            { headers: { 'Content-Type': 'application/json' } },
+        );
+        return asnwer;
+    }catch(error){
+        console.log(error);
+    }
+}
+
 async function getNewsUsingEngine(categories){
     const news = await fetch("http://localhost:3004/news-data/getNews",{
         method: 'POST',
@@ -38,8 +54,10 @@ async function getNewsUsingEngine(categories){
 async function bestFitNewsWithAi(news, preferences){
     //TODO: talk with ai
 }
+
 module.exports = {
     registerUserUsingAccessor,
     getNewsUsingEngine,
-    bestFitNewsWithAi
+    bestFitNewsWithAi,
+    userDelete
 }

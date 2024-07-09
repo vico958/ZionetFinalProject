@@ -1,4 +1,4 @@
-const { registerUserUsingAccessor, getNewsUsingEngine, bestFitNewsWithAi } = require("./newsFunctionsHelper");
+const { registerUserUsingAccessor, getNewsUsingEngine, bestFitNewsWithAi, userDelete } = require("./newsFunctionsHelper");
 
 async function getNews(req, res){
     try{
@@ -26,7 +26,20 @@ async function userRegister(req, res){
     }
 }
 
+async function userDelete(req, res){
+    try{
+        const userToDelete = req.body.user;
+        const answer = await userDelete(userToDelete)//TODO: check if really delete or not
+        const message = `you been remove from news app`
+        res.status(200).send(message);
+        res.end();
+    }catch(error){
+        console.log(error);
+    }
+}
+
 module.exports = {
     getNews,
-    userRegister
+    userRegister,
+    userDelete
 }
