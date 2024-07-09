@@ -70,9 +70,51 @@ async function deleteUser(req, res){
         console.log(error)
     }
 }
+
+async function chageCategoriesAndPreferences(req, res){
+    try{
+        const userWithNewSettings = req.body.userWithNewSettings;
+        const serviceMethod = `${urlMethodBeggining}/change-categories-and-preferences`;
+        const returnedData = await client.invoker.invoke(
+                daprHostAndServiceAppId,
+                serviceMethod,
+                HttpMethod.PUT,
+                {userWithNewSettings} ,
+                { headers: { 'Content-Type': 'application/json' } },
+              );
+    
+             //TODO : Handle returnedData
+            res.status(200).send(JSON.stringify(returnedData));
+            res.end();
+        }catch(error){
+            console.log(error)
+        }
+}
+
+async function chagePreferences(req, res){
+    try{
+        const userWithNewPreferences = req.body.userWithNewPreferences;
+        const serviceMethod = `${urlMethodBeggining}/change-preferences`;
+        const returnedData = await client.invoker.invoke(
+                daprHostAndServiceAppId,
+                serviceMethod,
+                HttpMethod.PUT,
+                {userWithNewPreferences} ,
+                { headers: { 'Content-Type': 'application/json' } },
+              );
+    
+             //TODO : Handle returnedData
+            res.status(200).send(JSON.stringify(returnedData));
+            res.end();
+        }catch(error){
+            console.log(error)
+        }
+}
 module.exports = {
     userLogin,
     userRegister,
     changePassword,
-    deleteUser
+    deleteUser,
+    chageCategoriesAndPreferences,
+    chagePreferences
 }
