@@ -46,21 +46,25 @@ async function changePassword(req, res) {
     }
 }
 
-async function check(req, res){
+async function deleteUser(req, res){
     try{
-        const { userToRegister} = req.body;
-        const emailInLowerCase = userToRegister.email.toLowerCase()
-        const returnedData = await userAccessorManger.getUserByEmail(emailInLowerCase)
-        res.status(500).send(JSON.stringify({returnedData}));
-        res.end();
+        const {userId, passwrod} = req.body.userToDelete;
+        const user = await userAccessorManger.getUserById(userId) // TODO: if there is no such user
+        if(passwrod === user.password){
+            const answer = await userAccessorManger.deleteUser(userId, passwrod)
+            res.status(200).send(JSON.stringify("user deleted"));
+            res.end();
+        }else{
+            res.status(400).send(JSON.stringify("cant remove user"));
+            res.end();
+        }
     }catch(error){
         console.log(error)
     }
 }
-
 module.exports = {
     userLogin,
     userRegister,
     changePassword,
-    check
+    deleteUser
 }
