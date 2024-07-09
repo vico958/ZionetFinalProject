@@ -77,7 +77,7 @@ async function bestFitNewsWithAi(articles, preferences){
     }
 }
 
-async function chageCategoriesAndPreferencesHelper(userWithNewSettings){
+async function changeCategoriesAndPreferencesHelper(userWithNewSettings){
     try{
         const serviceMethod = `${userUrlMethodBeggining}/change-categories-and-preferences`;
         const asnwer = await userClientDapr.invoker.invoke(
@@ -93,7 +93,7 @@ async function chageCategoriesAndPreferencesHelper(userWithNewSettings){
     }
 }
 
-async function chagePreferencesHelper(userWithNewPreferences){
+async function changePreferencesHelper(userWithNewPreferences){
     try{
         const serviceMethod = `${userUrlMethodBeggining}/change-preferences`;
         const asnwer = await userClientDapr.invoker.invoke(
@@ -114,6 +114,6 @@ module.exports = {
     getNews,
     bestFitNewsWithAi,
     userDeleteHelper,
-    chageCategoriesAndPreferencesHelper,
-    chagePreferencesHelper
+    changeCategoriesAndPreferencesHelper,
+    changePreferencesHelper
 }

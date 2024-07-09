@@ -1,4 +1,4 @@
-const { registerUserUsingAccessor, getNews, bestFitNewsWithAi, userDeleteHelper, chageCategoriesAndPreferencesHelper, chagePreferencesHelper } = require("./newsFunctionsHelper");
+const { registerUserUsingAccessor, getNews, bestFitNewsWithAi, userDeleteHelper, changeCategoriesAndPreferencesHelper, changePreferencesHelper } = require("./newsFunctionsHelper");
 
 async function userRegister(req, res){
     try{
@@ -30,10 +30,10 @@ async function userDelete(req, res){
     }
 }
 
-async function chageCategoriesAndPreferences(req, res){
+async function changeCategoriesAndPreferences(req, res){
     try{
         const userWithNewSettings = req.body.userWithNewSettings;
-        const answer = await chageCategoriesAndPreferencesHelper(userWithNewSettings)//TODO:TO TEST
+        const answer = await changeCategoriesAndPreferencesHelper(userWithNewSettings)//TODO:TO TEST
         const message = `you'r info has been change`
         res.status(200).send(message);
         res.end();
@@ -42,10 +42,10 @@ async function chageCategoriesAndPreferences(req, res){
     }
 }
 
-async function chagePreferences(req, res){
+async function changePreferences(req, res){
     try{
         const userWithNewPreferences = req.body.userWithNewPreferences;
-        const answer = await chagePreferencesHelper(userWithNewPreferences)//TODO:TO TEST
+        const answer = await changePreferencesHelper(userWithNewPreferences)//TODO:TO TEST
         const message = `you'r info has been change`
         res.status(200).send(message);
         res.end();
@@ -57,6 +57,6 @@ async function chagePreferences(req, res){
 module.exports = {
     userRegister,
     userDelete,
-    chageCategoriesAndPreferences,
-    chagePreferences
+    changeCategoriesAndPreferences,
+    changePreferences
 }
