@@ -58,7 +58,18 @@ async function deleteUser(req, res){
 }
 
 async function chagePreferences(req, res){
-    //TODO
+    try{
+        const {email, password, preferences} = req.body.userWithNewPreferences;
+        const user = await userAccessorManger.getUserByEmail(email) // TODO: if there is no such user
+        if(password === user.password){
+            const answer = await userAccessorManger.changeUserPreferences(user._id, preferences)
+            res.status(200).send(JSON.stringify("user preferences changed"));
+        }else{
+            res.status(400).send(JSON.stringify("cant change user preferences"));
+        }
+    }catch(error){
+
+    }
 }
 
 async function chageCategoriesAndPreferences(req, res){
