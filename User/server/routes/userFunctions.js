@@ -110,11 +110,31 @@ async function chagePreferences(req, res){
             console.log(error)
         }
 }
+
+async function changeEmail(req, res){
+    try{
+        const userWithNewEmail = req.body.userWithNewEmail;
+        const serviceMethod = `${urlMethodBeggining}/change-email`;
+        const returnedData = await client.invoker.invoke(
+                daprHostAndServiceAppId,
+                serviceMethod,
+                HttpMethod.PUT,
+                {userWithNewEmail} ,
+                { headers: { 'Content-Type': 'application/json' } },
+              );
+    
+             //TODO : Handle returnedData
+            res.status(200).send(JSON.stringify(returnedData));
+            res.end();
+        }catch(error){
+            console.log(error)
+        }
+}
 module.exports = {
-    userLogin,
     userRegister,
     changePassword,
     deleteUser,
     chageCategoriesAndPreferences,
-    chagePreferences
+    chagePreferences,
+    changeEmail,
 }
