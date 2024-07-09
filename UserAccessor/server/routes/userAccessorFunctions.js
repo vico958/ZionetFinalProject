@@ -56,9 +56,20 @@ async function deleteUser(req, res){
         console.log(error)
     }
 }
+
+async function chagePreferences(req, res){
+    //TODO
+}
+
+async function chageCategoriesAndPreferences(req, res){
+    //TODO
+}
+
 module.exports = {
     userLogin,
     userRegister,
     changePassword,
-    deleteUser
+    deleteUser,
+    chagePreferences,
+    chageCategoriesAndPreferences,
 }
