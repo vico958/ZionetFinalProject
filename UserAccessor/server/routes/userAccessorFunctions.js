@@ -43,16 +43,11 @@ async function changePassword(req, res) {
 }
 
 async function deleteUser(req, res){
-    try{
-        for(let i=0; i<10; i++){
-            console.log("enterrrrrrrrrrrrrrrrrrrrrrrrrrrrrr")
-        }
-        const {email, passwrod} = req.body.userToDelete;
-        console.log(req.body.userToDelete)
+    try{//TODO: check about id of user
+        const {email, password} = req.body.userToDelete;
         const user = await userAccessorManger.getUserByEmail(email) // TODO: if there is no such user
-        console.log(user)
-        if(passwrod === user.password){
-            const answer = await userAccessorManger.deleteUser(user.userId, passwrod)
+        if(password === user.password){
+            const answer = await userAccessorManger.deleteUser(user._id)
             res.status(200).send(JSON.stringify("user deleted"));
         }else{
             res.status(400).send(JSON.stringify("cant remove user"));

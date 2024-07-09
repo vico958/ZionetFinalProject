@@ -15,7 +15,6 @@ class userAccessorManger{
 
     async getUserByEmail (email) {
         try{
-            console.log("email is ", email)
             return await this.userDatabase.getUserByEmail(email);
         }catch(error){
             console.log(error)
