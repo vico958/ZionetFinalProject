@@ -35,7 +35,11 @@ async function getNewsUsingEngine(categories){
     return news;
 }
 
+async function bestFitNewsWithAi(news, preferences){
+    //TODO: talk with ai
+}
 module.exports = {
     registerUserUsingAccessor,
-    getNewsUsingEngine
+    getNewsUsingEngine,
+    bestFitNewsWithAi
 }

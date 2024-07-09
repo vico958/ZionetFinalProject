@@ -4,5 +4,5 @@ const {getNews, userRegister} = require("./newsFunctions");
 const newsRouter = express.Router();
 
 newsRouter.get("/get-news", getNews);
-newsRouter.get("/register", userRegister)
+newsRouter.post("/register", userRegister)
 module.exports = newsRouter;
