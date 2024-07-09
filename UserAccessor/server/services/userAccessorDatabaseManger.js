@@ -68,14 +68,25 @@ class userDatabaseManager {
     changeUserPreferences = async (userId, newPreferences) => {
         try{
             return await changeUserDataHelper(userId, newPreferences, "preferences")
-
         }catch(error){
             console.log(error)
         }
     }
 
     changeUserDataHelper = async(userId, newData, dataField) => {
-        return await user.findByIdAndUpdate({_id:userId}, {[dataField]: newData}, {new:true})
+        try{
+            return await user.findByIdAndUpdate({_id:userId}, {[dataField]: newData}, {new:true})
+        }catch(error){
+            console.log(error)
+        }
+    }
+
+    changeUserEmail = async(userId, newEmail) =>{
+        try{
+            return await changeUserDataHelper(userId, newEmail, "email")
+        }catch(error){
+            console.log(error)
+        }
     }
 
     deleteUser = async(userId) => {

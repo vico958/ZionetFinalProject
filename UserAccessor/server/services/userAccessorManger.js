@@ -62,6 +62,14 @@ class userAccessorManger{
         }
     }
 
+    async changeUserEmail(userId, newEmail){
+        try{
+            return await this.userDatabase.changeUserEmail(userId, newEmail);
+        }catch(error){
+            console.log(error);
+        }
+    }
+
     async deleteUser(userId){
         try{
             return await this.userDatabase.deleteUser(userId)
