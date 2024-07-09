@@ -7,13 +7,11 @@ async function userRegister(req, res){
         const isAlreadyInSytem = await userAccessorManger.getUserByEmail(emailInLowerCase);
         if(isAlreadyInSytem){
         res.status(400).send(JSON.stringify("Email already use"));
-        res.end();
         }
         else{
             userToRegister.email = emailInLowerCase;
             const returnedData = await userAccessorManger.register(userToRegister);
             res.status(200).send(JSON.stringify(returnedData));
-            res.end();
         }
     }catch(error){
         console.log(error)
@@ -36,10 +34,8 @@ async function changePassword(req, res) {
         if(oldPassword === user.password){
             await userAccessorManger.changePassword(userId, newPassword)
             res.status(200).send(JSON.stringify("Password changed"));
-            res.end();
         }else{
             res.status(400).send(JSON.stringify("old password doesnt match"));
-            res.end();
         }
     }catch(error){
         console.log(error)
@@ -47,16 +43,14 @@ async function changePassword(req, res) {
 }
 
 async function deleteUser(req, res){
-    try{
-        const {email, passwrod} = req.body.userToDelete;
+    try{//TODO: check about id of user
+        const {email, password} = req.body.userToDelete;
         const user = await userAccessorManger.getUserByEmail(email) // TODO: if there is no such user
-        if(passwrod === user.password){
-            const answer = await userAccessorManger.deleteUser(user.userId, passwrod)
+        if(password === user.password){
+            const answer = await userAccessorManger.deleteUser(user._id)
             res.status(200).send(JSON.stringify("user deleted"));
-            res.end();
         }else{
             res.status(400).send(JSON.stringify("cant remove user"));
-            res.end();
         }
     }catch(error){
         console.log(error)

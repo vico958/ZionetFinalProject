@@ -5,5 +5,5 @@ const userAccessorRouter = express.Router();
 userAccessorRouter.post("/register", userRegister);
 userAccessorRouter.post("/login", userLogin);
 userAccessorRouter.put("/change-password", changePassword)
-userAccessorRouter.delete("delete-user", deleteUser)
+userAccessorRouter.delete("/delete-user", deleteUser)
 module.exports = userAccessorRouter;
