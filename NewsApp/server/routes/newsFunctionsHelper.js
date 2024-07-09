@@ -42,21 +42,19 @@ async function userDeleteHelper(userToDelete){
     }
 }
 
-async function getNews(categories){
+async function getNews(categories, preferences){
     try{
         const serviceMethod = `${newsDataUrlMethodBeggining}/get-news`;
         const news = await newsDataClientDapr.invoker.invoke(
             newsDataDaprHost,
             serviceMethod,
             HttpMethod.POST,
-            {categories} ,
+            {categories, preferences} ,
             { headers: { 'Content-Type': 'application/json' } },
         );
         const reducedNews = news.results.map(item => ({
             title: item.title,
             link: item.link,
-            creator: item.creator,
-            description: item.description
         }));
         return reducedNews;
     }catch(error){

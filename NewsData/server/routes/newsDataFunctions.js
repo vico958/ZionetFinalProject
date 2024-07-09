@@ -3,6 +3,7 @@ const apiKey = process.env.DATA_NEWS_IO_API_KEY
 const url = `https://newsdata.io/api/1/latest?apikey=${apiKey}`
 
 async function getNews(req, res){
+    // TODO : fix getting news with categories and inside with preferences
     const categories = req.body.categories;
     const preferences = req.body.preferences;
     const query = preferences.join(` OR `)

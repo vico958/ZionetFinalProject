@@ -9,7 +9,7 @@ async function userRegister(req, res){
         res.status(200).send(message);
         res.end();
 
-        const news = await getNews(categories)
+        const news = await getNews(categories, preferences)
         const bestNews = await bestFitNewsWithAi(news, preferences) // TODO: need to do that
         console.log(bestNews);
 
