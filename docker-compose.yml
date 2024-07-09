@@ -96,6 +96,38 @@ services:
       - useraccessor
     network_mode: "service:useraccessor"
 
+  newsdata:
+    build: ./Newsdata
+    container_name: newsdata
+    ports:
+      - "3004:3004"
+    restart: on-failure
+    networks:
+      - newsApp
+  
+  newsdata-dapr:
+    image: "daprio/daprd:edge"
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 10
+        window: 120s
+    command: ["./daprd",
+        "-app-port", "3004",
+        "-app-id", "newsdata",
+        "-app-protocol", "http",
+        "-dapr-http-port", "3500",
+        "--resources-path", "./dapr/components",
+        "-config", "./dapr/config.yaml",
+        "--log-level", "debug",
+        ]
+    volumes:
+      - "./dapr/:/dapr"
+    depends_on:
+      - newsdata
+    network_mode: "service:newsdata"
+
   mongodb:
     image: mongo:latest
     container_name: mongoDb
