@@ -12,11 +12,10 @@ async function getNews(req, res){
 async function userRegister(req, res){
     try{
         const { userToRegister} = req.body;
-        console.log(userToRegister);
         const returnedUser = await registerUserUsingAccessor(userToRegister)
         const {categories, preferences, fullName } = returnedUser;
         const message = `${fullName} you signed to the news app, we will send to you via email the news`
-        res.status(200).send(returnedUser);
+        res.status(200).send(message);
         res.end();
 
         // const news = await getNewsUsingEngine(categories).then(async (res) =>await res.json())
