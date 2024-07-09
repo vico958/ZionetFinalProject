@@ -19,7 +19,7 @@ async function userRegister(req, res){
 }
 
 async function changePassword(req, res) {
-    try{
+    try{//TODO :TEST
         const {newPassword, oldPassword} = req.body.user;
         const userId = req.user.id;
         const user = await userAccessorManger.getUserById(userId)
@@ -50,7 +50,7 @@ async function deleteUser(req, res){
 }
 
 async function chagePreferences(req, res){
-    try{
+    try{//TODO :TEST
         const {email, password, preferences} = req.body.userWithNewPreferences;
         const user = await userAccessorManger.getUserByEmail(email) // TODO: if there is no such user
         if(password === user.password){
@@ -65,7 +65,7 @@ async function chagePreferences(req, res){
 }
 
 async function chageCategoriesAndPreferences(req, res){
-    try{
+    try{//TODO :TEST
         const {email, password, categories, preferences} = req.body.userWithNewSettings;
         const user = await userAccessorManger.getUserByEmail(email) // TODO: if there is no such user
         if(password === user.password){//TODO: check first categories change and only then change preferences
@@ -81,7 +81,7 @@ async function chageCategoriesAndPreferences(req, res){
 }
 
 async function changeEmail(req, res){
-    try{
+    try{//TODO :TEST
         const {email, password, newEmail } = req.body.userWithNewEmail;
         const user = await userAccessorManger.getUserByEmail(email) // TODO: if there is no such user
         if(password === user.password){//TODO: check first categories change and only then change preferences
