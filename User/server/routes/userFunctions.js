@@ -35,20 +35,22 @@ async function userLogin(req, res){
 
 async function changePassword(req, res) {
     try{ // TODO:
-        const {newPassword, oldPassword} = req.body.user;
-        const userId = req.user.id;
-        const user = await userManger.getUserById(userId)
-        if(oldPassword === user.password){
-            await userManger.changePassword(userId, newPassword)
-            res.status(200).send(JSON.stringify("Password changed"));
-            res.end();
-        }else{
-            res.status(400).send(JSON.stringify("old password doesnt match"));
-            res.end();
-        }
+        const serviceMethod = `${urlMethodBeggining}/change-password`;
+        const { userWithNewPassword} = req.body.userWithNewPassword;
+        const returnedData = await client.invoker.invoke(
+            daprHostAndServiceAppId,
+            serviceMethod,
+            HttpMethod.PUT,
+            {userWithNewPassword} ,
+            { headers: { 'Content-Type': 'application/json' } },
+            );
+    
+            //TODO : Handle returnedData
+        res.status(200).send(JSON.stringify(returnedData));
+        res.end();
     }catch(error){
         console.log(error)
-    }
+        }
 }
 
 async function deleteUser(req, res){
