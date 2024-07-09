@@ -51,26 +51,28 @@ async function changePassword(req, res) {
     }
 }
 
-async function check(req, res){
+async function deleteUser(req, res){
     try{
-        const userToRegister={
-            email:"viko@gmail.com",
-            password:"1234",
-            fullName: "viko dabush",
-            preferences:"love",
-            categories:"love2"
-        }
-        const returnedData = await userManger.register(userToRegister);
+    const userToDelete = req.body.userToDelete;
+    const serviceMethod = `${urlMethodBeggining}/delete-user`;
+    const returnedData = await client.invoker.invoke(
+            daprHostAndServiceAppId,
+            serviceMethod,
+            HttpMethod.DELETE,
+            {userToDelete} ,
+            { headers: { 'Content-Type': 'application/json' } },
+          );
+
+         //TODO : Handle returnedData
         res.status(200).send(JSON.stringify({returnedData}));
         res.end();
     }catch(error){
         console.log(error)
     }
 }
-
 module.exports = {
     userLogin,
     userRegister,
     changePassword,
-    check
+    deleteUser
 }
