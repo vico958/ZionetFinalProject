@@ -4,9 +4,8 @@ const url = `https://newsdata.io/api/1/latest?apikey=${apiKey}`
 
 async function getNews(req, res){
     const categories = req.body.categories;
-    const urlWithQuery = `${url}&category=${categories.toString()}$language=en`
+    const urlWithQuery = `${url}&category=${categories.toString()}&language=en`
     const data = await fetch(urlWithQuery).then(async (res)=> res.json());
-    console.log(data);
     res.status(200).send(data);
     res.end();
 }
