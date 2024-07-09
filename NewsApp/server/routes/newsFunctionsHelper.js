@@ -66,9 +66,9 @@ async function getNews(categories){
 
 async function bestFitNewsWithAi(articles, preferences){
     try{
-        const serviceMethod = `${newsAiUrlMethodBeggining}/best-articles"`;
+        const serviceMethod = `${newsAiUrlMethodBeggining}/best-articles`;
         return await newsAiClientDapr.invoker.invoke(
-            userDaprHost,
+            newsAiDaprHost,
             serviceMethod,
             HttpMethod.POST,
             {articles, preferences} ,
