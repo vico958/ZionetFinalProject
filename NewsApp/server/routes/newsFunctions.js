@@ -29,7 +29,17 @@ async function userDelete(req, res){
     }
 }
 
+async function chageCategoriesAndPreferences(req, res){
+
+}
+
+async function chagePreferences(req, res){
+
+}
+
 module.exports = {
     userRegister,
-    userDelete
+    userDelete,
+    chageCategoriesAndPreferences,
+    chagePreferences
 }
