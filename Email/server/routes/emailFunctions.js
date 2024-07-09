@@ -10,7 +10,7 @@ async function sendEmail(req, res){
             subject: subject, // Subject line
             text: text, // plain text body
         });
-        req.status(200).send("email sent")
+        res.status(200).send("email sent")
     }catch(error){
         console.log(error);
     }
