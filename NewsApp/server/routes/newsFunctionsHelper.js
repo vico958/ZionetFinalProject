@@ -54,9 +54,43 @@ async function bestFitNewsWithAi(news, preferences){
     //TODO: talk with ai
 }
 
+async function chageCategoriesAndPreferencesHelper(userWithNewSettings){
+    try{
+        const serviceMethod = `${userUrlMethodBeggining}/change-categories-and-preferences`;
+        const asnwer = await useClientDapr.invoker.invoke(
+            userDaprHost,
+            serviceMethod,
+            HttpMethod.PUT,
+            {userWithNewSettings} ,
+            { headers: { 'Content-Type': 'application/json' } },
+        );
+        return asnwer;
+    }catch(error){
+        console.log(error);
+    }
+}
+
+async function chagePreferencesHelper(userWithNewPreferences){
+    try{
+        const serviceMethod = `${userUrlMethodBeggining}/change-preferences`;
+        const asnwer = await useClientDapr.invoker.invoke(
+            userDaprHost,
+            serviceMethod,
+            HttpMethod.PUT,
+            {userWithNewPreferences} ,
+            { headers: { 'Content-Type': 'application/json' } },
+        );
+        return asnwer;
+    }catch(error){
+        console.log(error);
+    }
+}
+
 module.exports = {
     registerUserUsingAccessor,
     getNewsUsingEngine,
     bestFitNewsWithAi,
-    userDeleteHelper
+    userDeleteHelper,
+    chageCategoriesAndPreferencesHelper,
+    chagePreferencesHelper
 }

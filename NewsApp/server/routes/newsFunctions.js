@@ -1,13 +1,4 @@
-const { registerUserUsingAccessor, getNewsUsingEngine, bestFitNewsWithAi, userDeleteHelper } = require("./newsFunctionsHelper");
-
-async function getNews(req, res){
-    try{
-        res.status(200).send(JSON.stringify("test"))
-    }catch(error){
-        console.error("Error in getNews: ", error);
-        res.status(500).json({error: 'Internal Server Error' })
-    }
-}
+const { registerUserUsingAccessor, getNewsUsingEngine, bestFitNewsWithAi, userDeleteHelper, chageCategoriesAndPreferencesHelper, chagePreferencesHelper } = require("./newsFunctionsHelper");
 
 async function userRegister(req, res){
     try{
@@ -38,8 +29,33 @@ async function userDelete(req, res){
     }
 }
 
+async function chageCategoriesAndPreferences(req, res){
+    try{
+        const userWithNewSettings = req.body.userWithNewSettings;
+        const answer = await chageCategoriesAndPreferencesHelper(userWithNewSettings)//TODO:TO TEST
+        const message = `you'r info has been change`
+        res.status(200).send(message);
+        res.end();
+    }catch(error){
+        console.log(error);
+    }
+}
+
+async function chagePreferences(req, res){
+    try{
+        const userWithNewPreferences = req.body.userWithNewPreferences;
+        const answer = await chagePreferencesHelper(userWithNewPreferences)//TODO:TO TEST
+        const message = `you'r info has been change`
+        res.status(200).send(message);
+        res.end();
+    }catch(error){
+        console.log(error);
+    }
+}
+
 module.exports = {
-    getNews,
     userRegister,
-    userDelete
+    userDelete,
+    chageCategoriesAndPreferences,
+    chagePreferences
 }
