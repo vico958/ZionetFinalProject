@@ -68,7 +68,7 @@ async function chagePreferences(req, res){
             res.status(400).send(JSON.stringify("cant change user preferences"));
         }
     }catch(error){
-
+        console.log(error)
     }
 }
 
