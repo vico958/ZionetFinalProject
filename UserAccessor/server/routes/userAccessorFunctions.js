@@ -12,7 +12,7 @@ async function userRegister(req, res){
         else{
             userToRegister.email = emailInLowerCase;
             const returnedData = await userAccessorManger.register(userToRegister);
-            res.status(200).send(JSON.stringify({returnedData}));
+            res.status(200).send(JSON.stringify(returnedData));
             res.end();
         }
     }catch(error){
