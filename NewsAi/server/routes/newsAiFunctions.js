@@ -7,12 +7,6 @@ async function whichOneIsTheBestArticle(req, res){
     try{
         const preferences = req.body.preferences;
         const articlesInfo = req.body.articlesInfo;
-        //articlesInfo :{
-    //         article_id: article.article_id,
-    //         title: article.title,
-    //     description: article.description,
-    //     link:article.link,
-    // }
         const response = talkWithAi(articlesInfo, preferences);
         res.status(200).send(JSON.stringify(response));
         res.end();
@@ -24,7 +18,7 @@ async function whichOneIsTheBestArticle(req, res){
 async function talkWithAi(articlesInfo, preferences){
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash", generationConfig: { responseMimeType: "application/json" }});
     const prompt ="take this link list make a summry of each article inside them and choose me the best 3 that will fit this preferences";
-    const newPromt = `${prompt} ${preferences.toString()}`
+    const newPromt = `${prompt} ${preferences.toString()}. as well return me the summry you made`
     const result = await model.generateContent([newPromt, JSON.stringify(articlesInfo)])
     const response = await result.response;
     const text = response.text();
