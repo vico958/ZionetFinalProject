@@ -1,4 +1,4 @@
-const { registerUserUsingAccessor, getNewsUsingEngine, bestFitNewsWithAi, userDeleteHelper, chageCategoriesAndPreferencesHelper, chagePreferencesHelper } = require("./newsFunctionsHelper");
+const { registerUserUsingAccessor, getNews, bestFitNewsWithAi, userDeleteHelper, chageCategoriesAndPreferencesHelper, chagePreferencesHelper } = require("./newsFunctionsHelper");
 
 async function userRegister(req, res){
     try{
@@ -9,7 +9,7 @@ async function userRegister(req, res){
         res.status(200).send(message);
         res.end();
 
-        // const news = await getNewsUsingEngine(categories).then(async (res) =>await res.json())
+        const news = await getNews(categories).then(async (res) =>await res.json())
         // const bestNews = await bestFitNewsWithAi(news, preferences) // TODO: need to do that
 
     }catch(error){

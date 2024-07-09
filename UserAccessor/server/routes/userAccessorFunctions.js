@@ -81,7 +81,6 @@ async function chageCategoriesAndPreferences(req, res){
 }
 
 module.exports = {
-    userLogin,
     userRegister,
     changePassword,
     deleteUser,

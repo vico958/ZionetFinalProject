@@ -1,5 +1,5 @@
 const express = require("express")
-const { userLogin, userRegister, changePassword, deleteUser, chagePreferences, chageCategoriesAndPreferences } = require("./userAccessorFunctions")
+const { userRegister, changePassword, deleteUser, chagePreferences, chageCategoriesAndPreferences } = require("./userAccessorFunctions")
 const userAccessorRouter = express.Router();
 
 userAccessorRouter.post("/register", userRegister);
