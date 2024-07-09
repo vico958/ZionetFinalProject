@@ -52,7 +52,13 @@ async function getNews(categories){
             {categories} ,
             { headers: { 'Content-Type': 'application/json' } },
         );
-        return news;
+        const reducedNews = news.results.map(item => ({
+            title: item.title,
+            link: item.link,
+            creator: item.creator,
+            description: item.description
+        }));
+        return reducedNews;
     }catch(error){
         console.log(error);
     }
