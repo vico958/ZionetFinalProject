@@ -55,8 +55,6 @@ async function getNews(categories, preferences){
         const reducedNews = news.results.map(item => ({
             title: item.title,
             link: item.link,
-            creator: item.creator,
-            description: item.description
         }));
         return reducedNews;
     }catch(error){
