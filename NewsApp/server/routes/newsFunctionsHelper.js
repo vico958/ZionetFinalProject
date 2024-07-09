@@ -3,13 +3,16 @@ const { DaprClient, HttpMethod } = require("@dapr/dapr");
 const userDaprHostAndServiceAppId = "user"; // Dapr Sidecar Host
 const newsDaprHostAndServiceAppId = "newsdata"
 const newsAiDaprHostAndServiceAppId = "newsai"
+const emailDaprHostAndServiceAppId = "email"
 const daprPort = "3500"; // Dapr Sidecar Port for user service
 const userClientDapr = new DaprClient({ userDaprHostAndServiceAppId, daprPort });
 const newsDataClientDapr = new DaprClient({ newsDaprHostAndServiceAppId, daprPort });
 const newsAiClientDapr = new DaprClient({ newsAiDaprHostAndServiceAppId, daprPort });
+const emailClientDapr = new DaprClient({ emailDaprHostAndServiceAppId, daprPort });
 const userUrlMethodBeggining = "user"
 const newsDataUrlMethodBeggining = "news-data"
 const newsAiUrlMethodBeggining = "news-ai"
+const emailUrlMethodBeggining = "email"
 
 async function registerUserUsingAccessor(userToRegister){
     try{
@@ -112,7 +115,7 @@ async function changePreferencesHelper(userWithNewPreferences){
 async function changeEmailHelper(userWithNewEmail){
     try{
         const serviceMethod = `${userUrlMethodBeggining}/change-email`;
-        const asnwer = await userClientDapr.invoker.invoke(
+        const asnwer = await emailClientDapr.invoker.invoke(
             userDaprHostAndServiceAppId,
             serviceMethod,
             HttpMethod.PUT,
@@ -141,6 +144,33 @@ async function changePasswordHelper(userWithNewPassword){
     }
 }
 
+async function sendMessage(newsData, userEmail, subject, text){
+    
+const emailHost = process.env.EMAIL_HOST;
+const emailUser = process.env.EMAIL_USER;
+const emailPassword = process.env.EMAIL_PASSWORD;
+const emailFrom = process.env.EMAIL_FROM;
+const to = userEmail;
+const subject = "Your interesting news is ready!!!" //|| subject
+const text = `Hello, this is the news app you signed for, here is your news:
+${newsData}
+we hope you like it, in 24 hours your gona get a new update, until then, have a nice day!` //|| text;
+
+try{
+    const serviceMethod = `${emailUrlMethodBeggining}/send-email`;
+    return await userClientDapr.invoker.invoke(
+        emailDaprHostAndServiceAppId,
+        serviceMethod,
+        HttpMethod.POST,
+        {userToRegister} ,
+        { headers: { 'Content-Type': 'application/json' } },
+    );
+}catch(error){
+    console.log(error);
+}
+
+}
+
 module.exports = {
     registerUserUsingAccessor,
     getNews,
@@ -149,5 +179,6 @@ module.exports = {
     changeCategoriesAndPreferencesHelper,
     changePreferencesHelper,
     changeEmailHelper,
-    changePasswordHelper
+    changePasswordHelper,
+    sendMessage
 }

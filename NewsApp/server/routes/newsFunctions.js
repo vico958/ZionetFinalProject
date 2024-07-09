@@ -1,6 +1,6 @@
 const { registerUserUsingAccessor, getNews, bestFitNewsWithAi, userDeleteHelper, 
     changeCategoriesAndPreferencesHelper, changePreferencesHelper,
-    changeEmailHelper, changePasswordHelper } = require("./newsFunctionsHelper");
+    changeEmailHelper, changePasswordHelper, sendMessage } = require("./newsFunctionsHelper");
 
 async function userRegister(req, res){
     try{
@@ -13,6 +13,7 @@ async function userRegister(req, res){
 
         const news = await getNews(categories, preferences)
         const bestNews = await bestFitNewsWithAi(news, preferences) // TODO: need to do that
+        sendMessage(bestNews, returnedUser.email)
         console.log(bestNews);
 
     }catch(error){
