@@ -6,8 +6,8 @@ const genAI = new GoogleGenerativeAI(aiApiKey);
 async function whichOneIsTheBestArticle(req, res){
     try{
         const preferences = req.body.preferences;
-        const articlesInfo = req.body.articlesInfo;
-        const response = talkWithAi(articlesInfo, preferences);
+        const articles = req.body.articles;
+        const response = talkWithAi(articles, preferences);
         res.status(200).send(JSON.stringify(response));
         res.end();
     }catch(error){

@@ -2,11 +2,14 @@ require("dotenv").config()
 const { DaprClient, HttpMethod } = require("@dapr/dapr");
 const userDaprHost = "user"; // Dapr Sidecar Host
 const newsDataDaprHost = "newsdata"
+const newsAiDaprHost = "newsai"
 const daprPort = "3500"; // Dapr Sidecar Port for user service
 const userClientDapr = new DaprClient({ userDaprHost, daprPort });
 const newsDataClientDapr = new DaprClient({ newsDataDaprHost, daprPort });
+const newsAiClientDapr = new DaprClient({ newsAiDaprHost, daprPort });
 const userUrlMethodBeggining = "user"
 const newsDataUrlMethodBeggining = "news-data"
+const newsAiUrlMethodBeggining = "news-ai"
 
 async function registerUserUsingAccessor(userToRegister){
     try{
@@ -55,8 +58,19 @@ async function getNews(categories){
     }
 }
 
-async function bestFitNewsWithAi(news, preferences){
-    //TODO: talk with ai
+async function bestFitNewsWithAi(articles, preferences){
+    try{
+        const serviceMethod = `${newsAiUrlMethodBeggining}/best-articles"`;
+        return await newsAiClientDapr.invoker.invoke(
+            userDaprHost,
+            serviceMethod,
+            HttpMethod.POST,
+            {articles, preferences} ,
+            { headers: { 'Content-Type': 'application/json' } },
+        );
+    }catch(error){
+        console.log(error);
+    }
 }
 
 async function chageCategoriesAndPreferencesHelper(userWithNewSettings){
