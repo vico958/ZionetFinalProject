@@ -1,14 +1,5 @@
 const { registerUserUsingAccessor, getNewsUsingEngine, bestFitNewsWithAi, userDeleteHelper } = require("./newsFunctionsHelper");
 
-async function getNews(req, res){
-    try{
-        res.status(200).send(JSON.stringify("test"))
-    }catch(error){
-        console.error("Error in getNews: ", error);
-        res.status(500).json({error: 'Internal Server Error' })
-    }
-}
-
 async function userRegister(req, res){
     try{
         const { userToRegister} = req.body;
@@ -39,7 +30,6 @@ async function userDelete(req, res){
 }
 
 module.exports = {
-    getNews,
     userRegister,
     userDelete
 }
