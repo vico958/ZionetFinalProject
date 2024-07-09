@@ -80,10 +80,26 @@ async function chageCategoriesAndPreferences(req, res){
     }
 }
 
+async function changeEmail(req, res){
+    try{
+        const {email, password, newEmail } = req.body.userWithNewEmail;
+        const user = await userAccessorManger.getUserByEmail(email) // TODO: if there is no such user
+        if(password === user.password){//TODO: check first categories change and only then change preferences
+            const answer = await userAccessorManger.changeUserEmail(user._id, newEmail)
+            res.status(200).send(JSON.stringify("user preferences and categories changed"));
+        }else{
+            res.status(400).send(JSON.stringify("cant change user preferences and categories"));
+        }
+    }catch(error){
+        console.log(error)
+    }
+}
+
 module.exports = {
     userRegister,
     changePassword,
     deleteUser,
     chagePreferences,
     chageCategoriesAndPreferences,
+    changeEmail,
 }
