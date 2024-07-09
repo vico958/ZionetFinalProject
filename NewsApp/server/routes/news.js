@@ -4,7 +4,7 @@ const { userRegister, userDelete, chageCategoriesAndPreferences, chagePreference
 const newsRouter = express.Router();
 
 newsRouter.post("/register", userRegister)
-newsRouter.delete("/delete-user", userDelete)
+newsRouter.delete("/remove-user-from-receiving-news", userDelete)
 newsRouter.put("/change-user-categories-and-preferences", chageCategoriesAndPreferences);
 newsRouter.put("/change-user-preferences", chagePreferences);
 module.exports = newsRouter;
