@@ -67,10 +67,15 @@ async function changeEmail(req, res){
     }
 }
 
+async function changePassword(req, res){
+    
+}
+
 module.exports = {
     userRegister,
     userDelete,
     changeCategoriesAndPreferences,
     changePreferences,
-    changeEmail
+    changeEmail,
+    changePassword
 }
