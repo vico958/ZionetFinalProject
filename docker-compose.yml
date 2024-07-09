@@ -128,7 +128,7 @@ services:
       - newsdata
     network_mode: "service:newsdata"
 
-    newsai:
+  newsai:
     build: ./NewsAi
     container_name: newsAi
     ports:
@@ -157,7 +157,7 @@ services:
     volumes:
       - "./dapr/:/dapr"
     depends_on:
-      - newsdata
+      - newsai
     network_mode: "service:newsai"
 
   mongodb:
