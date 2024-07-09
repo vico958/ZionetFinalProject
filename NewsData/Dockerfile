@@ -8,6 +8,6 @@ WORKDIR /NewsData
 
 RUN npm install
 
-copy . /NewsData/
+COPY . /NewsData/
 
 CMD ["npm", "start"]

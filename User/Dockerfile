@@ -8,6 +8,6 @@ WORKDIR /User
 
 RUN npm install
 
-copy . /User/
+COPY . /User/
 
 CMD ["npm", "start"]
