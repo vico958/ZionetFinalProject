@@ -77,6 +77,14 @@ class userDatabaseManager {
     changeUserDataHelper = async(userId, newData, dataField) => {
         return await user.findByIdAndUpdate({_id:userId}, {[dataField]: newData}, {new:true})
     }
+
+    deleteUser = async(userId) => {
+        try{
+            return await user.deleteOne({_id:userId})
+        }catch(error){
+            console.log(error);
+        }
+    }
 }
 
 module.exports = userDatabaseManager

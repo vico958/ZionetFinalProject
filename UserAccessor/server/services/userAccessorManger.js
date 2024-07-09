@@ -61,6 +61,14 @@ class userAccessorManger{
             console.log(error);
         }
     }
+
+    async deleteUser(userId){
+        try{
+            return await this.userDatabase.deleteUser(userId)
+        }catch(error){
+            console.log(error);
+        }
+    }
 }
 
 module.exports = new userAccessorManger();
