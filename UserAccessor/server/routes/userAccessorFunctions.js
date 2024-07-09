@@ -18,14 +18,6 @@ async function userRegister(req, res){
     }
 }
 
-async function userLogin(req, res){
-    try{
-        // TODO: at the end when i choose if i use jwt or not
-    }catch(error){
-        console.log(error);
-    }
-}
-
 async function changePassword(req, res) {
     try{
         const {newPassword, oldPassword} = req.body.user;
@@ -73,7 +65,19 @@ async function chagePreferences(req, res){
 }
 
 async function chageCategoriesAndPreferences(req, res){
-    //TODO
+    try{
+        const {email, password, categories, preferences} = req.body.userWithNewPreferences;
+        const user = await userAccessorManger.getUserByEmail(email) // TODO: if there is no such user
+        if(password === user.password){//TODO: check first categories change and only then change preferences
+            const answerCategories = await userAccessorManger.changeUserCategories(user._id, categories)
+            const answerPreferences = await userAccessorManger.changeUserPreferences(user._id, preferences)
+            res.status(200).send(JSON.stringify("user preferences and categories changed"));
+        }else{
+            res.status(400).send(JSON.stringify("cant change user preferences and categories"));
+        }
+    }catch(error){
+        console.log(error)
+    }
 }
 
 module.exports = {
