@@ -1,35 +1,12 @@
 require("dotenv").config()
 const { DaprClient, HttpMethod } = require("@dapr/dapr");
-const userDaprHostAndServiceAppId = "user"; // Dapr Sidecar Host
 const newsDaprHostAndServiceAppId = "newsdata"
 const emailDaprHostAndServiceAppId = "email"
 const daprPort = "3500"; // Dapr Sidecar Port for user service
-const userClientDapr = new DaprClient({ userDaprHostAndServiceAppId, daprPort });
 const newsDataClientDapr = new DaprClient({ newsDaprHostAndServiceAppId, daprPort });
 const emailClientDapr = new DaprClient({ emailDaprHostAndServiceAppId, daprPort });
-const userUrlMethodBeggining = "user"
 const newsDataUrlMethodBeggining = "news-data"
 const emailUrlMethodBeggining = "email"
-
-async function getNews(categories, preferences){
-    try{
-        const serviceMethod = `${newsDataUrlMethodBeggining}/get-news`;
-        const news = await newsDataClientDapr.invoker.invoke(
-            newsDaprHostAndServiceAppId,
-            serviceMethod,
-            HttpMethod.POST,
-            {categories, preferences} ,
-            { headers: { 'Content-Type': 'application/json' } },
-        );
-        const reducedNews = news.results.map(item => ({
-            title: item.title,
-            link: item.link,
-        }));
-        return reducedNews;
-    }catch(error){
-        console.log(error);
-    }
-}
 
 async function changeEmailHelper(userWithNewEmail){
     try{
