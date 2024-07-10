@@ -77,11 +77,21 @@ async function changePassword(req, res){
     }
 }
 
+async function getNewsNow(req, res){
+    try{
+        const user = req.body.user;
+        
+    }catch(error){
+
+    }
+}
+
 module.exports = {
     userRegister,
     userDelete,
     changeCategoriesAndPreferences,
     changePreferences,
     changeEmail,
-    changePassword
+    changePassword,
+    getNewsNow
 }
