@@ -96,6 +96,14 @@ class userDatabaseManager {
             console.log(error);
         }
     }
+
+    getAllUsers = async() => {
+        try{
+            return await user.find({})
+        }catch(error){
+            console.log(error);
+        }
+    }
 }
 
 module.exports = userDatabaseManager
