@@ -1,4 +1,4 @@
-function isArray(arr){
+function isArrayAndNotEmpty(arr){
     if (!Array.isArray(arr)) {
         return false;
       }
@@ -13,13 +13,13 @@ function isStringType(itemToCheckIfStringType){
         return true;
 }
 
-function isListAndFromStringType(listToCheck, listName) {
-    if (isArray(listToCheck) === false) {
+function isListAndFromStringTypeAndNotEmpty(listToCheck, listName) {
+    if (isArrayAndNotEmpty(listToCheck) === false) {
       return { valid: false, message: `${listName} should be an array.` };
     }
   
     for (const item of listToCheck) {
-      if (isStringType(item) === false) {
+      if (isStringType(item) === false || isInputBlank(item)) {
         return { valid: false, message: `All elements in the ${listName} should be strings.` };
       }
     }
@@ -31,9 +31,13 @@ function isEmailValidAsEmail(emailToCheck){
     return emailRegex.test(emailToCheck);
   }
 
+function isInputBlank(str) {
+    const isWhiteSpacesOnlyRegex = /^\s*$/;
+    return (!str || isWhiteSpacesOnlyRegex.test(str));
+}
 module.exports = {
     isStringType,
-    isArray,
-    isListAndFromStringType,
+    isArrayAndNotEmpty,
+    isListAndFromStringTypeAndNotEmpty,
     isEmailValidAsEmail
   }
