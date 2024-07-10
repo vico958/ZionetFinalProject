@@ -6,11 +6,9 @@ function isUserPasswordValid(password) {
     const hasLowerCase = /[a-z]/.test(password);
     const hasDigit = /\d/.test(password);
     const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
-  
     if (password.length < minLength || !hasUpperCase || !hasLowerCase || !hasDigit || !hasSpecialChar) {
       return false
     }
-  
     return true
   }
 
