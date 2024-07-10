@@ -22,7 +22,7 @@ app.get("/", (req, res) =>{
     res.send("hello world news app")
 })
 
-cron.schedule('11 22 * * *', () => {
+cron.schedule('05 23 * * *', () => {
   console.log('Running daily news job at 10:07 PM Israel Time');
   sendDailyNews();
 }, {

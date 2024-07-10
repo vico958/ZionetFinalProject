@@ -5,7 +5,7 @@ const userAccessorRouter = express.Router();
 
 userAccessorRouter.post("/register", userRegister);
 userAccessorRouter.post("/login", userLogin);
-userRouter.get("/get-all-users", getAllUsers);
+userAccessorRouter.get("/get-all-users", getAllUsers);
 userAccessorRouter.put("/change-preferences", chagePreferences);
 userAccessorRouter.put("/change-categories-and-preferences", chageCategoriesAndPreferences);
 userAccessorRouter.put("/change-password", changePassword)
