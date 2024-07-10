@@ -10,21 +10,6 @@ function isListAndFromStringType(listToCheck, listName) {
     }
     return { valid: true, message: `${listName} are valid.` };
 }
-  
-function isArray(arr){
-    if (!Array.isArray(arr)) {
-        return false;
-      }
-      return true;
-    
-}
-
-function isStringType(itemToCheckIfStringType){
-        if (typeof itemToCheckIfStringType !== 'string') {
-          return false;
-        }
-        return true;
-}
 
 
 module.exports = {
