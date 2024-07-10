@@ -170,7 +170,7 @@ services:
       - newsai
     network_mode: "service:newsai"
 
-    email:
+  email:
     build: ./Email
     container_name: email
     ports:
