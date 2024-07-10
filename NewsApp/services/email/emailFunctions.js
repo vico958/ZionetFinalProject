@@ -1,11 +1,8 @@
 require("dotenv").config()
 const { DaprClient, HttpMethod } = require("@dapr/dapr");
-const newsDaprHostAndServiceAppId = "newsdata"
 const emailDaprHostAndServiceAppId = "email"
 const daprPort = "3500"; // Dapr Sidecar Port for user service
-const newsDataClientDapr = new DaprClient({ newsDaprHostAndServiceAppId, daprPort });
 const emailClientDapr = new DaprClient({ emailDaprHostAndServiceAppId, daprPort });
-const newsDataUrlMethodBeggining = "news-data"
 const emailUrlMethodBeggining = "email"
 
 async function sendMessage(newsData, userEmail, clientName, subject, text){
@@ -47,6 +44,5 @@ try{
 }
 
 module.exports = {
-    changeEmailHelper,
     sendMessage
 }
