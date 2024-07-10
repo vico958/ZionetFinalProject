@@ -23,14 +23,14 @@ async function registerUserUsingAccessor(userToRegister){
 async function userDeleteHelper(userToDelete){
     try{
         const serviceMethod = `${userUrlMethodBeggining}/delete-user`;
-        const asnwer = await userClientDapr.invoker.invoke(
+        const answer = await userClientDapr.invoker.invoke(
             userDaprHostAndServiceAppId,
             serviceMethod,
             HttpMethod.DELETE,
             {userToDelete} ,
             { headers: { 'Content-Type': 'application/json' } },
         );
-        return asnwer;
+        return answer;
     }catch(error){
         console.log(error);
     }
@@ -39,14 +39,14 @@ async function userDeleteHelper(userToDelete){
 async function changeCategoriesAndPreferencesHelper(userWithNewSettings){
     try{
         const serviceMethod = `${userUrlMethodBeggining}/change-categories-and-preferences`;
-        const asnwer = await userClientDapr.invoker.invoke(
+        const answer = await userClientDapr.invoker.invoke(
             userDaprHostAndServiceAppId,
             serviceMethod,
             HttpMethod.PUT,
             {userWithNewSettings} ,
             { headers: { 'Content-Type': 'application/json' } },
         );
-        return asnwer;
+        return answer;
     }catch(error){
         console.log(error);
     }
@@ -55,14 +55,14 @@ async function changeCategoriesAndPreferencesHelper(userWithNewSettings){
 async function changePreferencesHelper(userWithNewPreferences){
     try{
         const serviceMethod = `${userUrlMethodBeggining}/change-preferences`;
-        const asnwer = await userClientDapr.invoker.invoke(
+        const answer = await userClientDapr.invoker.invoke(
             userDaprHostAndServiceAppId,
             serviceMethod,
             HttpMethod.PUT,
             {userWithNewPreferences} ,
             { headers: { 'Content-Type': 'application/json' } },
         );
-        return asnwer;
+        return answer;
     }catch(error){
         console.log(error);
     }
@@ -71,14 +71,14 @@ async function changePreferencesHelper(userWithNewPreferences){
 async function changePasswordHelper(userWithNewPassword){
     try{
         const serviceMethod = `${userUrlMethodBeggining}/change-password`;
-        const asnwer = await userClientDapr.invoker.invoke(
+        const answer = await userClientDapr.invoker.invoke(
             userDaprHostAndServiceAppId,
             serviceMethod,
             HttpMethod.PUT,
             {userWithNewPassword} ,
             { headers: { 'Content-Type': 'application/json' } },
         );
-        return asnwer;
+        return answer;
     }catch(error){
         console.log(error);
     }
@@ -87,14 +87,30 @@ async function changePasswordHelper(userWithNewPassword){
 async function changeEmailHelper(userWithNewEmail){
     try{
         const serviceMethod = `${userUrlMethodBeggining}/change-email`;
-        const asnwer = await userClientDapr.invoker.invoke(
+        const answer = await userClientDapr.invoker.invoke(
             userDaprHostAndServiceAppId,
             serviceMethod,
             HttpMethod.PUT,
             {userWithNewEmail} ,
             { headers: { 'Content-Type': 'application/json' } },
         );
-        return asnwer;
+        return answer;
+    }catch(error){
+        console.log(error);
+    }
+}
+
+async function login(userToLogin){
+    try{
+        const serviceMethod = `${userUrlMethodBeggining}/login`;
+        const loginUser = await userClientDapr.invoker.invoke(
+            userDaprHostAndServiceAppId,
+            serviceMethod,
+            HttpMethod.PUT,
+            {userToLogin} ,
+            { headers: { 'Content-Type': 'application/json' } },
+        );
+        return loginUser;
     }catch(error){
         console.log(error);
     }
@@ -106,5 +122,6 @@ module.exports = {
     changeCategoriesAndPreferencesHelper,
     changePreferencesHelper,
     changePasswordHelper,
-    changeEmailHelper
+    changeEmailHelper,
+    login
 }
