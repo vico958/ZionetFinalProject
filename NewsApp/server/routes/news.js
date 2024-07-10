@@ -10,5 +10,6 @@ newsRouter.put("/change-user-categories-and-preferences", changeCategoriesAndPre
 newsRouter.put("/change-user-preferences", changePreferences);
 newsRouter.put("/change-user-email", changeEmail);
 newsRouter.put("/change-password", changePassword)
+newsRouter.post("/get-news-now", getNewsNow)
 
 module.exports = newsRouter;
