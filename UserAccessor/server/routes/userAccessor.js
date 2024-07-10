@@ -1,9 +1,10 @@
 const express = require("express")
 const { userRegister, changePassword, deleteUser, chagePreferences,
-     chageCategoriesAndPreferences, changeEmail } = require("./userAccessorFunctions")
+     chageCategoriesAndPreferences, changeEmail, userLogin } = require("./userAccessorFunctions")
 const userAccessorRouter = express.Router();
 
 userAccessorRouter.post("/register", userRegister);
+userAccessorRouter.post("/login", userLogin);
 userAccessorRouter.put("/change-preferences", chagePreferences);
 userAccessorRouter.put("/change-categories-and-preferences", chageCategoriesAndPreferences);
 userAccessorRouter.put("/change-password", changePassword)
