@@ -1,3 +1,5 @@
+const { isArray, isStringType } = require("../general/generalValidation")
+
 function isListAndFromStringType(listToCheck, listName) {
     if (isArray(listToCheck) === false) {
       return { valid: false, message: `${listName} should be an array.` };
