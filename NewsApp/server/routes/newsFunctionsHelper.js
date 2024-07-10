@@ -8,22 +8,6 @@ const emailClientDapr = new DaprClient({ emailDaprHostAndServiceAppId, daprPort 
 const newsDataUrlMethodBeggining = "news-data"
 const emailUrlMethodBeggining = "email"
 
-async function changeEmailHelper(userWithNewEmail){
-    try{
-        const serviceMethod = `${userUrlMethodBeggining}/change-email`;
-        const asnwer = await userClientDapr.invoker.invoke(
-            userDaprHostAndServiceAppId,
-            serviceMethod,
-            HttpMethod.PUT,
-            {userWithNewEmail} ,
-            { headers: { 'Content-Type': 'application/json' } },
-        );
-        return asnwer;
-    }catch(error){
-        console.log(error);
-    }
-}
-
 async function sendMessage(newsData, userEmail, clientName, subject, text){
     
 const emailHost = process.env.EMAIL_HOST;
@@ -63,7 +47,6 @@ try{
 }
 
 module.exports = {
-    getNews,
     changeEmailHelper,
     sendMessage
 }

@@ -84,10 +84,27 @@ async function changePasswordHelper(userWithNewPassword){
     }
 }
 
+async function changeEmailHelper(userWithNewEmail){
+    try{
+        const serviceMethod = `${userUrlMethodBeggining}/change-email`;
+        const asnwer = await userClientDapr.invoker.invoke(
+            userDaprHostAndServiceAppId,
+            serviceMethod,
+            HttpMethod.PUT,
+            {userWithNewEmail} ,
+            { headers: { 'Content-Type': 'application/json' } },
+        );
+        return asnwer;
+    }catch(error){
+        console.log(error);
+    }
+}
+
 module.exports = {
     registerUserUsingAccessor,
     userDeleteHelper,
     changeCategoriesAndPreferencesHelper,
     changePreferencesHelper,
     changePasswordHelper,
+    changeEmailHelper
 }
