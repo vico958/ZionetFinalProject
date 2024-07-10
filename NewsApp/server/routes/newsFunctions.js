@@ -1,32 +1,27 @@
-const { bestFitNewsWithAi, } = require("../../services/newsAi/newsAiFunctions");
-const {getNews} = require("../../services/newsData/newsDataFunctions")
-const {sendEmailWithNews} = require("../../services/email/emailFunctions")
 const {changePasswordHelper,  changeEmailHelper, changeCategoriesAndPreferencesHelper, 
     changePreferencesHelper, userDeleteHelper,registerUserUsingAccessor} = require("../../services/user/userFunctions")
+const { sendNewsForClient} = require("../../services/general");
 
 async function userRegister(req, res){
     try{
         const { userToRegister} = req.body;
-        const returnedUser = await registerUserUsingAccessor(userToRegister)
+        const returnedUser = await registerUserUsingAccessor(userToRegister);
         const {categories, preferences, fullName } = returnedUser;
         const message = `${fullName} you signed to the news app, we will send to you via email the news`
         res.status(200).send(message);
         res.end();
         
-        const news = await getNews(categories, preferences)
-        const bestNews = await bestFitNewsWithAi(news, preferences) // TODO: need to do that
-        sendEmailWithNews(bestNews, returnedUser.email, returnedUser.fullName)
-
+        sendNewsForClient(categories, preferences, returnedUser.email, returnedUser.fullName);
     }catch(error){
-        console.log(error)
+        console.log(error);
     }
 }
 
 async function userDelete(req, res){
     try{
         const userToDelete = req.body.user;
-        const answer = await userDeleteHelper(userToDelete)//TODO: check if really delete or not
-        const message = `you been remove from news app`
+        const answer = await userDeleteHelper(userToDelete);//TODO: check if really delete or not
+        const message = `you been remove from news app`;
         res.status(200).send(message);
         res.end();
     }catch(error){
