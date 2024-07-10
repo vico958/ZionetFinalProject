@@ -116,6 +116,21 @@ async function login(userToLogin){
     }
 }
 
+async function getAllUsersInSystem(){
+    try{
+        const serviceMethod = `${userUrlMethodBeggining}/get-all-users`;
+        const allUsers = await userClientDapr.invoker.invoke(
+            userDaprHostAndServiceAppId,
+            serviceMethod,
+            HttpMethod.GET,
+            { headers: { 'Content-Type': 'application/json' } },
+        );
+        return allUsers;
+    }catch(error){
+        console.log(error);
+    }
+}
+
 module.exports = {
     registerUserUsingAccessor,
     userDeleteHelper,
@@ -123,5 +138,6 @@ module.exports = {
     changePreferencesHelper,
     changePasswordHelper,
     changeEmailHelper,
-    login
+    login,
+    getAllUsersInSystem
 }

@@ -1,4 +1,5 @@
 require("dotenv").config();
+const cron = require('node-cron');
 const express = require("express");
 const cors = require("cors");
 const {logger} = require("./server/middleware/logger");
@@ -19,3 +20,11 @@ app.listen(port, () => {
 app.get("/", (req, res) =>{
     res.send("hello world news app")
 })
+
+cron.schedule('0 22 * * *', () => {
+    console.log('Running daily news job at 10 PM Israel Time');
+    sendDailyNews();
+  }, {
+    scheduled: true,
+    timezone: "Asia/Jerusalem"
+  });
