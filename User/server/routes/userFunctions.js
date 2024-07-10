@@ -152,7 +152,6 @@ async function getAllUsers(req, res){
                 daprHostAndServiceAppId,
                 serviceMethod,
                 HttpMethod.GET,
-                { headers: { 'Content-Type': 'application/json' } },
               );
     
              //TODO : Handle returnedData
