@@ -27,14 +27,26 @@ async function userRegister(req, res){
 
 async function userLogin(req, res){
     try{
-        // TODO: at the end when i choose if i use jwt or not
+        const serviceMethod = `${urlMethodBeggining}/login`;
+        const { userToLogin} = req.body;
+        const returnedData = await client.invoker.invoke(
+            daprHostAndServiceAppId,
+            serviceMethod,
+            HttpMethod.POST,
+            {userToLogin} ,
+            { headers: { 'Content-Type': 'application/json' } },
+          );
+
+         //TODO : Handle returnedData
+        res.status(200).send(JSON.stringify(returnedData));
+        res.end();
     }catch(error){
-        console.log(error);
+        console.log(error)
     }
 }
 
 async function changePassword(req, res) {
-    try{ // TODO:
+    try{
         const serviceMethod = `${urlMethodBeggining}/change-password`;
         const { userWithNewPassword} = req.body.userWithNewPassword;
         const returnedData = await client.invoker.invoke(
@@ -140,4 +152,5 @@ module.exports = {
     chageCategoriesAndPreferences,
     chagePreferences,
     changeEmail,
+    userLogin
 }
