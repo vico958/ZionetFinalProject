@@ -2,13 +2,13 @@ const nodemailer = require("nodemailer");
 
 async function sendEmail(req, res){
     try{
-        const { emailHost, user, pass, from, to, subject, text } = req.body.emailInfo
-        const transporter = createTransporter(emailHost, user, pass);
+        const { emailHost, emailUser, emailPassword, emailFrom, emailTo, emailSubject, emailText } = req.body.emailInfo
+        const transporter = createTransporter(emailHost, emailUser, emailPassword);
         const info = await transporter.sendMail({
-            from: from, // sender address
-            to: to, // list of receivers
-            subject: subject, // Subject line
-            text: text, // plain text body
+            from: emailFrom, // sender address
+            to: emailTo, // list of receivers
+            subject: emailSubject, // Subject line
+            html: emailText, // Use 'html' instead of 'text'
         });
         res.status(200).send("email sent")
     }catch(error){
@@ -16,14 +16,14 @@ async function sendEmail(req, res){
     }
 }
 
-function createTransporter(emailHost, user, pass){
+function createTransporter(emailHost, emailUser, emailPassword){
     const transporter = nodemailer.createTransport({
         host: emailHost,
         port: 587,
         secure: false, // Use `true` for port 465, `false` for all other ports
         auth: {
-          user: user,// zionetFinalProjectViktorDabush@outlook.com
-          pass: pass, // ViktorDabushZionetFinal
+          user: emailUser,// zionetFinalProjectViktorDabush@outlook.com
+          pass: emailPassword, // ViktorDabushZionetFinal
         },
       });
     return transporter
