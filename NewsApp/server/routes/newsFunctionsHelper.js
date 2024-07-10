@@ -152,21 +152,21 @@ const emailPassword = process.env.EMAIL_PASSWORD;
 const emailFrom = process.env.EMAIL_FROM;
 const emailTo = userEmail;
 
-const formattedNewsData = newsData.map((item, index) => {
-    return `<h3>${index + 1}. Title of article:</h3>
-            <p><strong>${item.title}</strong></p>
-            <p><em>Our summary for the article:</em><br>${item.summary}</p>
+const formattedNewsData = newsData.map((item) => {
+    return `<p><strong style="color: black;">${item.title}</strong></p>
+            <p style="color: black;">${item.summary}</p>
             <p><a href="${item.link}">Read full article</a></p>`;
   }).join('<br>');
-
-const emailSubject = "Your interesting news is ready!!!" //|| subject
-const emailText = `<p>Hello ${clientName},</p>
-<p>This is the news app you signed up for. Here is your news:</p>
-${formattedNewsData}
-<p>We hope you like it. In 24 hours, you'll get a new update. Until then, have a nice day!</p>`; //|| text;
-const emailInfo = {
+  
+  const emailSubject = "Your interesting news is ready!!!" //|| subject
+  const emailText = `<p style="color: black;">Hello ${clientName},</p>
+  <p style="color: black;">This is the news app you signed up for. Here is your news:</p>
+  ${formattedNewsData}
+  <p style="color: black;">We hope you like it. In 24 hours, you'll get a new update. Until then, have a nice day!</p>`; //|| text;
+  
+  const emailInfo = {
     emailHost, emailUser, emailPassword, emailFrom, emailTo, emailSubject, emailText
-}
+  };
 try{
     const serviceMethod = `${emailUrlMethodBeggining}/send-email`;
     return await emailClientDapr.invoker.invoke(
