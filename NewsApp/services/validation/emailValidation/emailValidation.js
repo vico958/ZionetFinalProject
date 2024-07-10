@@ -1,4 +1,4 @@
-const {isStringType} = require("../general/generalValidation")
+const {isStringType, isEmailValidAsEmail} = require("../general/generalValidation")
 
 function isSendEmailInfoValid(emailHost, emailUser, emailPassword, emailFrom, emailTo, emailSubject, emailText){
   if(isStringType(emailHost) === false || isEmailValidAsEmail(emailHost) === false) return false;
@@ -9,11 +9,6 @@ function isSendEmailInfoValid(emailHost, emailUser, emailPassword, emailFrom, em
   if(isStringType(emailSubject) === false) return false;
   if(isStringType(emailText) === false) return false;
   return true;
-}
-
-function isEmailValidAsEmail(emailToCheck){
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(emailToCheck);
 }
 
 

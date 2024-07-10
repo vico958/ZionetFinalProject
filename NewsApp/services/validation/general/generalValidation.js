@@ -26,8 +26,14 @@ function isListAndFromStringType(listToCheck, listName) {
     return { valid: true, message: `${listName} are valid.` };
 }
 
+function isEmailValidAsEmail(emailToCheck){
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(emailToCheck);
+  }
+
 module.exports = {
     isStringType,
     isArray,
-    isListAndFromStringType
+    isListAndFromStringType,
+    isEmailValidAsEmail
   }
