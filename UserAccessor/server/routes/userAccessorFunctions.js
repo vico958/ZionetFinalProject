@@ -94,6 +94,24 @@ async function changeEmail(req, res){
     }
 }
 
+async function userLogin(req, res){
+    try{
+        const { email, password} = req.body.userToLogin;
+        const emailInLowerCase = email.toLowerCase()
+        const user = await userAccessorManger.getUserByEmail(emailInLowerCase);
+        if(user === null){
+            res.status(400).send(JSON.stringify("Email or password are not valid"));
+        }
+        else if(password === user.password){
+            res.status(200).send(user);
+        }
+        else{
+            res.status(400).send(JSON.stringify("Email or password are not valid"))
+        }
+    }catch(error){
+        console.log(error)
+    }
+}
 module.exports = {
     userRegister,
     changePassword,
@@ -101,4 +119,5 @@ module.exports = {
     chagePreferences,
     chageCategoriesAndPreferences,
     changeEmail,
+    userLogin
 }
