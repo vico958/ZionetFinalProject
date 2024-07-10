@@ -123,7 +123,6 @@ async function getAllUsersInSystem(){
             userDaprHostAndServiceAppId,
             serviceMethod,
             HttpMethod.GET,
-            { headers: { 'Content-Type': 'application/json' } },
         );
         return allUsers;
     }catch(error){
