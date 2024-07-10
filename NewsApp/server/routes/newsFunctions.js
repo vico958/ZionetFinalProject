@@ -14,7 +14,6 @@ async function userRegister(req, res){
         const news = await getNews(categories, preferences)
         const bestNews = await bestFitNewsWithAi(news, preferences) // TODO: need to do that
         sendMessage(bestNews, returnedUser.email, returnedUser.fullName)
-        console.log(bestNews);
 
     }catch(error){
         console.log(error)

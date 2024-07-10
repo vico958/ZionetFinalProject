@@ -144,16 +144,21 @@ async function changePasswordHelper(userWithNewPassword){
     }
 }
 
-async function sendMessage(newsData, userEmail, subject, text, clientName){
+async function sendMessage(newsData, userEmail, clientName, subject, text){
     
 const emailHost = process.env.EMAIL_HOST;
 const emailUser = process.env.EMAIL_USER;
 const emailPassword = process.env.EMAIL_PASSWORD;
 const emailFrom = process.env.EMAIL_FROM;
 const emailTo = userEmail;
+
+const formattedNewsData = newsData.map((item, index) => {
+    return `${index + 1}. Title of article :\n${item.title}\nOur summry for the article :\n${item.summry}\nYour link to enter to the full article :\n${item.link}\n\n`;
+  }).join('');
+
 const emailSubject = "Your interesting news is ready!!!" //|| subject
 const emailText = `Hello ${clientName}, this is the news app you signed for, here is your news:
-${newsData.toString()}
+${formattedNewsData}
 we hope you like it, in 24 hours your gona get a new update, until then, have a nice day!` //|| text;
 const emailInfo = {
     emailHost, emailUser, emailPassword, emailFrom, emailTo, emailSubject, emailText
