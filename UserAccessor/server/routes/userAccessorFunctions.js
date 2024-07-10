@@ -103,7 +103,7 @@ async function userLogin(req, res){
             res.status(400).send(JSON.stringify("Email or password are not valid"));
         }
         else if(password === user.password){
-            res.status(200).send(user);
+            res.status(200).send(JSON.stringify(user));
         }
         else{
             res.status(400).send(JSON.stringify("Email or password are not valid"))
