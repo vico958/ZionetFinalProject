@@ -1,5 +1,5 @@
 const {changePasswordHelper,  changeEmailHelper, changeCategoriesAndPreferencesHelper, 
-    changePreferencesHelper, userDeleteHelper,registerUserUsingAccessor} = require("../../services/user/userFunctions")
+    changePreferencesHelper, userDeleteHelper,registerUserUsingAccessor, login} = require("../../services/user/userFunctions")
 const { sendNewsForClient} = require("../../services/general");
 
 async function userRegister(req, res){
@@ -79,8 +79,11 @@ async function changePassword(req, res){
 
 async function getNewsNow(req, res){
     try{
+        res.status(200).send("We got your request, if your in the system you will get news in the next few minutes")
         const user = req.body.user;
-        
+        const loginUser = await login(user);
+        const { categories, preferences, email, fullName} = loginUser
+        sendNewsForClient(categories, preferences, email, fullName);
     }catch(error){
 
     }

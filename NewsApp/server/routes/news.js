@@ -1,6 +1,6 @@
 const express = require("express");
 const { userRegister, userDelete, changeCategoriesAndPreferences, changePreferences,
-    changeEmail, changePassword} = require("./newsFunctions");
+    changeEmail, changePassword, getNewsNow} = require("./newsFunctions");
 
 const newsRouter = express.Router();
 
