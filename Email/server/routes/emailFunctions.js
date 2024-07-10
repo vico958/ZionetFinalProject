@@ -8,7 +8,7 @@ async function sendEmail(req, res){
             from: emailFrom, // sender address
             to: emailTo, // list of receivers
             subject: emailSubject, // Subject line
-            text: emailText, // plain text body
+            html: emailText, // Use 'html' instead of 'text'
         });
         res.status(200).send("email sent")
     }catch(error){

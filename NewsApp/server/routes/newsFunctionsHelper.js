@@ -153,13 +153,17 @@ const emailFrom = process.env.EMAIL_FROM;
 const emailTo = userEmail;
 
 const formattedNewsData = newsData.map((item, index) => {
-    return `${index + 1}. Title of article :\n${item.title}\nOur summry for the article :\n${item.summry}\nYour link to enter to the full article :\n${item.link}\n\n`;
-  }).join('');
+    return `<h3>${index + 1}. Title of article:</h3>
+            <p><strong>${item.title}</strong></p>
+            <p><em>Our summary for the article:</em><br>${item.summary}</p>
+            <p><a href="${item.link}">Read full article</a></p>`;
+  }).join('<br>');
 
 const emailSubject = "Your interesting news is ready!!!" //|| subject
-const emailText = `Hello ${clientName}, this is the news app you signed for, here is your news:
+const emailText = `<p>Hello ${clientName},</p>
+<p>This is the news app you signed up for. Here is your news:</p>
 ${formattedNewsData}
-we hope you like it, in 24 hours your gona get a new update, until then, have a nice day!` //|| text;
+<p>We hope you like it. In 24 hours, you'll get a new update. Until then, have a nice day!</p>`; //|| text;
 const emailInfo = {
     emailHost, emailUser, emailPassword, emailFrom, emailTo, emailSubject, emailText
 }
