@@ -2,16 +2,13 @@ require("dotenv").config()
 const { DaprClient, HttpMethod } = require("@dapr/dapr");
 const userDaprHostAndServiceAppId = "user"; // Dapr Sidecar Host
 const newsDaprHostAndServiceAppId = "newsdata"
-const newsAiDaprHostAndServiceAppId = "newsai"
 const emailDaprHostAndServiceAppId = "email"
 const daprPort = "3500"; // Dapr Sidecar Port for user service
 const userClientDapr = new DaprClient({ userDaprHostAndServiceAppId, daprPort });
 const newsDataClientDapr = new DaprClient({ newsDaprHostAndServiceAppId, daprPort });
-const newsAiClientDapr = new DaprClient({ newsAiDaprHostAndServiceAppId, daprPort });
 const emailClientDapr = new DaprClient({ emailDaprHostAndServiceAppId, daprPort });
 const userUrlMethodBeggining = "user"
 const newsDataUrlMethodBeggining = "news-data"
-const newsAiUrlMethodBeggining = "news-ai"
 const emailUrlMethodBeggining = "email"
 
 async function registerUserUsingAccessor(userToRegister){
@@ -60,21 +57,6 @@ async function getNews(categories, preferences){
             link: item.link,
         }));
         return reducedNews;
-    }catch(error){
-        console.log(error);
-    }
-}
-
-async function bestFitNewsWithAi(articles, preferences){
-    try{
-        const serviceMethod = `${newsAiUrlMethodBeggining}/best-articles`;
-        return await newsAiClientDapr.invoker.invoke(
-            newsAiDaprHostAndServiceAppId,
-            serviceMethod,
-            HttpMethod.POST,
-            {articles, preferences} ,
-            { headers: { 'Content-Type': 'application/json' } },
-        );
     }catch(error){
         console.log(error);
     }
@@ -185,7 +167,6 @@ try{
 module.exports = {
     registerUserUsingAccessor,
     getNews,
-    bestFitNewsWithAi,
     userDeleteHelper,
     changeCategoriesAndPreferencesHelper,
     changePreferencesHelper,
