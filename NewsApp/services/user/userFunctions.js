@@ -106,7 +106,7 @@ async function login(userToLogin){
         const loginUser = await userClientDapr.invoker.invoke(
             userDaprHostAndServiceAppId,
             serviceMethod,
-            HttpMethod.PUT,
+            HttpMethod.POST,
             {userToLogin} ,
             { headers: { 'Content-Type': 'application/json' } },
         );
