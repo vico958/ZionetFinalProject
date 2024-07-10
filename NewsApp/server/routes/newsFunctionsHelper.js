@@ -115,7 +115,7 @@ async function changePreferencesHelper(userWithNewPreferences){
 async function changeEmailHelper(userWithNewEmail){
     try{
         const serviceMethod = `${userUrlMethodBeggining}/change-email`;
-        const asnwer = await emailClientDapr.invoker.invoke(
+        const asnwer = await userClientDapr.invoker.invoke(
             userDaprHostAndServiceAppId,
             serviceMethod,
             HttpMethod.PUT,
@@ -144,25 +144,27 @@ async function changePasswordHelper(userWithNewPassword){
     }
 }
 
-async function sendMessage(newsData, userEmail, subject, text){
+async function sendMessage(newsData, userEmail, subject, text, clientName){
     
 const emailHost = process.env.EMAIL_HOST;
 const emailUser = process.env.EMAIL_USER;
 const emailPassword = process.env.EMAIL_PASSWORD;
 const emailFrom = process.env.EMAIL_FROM;
-const to = userEmail;
-const subject = "Your interesting news is ready!!!" //|| subject
-const text = `Hello, this is the news app you signed for, here is your news:
-${newsData}
+const emailTo = userEmail;
+const emailSubject = "Your interesting news is ready!!!" //|| subject
+const emailText = `Hello ${clientName}, this is the news app you signed for, here is your news:
+${newsData.toString()}
 we hope you like it, in 24 hours your gona get a new update, until then, have a nice day!` //|| text;
-
+const emailInfo = {
+    emailHost, emailUser, emailPassword, emailFrom, emailTo, emailSubject, emailText
+}
 try{
     const serviceMethod = `${emailUrlMethodBeggining}/send-email`;
-    return await userClientDapr.invoker.invoke(
+    return await emailClientDapr.invoker.invoke(
         emailDaprHostAndServiceAppId,
         serviceMethod,
         HttpMethod.POST,
-        {userToRegister} ,
+        {emailInfo} ,
         { headers: { 'Content-Type': 'application/json' } },
     );
 }catch(error){

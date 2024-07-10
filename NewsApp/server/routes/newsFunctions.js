@@ -10,10 +10,10 @@ async function userRegister(req, res){
         const message = `${fullName} you signed to the news app, we will send to you via email the news`
         res.status(200).send(message);
         res.end();
-
+        
         const news = await getNews(categories, preferences)
         const bestNews = await bestFitNewsWithAi(news, preferences) // TODO: need to do that
-        sendMessage(bestNews, returnedUser.email)
+        sendMessage(bestNews, returnedUser.email, returnedUser.fullName)
         console.log(bestNews);
 
     }catch(error){
