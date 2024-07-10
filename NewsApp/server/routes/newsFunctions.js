@@ -1,6 +1,8 @@
-const { registerUserUsingAccessor, getNews, bestFitNewsWithAi, userDeleteHelper, 
-    changeCategoriesAndPreferencesHelper, changePreferencesHelper,
-    changeEmailHelper, changePasswordHelper, sendMessage } = require("./newsFunctionsHelper");
+const { bestFitNewsWithAi, } = require("../../services/newsAi/newsAiFunctions");
+const {getNews} = require("../../services/newsData/newsDataFunctions")
+const {sendMessage} = require("../../services/email/emailFunctions")
+const {changePasswordHelper,  changeEmailHelper, changeCategoriesAndPreferencesHelper, 
+    changePreferencesHelper, userDeleteHelper,registerUserUsingAccessor} = require("../../services/user/userFunctions")
 
 async function userRegister(req, res){
     try{
