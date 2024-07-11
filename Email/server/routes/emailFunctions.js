@@ -15,7 +15,7 @@ async function sendEmail(req, res){
         res.status(200).send({ message: 'Email sent successfully', info: info });
     } catch (error) {
         const err = handleEmailError(error)
-        res.status(err.statusCode).send(err.message);
+        throw err
     }
 }
 

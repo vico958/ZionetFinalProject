@@ -9,14 +9,13 @@ const emailUser = process.env.EMAIL_USER;
 const emailPassword = process.env.EMAIL_PASSWORD;
 const emailFrom = process.env.EMAIL_FROM;
 
-async function sendEmailWithNews(newsData, clientEmail, clientName, subject, text){
-  console.log("newsDatanewsDatanewsDatanewsDatanewsData ", newsData)
-const emailTo = clientEmail;
-const { emailSubject, emailText} = createEmailNewsContent(newsData, clientName);  
-  const emailInfo = {
-    emailHost, emailUser, emailPassword, emailFrom, emailTo, emailSubject, emailText
-  };
-  await sendEmail(emailInfo);
+async function sendEmailWithNews(newsData, clientEmail, clientName){
+    const emailTo = clientEmail;
+    const { emailSubject, emailText} = createEmailNewsContent(newsData, clientName);  
+    const emailInfo = {
+      emailHost, emailUser, emailPassword, emailFrom, emailTo, emailSubject, emailText
+    };
+    await sendEmail(emailInfo);
 }
 
 async function sendEmail(emailInfo){
@@ -30,7 +29,8 @@ async function sendEmail(emailInfo){
             { headers: { 'Content-Type': 'application/json' } },
         );
     }catch(error){
-        console.log(error);
+        console.log(error.message);
+        throw error
     }
 }
 

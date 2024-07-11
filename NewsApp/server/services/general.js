@@ -11,6 +11,7 @@ async function sendNewsToClient(categories, preferences, clientEmail, clientFull
         sendEmailWithNews(bestNews, clientEmail, clientFullName);
     }catch(error){
         console.log(error);
+        throw error
     }
 }
 
