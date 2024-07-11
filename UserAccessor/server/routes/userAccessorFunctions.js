@@ -50,10 +50,10 @@ async function deleteUser(req, res){
 
 async function chagePreferences(req, res){
     try{//TODO :TEST
-        const {email, password, preferences} = req.body.userWithNewPreferences;
+        const {email, password, newPreferences} = req.body.userWithNewPreferences;
         const user = await userAccessorManger.getUserByEmail(email) // TODO: if there is no such user
         if(password === user.password){
-            const answer = await userAccessorManger.changeUserPreferences(user._id, preferences)
+            const answer = await userAccessorManger.changeUserPreferences(user._id, newPreferences)
             res.status(200).send(JSON.stringify("user preferences changed"));
         }else{
             res.status(400).send(JSON.stringify("cant change user preferences"));
@@ -65,11 +65,11 @@ async function chagePreferences(req, res){
 
 async function chageCategoriesAndPreferences(req, res){
     try{//TODO :TEST
-        const {email, password, categories, preferences} = req.body.userWithNewSettings;
+        const {email, password, newCategories, newPreferences} = req.body.userWithNewSettings;
         const user = await userAccessorManger.getUserByEmail(email) // TODO: if there is no such user
         if(password === user.password){//TODO: check first categories change and only then change preferences
-            const answerCategories = await userAccessorManger.changeUserCategories(user._id, categories)
-            const answerPreferences = await userAccessorManger.changeUserPreferences(user._id, preferences)
+            const answerCategories = await userAccessorManger.changeUserCategories(user._id, newCategories)
+            const answerPreferences = await userAccessorManger.changeUserPreferences(user._id, newPreferences)
             res.status(200).send(JSON.stringify("user preferences and categories changed"));
         }else{
             res.status(400).send(JSON.stringify("cant change user preferences and categories"));

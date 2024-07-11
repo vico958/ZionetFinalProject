@@ -24,7 +24,7 @@ class DaprUserService {
         }
     }
 
-    async userDeleteHelper(userToDelete) {
+    async userDelete(userToDelete) {
         try {
             const serviceMethod = `${this.userUrlMethodBeggining}/delete-user`;
             return await this.userClientDapr.invoker.invoke(
@@ -39,7 +39,7 @@ class DaprUserService {
         }
     }
 
-    async changeCategoriesAndPreferencesHelper(userWithNewSettings) {
+    async changeCategoriesAndPreferences(userWithNewSettings) {
         try {
             const serviceMethod = `${this.userUrlMethodBeggining}/change-categories-and-preferences`;
             return await this.userClientDapr.invoker.invoke(
@@ -54,7 +54,7 @@ class DaprUserService {
         }
     }
 
-    async changePreferencesHelper(userWithNewPreferences) {
+    async changePreferences(userWithNewPreferences) {
         try {
             const serviceMethod = `${this.userUrlMethodBeggining}/change-preferences`;
             return await this.userClientDapr.invoker.invoke(
@@ -69,7 +69,7 @@ class DaprUserService {
         }
     }
 
-    async changePasswordHelper(userWithNewPassword) {
+    async changePassword(userWithNewPassword) {
         try {
             const serviceMethod = `${this.userUrlMethodBeggining}/change-password`;
             return await this.userClientDapr.invoker.invoke(
@@ -84,7 +84,7 @@ class DaprUserService {
         }
     }
 
-    async changeEmailHelper(userWithNewEmail) {
+    async changeEmail(userWithNewEmail) {
         try {
             const serviceMethod = `${this.userUrlMethodBeggining}/change-email`;
             return await this.userClientDapr.invoker.invoke(
