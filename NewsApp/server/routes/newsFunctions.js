@@ -1,18 +1,20 @@
 const {changePasswordHelper,  changeEmailHelper, changeCategoriesAndPreferencesHelper, 
     changePreferencesHelper, userDeleteHelper,registerUserUsingAccessor, login} = require("../services/user/userFunctions")
 const { sendNewsToClient} = require("../services/general");
-
+const {isRegisterUserValidIfNotThrowError} = require("../services/validation/userValidation/userValidation");
 async function userRegister(req, res){
     try{
         const { userToRegister} = req.body;
+        isRegisterUserValidIfNotThrowError(userToRegister)
+        const {email, password, fullName, preferences, categories} = userToRegister
         const returnedUser = await registerUserUsingAccessor(userToRegister);
-        const {categories, preferences, fullName } = returnedUser;
         const message = `${fullName} you signed to the news app, we will send to you via email the news`
         res.status(200).send(message);
         res.end();
         
-        sendNewsToClient(categories, preferences, returnedUser.email, returnedUser.fullName);
+        sendNewsToClient(categories, preferences, email, fullName);
     }catch(error){
+        res.status(error.statusCode).send(error.message)
         console.log(error);
     }
 }
@@ -25,6 +27,7 @@ async function userDelete(req, res){
         res.status(200).send(message);
         res.end();
     }catch(error){
+        res.status(error.statusCode).send(error.message)
         console.log(error);
     }
 }
@@ -37,6 +40,7 @@ async function changeCategoriesAndPreferences(req, res){
         res.status(200).send(message);
         res.end();
     }catch(error){
+        res.status(error.statusCode).send(error.message)
         console.log(error);
     }
 }
@@ -49,6 +53,7 @@ async function changePreferences(req, res){
         res.status(200).send(message);
         res.end();
     }catch(error){
+        res.status(error.statusCode).send(error.message)
         console.log(error);
     }
 }
@@ -61,6 +66,7 @@ async function changeEmail(req, res){
         res.status(200).send(message);
         res.end();
     }catch(error){
+        res.status(error.statusCode).send(error.message)
         console.log(error);
     }
 }
@@ -73,6 +79,7 @@ async function changePassword(req, res){
         res.status(200).send(message);
         res.end();
     }catch(error){
+        res.status(error.statusCode).send(error.message)
         console.log(error);
     }
 }
@@ -85,7 +92,8 @@ async function getNewsNow(req, res){
         const { categories, preferences, email, fullName} = loginUser
         sendNewsToClient(categories, preferences, email, fullName);
     }catch(error){
-
+        res.status(error.statusCode).send(error.message)
+        console.log(error);
     }
 }
 
