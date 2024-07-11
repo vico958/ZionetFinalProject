@@ -1,4 +1,4 @@
-const { user } = require("../storages/models/user")
+const { user } = require("../../storages/models/user")
 const mongoose = require('mongoose');
 const dbUri = 'mongodb://mongoDb:27017/userDb';
 

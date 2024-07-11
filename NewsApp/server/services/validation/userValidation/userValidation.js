@@ -6,9 +6,8 @@ function isUserPasswordValidIfNotThrowError(password) {
   const hasUpperCase = /[A-Z]/.test(password);
   const hasLowerCase = /[a-z]/.test(password);
   const hasDigit = /\d/.test(password);
-  const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
 
-  if (password.length < minLength || !hasUpperCase || !hasLowerCase || !hasDigit || !hasSpecialChar) {
+  if (password.length < minLength || !hasUpperCase || !hasLowerCase || !hasDigit) {
       const errorMessage = "Password should contain at least 8 characters, including one uppercase letter, one lowercase letter, and one digit."
       throw createError(errorMessage, 400);
   }
@@ -49,7 +48,6 @@ function isCategoriesValidIfNotThrowError(categories){
 function isRegisterUserValidIfNotThrowError(userToRegister){
   const {email, password, fullName, preferences, categories} = userToRegister
   try{
-    isUserFullNameValidIfNotThrowError(email);
     isCategoriesValidIfNotThrowError(categories);
     isPreferencesValidIfNotThrowError(preferences);
     isUserEmailValidIfNotThrowError(email);

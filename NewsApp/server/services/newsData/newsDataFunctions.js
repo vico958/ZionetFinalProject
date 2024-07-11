@@ -19,6 +19,8 @@ async function getNews(categories, preferences){
             title: item.title,
             link: item.link,
         }));
+        console.log("newsssssss is ", news)
+        console.log("reducedNewsreducedNews is ", reducedNews)
         return reducedNews;
     }catch(error){
         console.log(error);

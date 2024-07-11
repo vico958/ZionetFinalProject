@@ -1,103 +1,105 @@
-const {changePasswordHelper,  changeEmailHelper, changeCategoriesAndPreferencesHelper, 
-    changePreferencesHelper, userDeleteHelper,registerUserUsingAccessor, login} = require("../services/user/userFunctions")
-const { sendNewsToClient} = require("../services/general");
-const {isRegisterUserValidIfNotThrowError, isChangeCategoriesAndPreferencesValidIfNotThrowError,
-     isChangePreferencesValidIfNotThrowError, isChangeEmailValidIfNotThrowError, isChangePasswordValidIfNotThrowError} = require("../services/validation/userValidation/userValidation");
-async function userRegister(req, res){
-    try{
-        const { userToRegister} = req.body;
-        isRegisterUserValidIfNotThrowError(userToRegister)
-        const returnedUser = await registerUserUsingAccessor(userToRegister);
-        const {email, fullName, preferences, categories} = returnedUser
-        const message = `${fullName} you register to the news app, we will send to you via email the news`
+require("dotenv").config();
+const DaprUserService = require("../services/user/userDaprService");
+const { sendNewsToClient } = require("../services/general");
+const {
+    isRegisterUserValidIfNotThrowError,
+    isChangeCategoriesAndPreferencesValidIfNotThrowError,
+    isChangePreferencesValidIfNotThrowError,
+    isChangeEmailValidIfNotThrowError,
+    isChangePasswordValidIfNotThrowError
+} = require("../services/validation/userValidation/userValidation");
+
+
+
+async function userRegister(req, res) {
+    try {
+        const { userToRegister } = req.body;
+        isRegisterUserValidIfNotThrowError(userToRegister);
+        const returnedUser = await DaprUserService.registerUserUsingAccessor(userToRegister);
+        const { email, fullName, preferences, categories } = returnedUser;
+        const message = `${fullName}, you registered to the news app. We will send you the news via email.`;
         res.status(200).send(message);
-        res.end();
         sendNewsToClient(categories, preferences, email, fullName);
-    }catch(error){
-        res.status(error.statusCode).send(error.message)
+    } catch (error) {
+        res.status(error.statusCode || 500).send(error.message || "Something went wrong from our side.");
         console.log(error);
     }
 }
 
-async function userDelete(req, res){
-    try{//TODO : check if really need validation for req.body.user(i dont think need)
+async function userDelete(req, res) {
+    try { // TODO: check if really need validation for req.body.user (i don't think need)
         const userToDelete = req.body.user;
-        const answer = await userDeleteHelper(userToDelete);//TODO: check if really delete or not
-        const message = `you been remove from news app`;
+        const answer = await DaprUserService.userDelete(userToDelete); // TODO: check if really delete or not
+        const message = `You have been removed from the news app.`;
         res.status(200).send(message);
-        res.end();
-    }catch(error){
-        res.status(error.statusCode).send(error.message)
+    } catch (error) {
+        res.status(error.statusCode || 500).send(error.message || "Something went wrong from our side.");
         console.log(error);
     }
 }
 
-async function changeCategoriesAndPreferences(req, res){
-    try{
+async function changeCategoriesAndPreferences(req, res) {
+    try {
         const userWithNewSettings = req.body.userWithNewSettings;
-        const { categories, preferences } = userWithNewSettings
-        isChangeCategoriesAndPreferencesValidIfNotThrowError(categories, preferences)
-        const answer = await changeCategoriesAndPreferencesHelper(userWithNewSettings)//TODO:TO TEST
-        const message = `you'r info has been change`
+        const { newCategories, newPreferences } = userWithNewSettings;
+        isChangeCategoriesAndPreferencesValidIfNotThrowError(newCategories, newPreferences);
+        const answer = await DaprUserService.changeCategoriesAndPreferences(userWithNewSettings); // TODO: TO TEST
+        const message = `Your information has been updated.`;
         res.status(200).send(message);
-        res.end();
-    }catch(error){
-        res.status(error.statusCode).send(error.message)
+    } catch (error) {
+        res.status(error.statusCode || 500).send(error.message || "Something went wrong from our side.");
         console.log(error);
     }
 }
 
-async function changePreferences(req, res){
-    try{
+async function changePreferences(req, res) {
+    try {
         const userWithNewPreferences = req.body.userWithNewPreferences;
-        isChangePreferencesValidIfNotThrowError(userWithNewPreferences.preferences)
-        const answer = await changePreferencesHelper(userWithNewPreferences)//TODO:TO TEST
-        const message = `you'r info has been change`
+        isChangePreferencesValidIfNotThrowError(userWithNewPreferences.newPreferences);
+        const answer = await DaprUserService.changePreferences(userWithNewPreferences); // TODO: TO TEST
+        const message = `Your preferences have been updated.`;
         res.status(200).send(message);
-        res.end();
-    }catch(error){
-        res.status(error.statusCode).send(error.message)
+    } catch (error) {
+        res.status(error.statusCode || 500).send(error.message || "Something went wrong from our side.");
         console.log(error);
     }
 }
 
-async function changeEmail(req, res){
-    try{
+async function changeEmail(req, res) {
+    try {
         const userWithNewEmail = req.body.userWithNewEmail;
-        isChangeEmailValidIfNotThrowError(userWithNewEmail.email)
-        const answer = await changeEmailHelper(userWithNewEmail)//TODO:TO TEST
-        const message = `you'r email has been change`
+        isChangeEmailValidIfNotThrowError(userWithNewEmail.newEmail);
+        const answer = await DaprUserService.changeEmail(userWithNewEmail); // TODO: TO TEST
+        const message = `Your email has been updated.`;
         res.status(200).send(message);
-        res.end();
-    }catch(error){
-        res.status(error.statusCode).send(error.message)
+    } catch (error) {
+        res.status(error.statusCode || 500).send(error.message || "Something went wrong from our side.");
         console.log(error);
     }
 }
 
-async function changePassword(req, res){
-    try{
+async function changePassword(req, res) {
+    try {
         const userWithNewPassword = req.body.userWithNewPassword;
-        isChangePasswordValidIfNotThrowError(userWithNewPassword.password);
-        const answer = await changePasswordHelper(userWithNewPassword)//TODO:TO TEST
-        const message = `you'r password has been change`
+        isChangePasswordValidIfNotThrowError(userWithNewPassword.newPassword);
+        const answer = await DaprUserService.changePassword(userWithNewPassword); // TODO: TO TEST
+        const message = `Your password has been updated.`;
         res.status(200).send(message);
-        res.end();
-    }catch(error){
-        res.status(error.statusCode).send(error.message)
+    } catch (error) {
+        res.status(error.statusCode || 500).send(error.message || "Something went wrong from our side.");
         console.log(error);
     }
 }
 
-async function getNewsNow(req, res){
-    try{
-        res.status(200).send("We got your request, if your in the system you will get news in the next few minutes")
+async function getNewsNow(req, res) {
+    try {
+        res.status(200).send("We received your request. If you are in the system, you will receive news shortly.");
         const user = req.body.user;
-        const loginUser = await login(user);
-        const { categories, preferences, email, fullName} = loginUser
+        const loginUser = await DaprUserService.login(user);
+        const { categories, preferences, email, fullName } = loginUser;
         sendNewsToClient(categories, preferences, email, fullName);
-    }catch(error){
-        res.status(error.statusCode).send(error.message)
+    } catch (error) {
+        res.status(error.statusCode || 500).send(error.message || "Something went wrong from our side.");
         console.log(error);
     }
 }
@@ -110,4 +112,4 @@ module.exports = {
     changeEmail,
     changePassword,
     getNewsNow
-}
+};
