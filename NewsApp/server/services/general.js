@@ -1,7 +1,9 @@
 const { bestFitNewsWithAi, } = require("./newsAi/newsAiFunctions");
 const {getNews} = require("./newsData/newsDataFunctions")
 const {sendEmailWithNews} = require("./email/emailFunctions")
-const { getAllUsersInSystem } = require("./user/userFunctions")
+const DaprUserService = require("./user/userDaprService");
+
+
 async function sendNewsToClient(categories, preferences, clientEmail, clientFullName){
     try{
         const news = await getNews(categories, preferences);
@@ -14,7 +16,7 @@ async function sendNewsToClient(categories, preferences, clientEmail, clientFull
 
 async function sendDailyNews(){
     try{//TODO: a retry for the ones that fail
-        const allUsers = await getAllUsersInSystem();
+        const allUsers = await DaprUserService.getAllUsersInSystem();
         for (const user of allUsers) {
             const {categories, preferences, email, fullName} = user
             await sendNewsToClient(categories, preferences, email, fullName)
