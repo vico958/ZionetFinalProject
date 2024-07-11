@@ -10,7 +10,7 @@ async function sendNewsToClient(categories, preferences, clientEmail, clientFull
         const bestNews = await bestFitNewsWithAi(news, preferences);
         sendEmailWithNews(bestNews, clientEmail, clientFullName);
     }catch(error){
-        console.log(error.message);
+        console.log(error);
         throw error
     }
 }
@@ -23,7 +23,7 @@ async function sendDailyNews(){
             await sendNewsToClient(categories, preferences, email, fullName)
         }
     }catch(error){
-        console.log(error.message)
+        console.log(error)
     }
 }
 
