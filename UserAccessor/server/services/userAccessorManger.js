@@ -77,6 +77,14 @@ class userAccessorManger{
             console.log(error);
         }
     }
+
+    async getAllUsers(){
+        try{
+            return await this.userDatabase.getAllUsers()
+        }catch(error){
+            console.log(error);
+        }
+    }
 }
 
 module.exports = new userAccessorManger();

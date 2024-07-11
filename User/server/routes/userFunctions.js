@@ -145,6 +145,23 @@ async function changeEmail(req, res){
         }
 }
 
+async function getAllUsers(req, res){
+    try{
+        const serviceMethod = `${urlMethodBeggining}/get-all-users`;
+        const allUsers = await client.invoker.invoke(
+                daprHostAndServiceAppId,
+                serviceMethod,
+                HttpMethod.GET,
+              );
+    
+             //TODO : Handle returnedData
+            res.status(200).send(JSON.stringify(allUsers));
+            res.end();
+        }catch(error){
+            console.log(error)
+        }
+}
+
 module.exports = {
     userRegister,
     changePassword,
@@ -152,5 +169,6 @@ module.exports = {
     chageCategoriesAndPreferences,
     chagePreferences,
     changeEmail,
-    userLogin
+    userLogin,
+    getAllUsers
 }

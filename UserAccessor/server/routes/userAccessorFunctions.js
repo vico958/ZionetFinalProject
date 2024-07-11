@@ -112,6 +112,22 @@ async function userLogin(req, res){
         console.log(error)
     }
 }
+
+async function getAllUsers(req, res){
+    try{
+        const allUsers = await userAccessorManger.getAllUsers();
+        const transformedUsers = allUsers.map(user => ({
+            email: user.email,
+            fullName: user.fullName,
+            preferences: user.preferences,
+            categories: user.categories
+        }));
+        res.status(200).send(JSON.stringify(transformedUsers));
+    }catch(error){
+        console.log(error);
+    }
+}
+
 module.exports = {
     userRegister,
     changePassword,
@@ -119,5 +135,6 @@ module.exports = {
     chagePreferences,
     chageCategoriesAndPreferences,
     changeEmail,
-    userLogin
+    userLogin,
+    getAllUsers
 }
