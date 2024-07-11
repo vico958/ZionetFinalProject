@@ -1,6 +1,6 @@
 const {changePasswordHelper,  changeEmailHelper, changeCategoriesAndPreferencesHelper, 
     changePreferencesHelper, userDeleteHelper,registerUserUsingAccessor, login} = require("../services/user/userFunctions")
-const { sendNewsForClient} = require("../services/general");
+const { sendNewsToClient} = require("../services/general");
 
 async function userRegister(req, res){
     try{
@@ -11,7 +11,7 @@ async function userRegister(req, res){
         res.status(200).send(message);
         res.end();
         
-        sendNewsForClient(categories, preferences, returnedUser.email, returnedUser.fullName);
+        sendNewsToClient(categories, preferences, returnedUser.email, returnedUser.fullName);
     }catch(error){
         console.log(error);
     }
@@ -83,7 +83,7 @@ async function getNewsNow(req, res){
         const user = req.body.user;
         const loginUser = await login(user);
         const { categories, preferences, email, fullName} = loginUser
-        sendNewsForClient(categories, preferences, email, fullName);
+        sendNewsToClient(categories, preferences, email, fullName);
     }catch(error){
 
     }
