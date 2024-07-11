@@ -61,7 +61,7 @@ function isRegisterUserValidIfNotThrowError(userToRegister){
   }
 }
 
-function isChangeCategoriesAndPreferencesIfNotThrowError(categories, preferences){
+function isChangeCategoriesAndPreferencesValidIfNotThrowError(categories, preferences){
   try{
     isCategoriesValidIfNotThrowError(categories);
     isPreferencesValidIfNotThrowError(preferences);
@@ -71,7 +71,7 @@ function isChangeCategoriesAndPreferencesIfNotThrowError(categories, preferences
   }
 }
 
-function isChangePreferencesIfNotThrowError(preferences){
+function isChangePreferencesValidIfNotThrowError(preferences){
   try{
     isPreferencesValidIfNotThrowError(preferences);
   }catch(error){
@@ -80,7 +80,7 @@ function isChangePreferencesIfNotThrowError(preferences){
   }
 }
 
-function isChangeEmailIfNotThrowError(email){
+function isChangeEmailValidIfNotThrowError(email){
   try{
     isUserEmailValidIfNotThrowError(email);
   }catch(error){
@@ -88,9 +88,19 @@ function isChangeEmailIfNotThrowError(email){
     throw error;
   }
 }
+
+function isChangePasswordValidIfNotThrowError(password){
+  try{
+    isUserPasswordValidIfNotThrowError(password);
+  }catch(error){
+    console.log(error.message);
+    throw error;
+  }
+}
 module.exports = {
     isRegisterUserValidIfNotThrowError,
-    isChangeCategoriesAndPreferencesIfNotThrowError,
-    isChangePreferencesIfNotThrowError,
-    isChangeEmailIfNotThrowError
+    isChangeCategoriesAndPreferencesValidIfNotThrowError,
+    isChangePreferencesValidIfNotThrowError,
+    isChangeEmailValidIfNotThrowError,
+    isChangePasswordValidIfNotThrowError
   }
