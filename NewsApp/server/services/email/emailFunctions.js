@@ -29,7 +29,7 @@ async function sendEmail(emailInfo){
             { headers: { 'Content-Type': 'application/json' } },
         );
     }catch(error){
-        console.log(error.message);
+        console.error(error.message);
         throw error
     }
 }

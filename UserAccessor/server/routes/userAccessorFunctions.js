@@ -15,7 +15,7 @@ async function userRegister(req, res){
             returnResAnswer(res, "User saved in system", removePasswordFieldFromObject(returnedUser));
         }
     }catch(error){
-        console.log("user register, user accessor service error : ", error)
+        console.error("user register, user accessor service error : ", error)
         throw error
     }
 }
@@ -35,7 +35,7 @@ async function deleteUser(req, res){
             throw createError("Unable to remove user: the provided password is incorrect.", 400);
         }
     }catch(error){
-        console.log("delete user, user accessor service error : ", error)
+        console.error("delete user, user accessor service error : ", error)
         throw error
     }
 }
@@ -55,7 +55,7 @@ async function userLogin(req, res){
             res.status(400).send(JSON.stringify("Email or password are not valid"))
         }
     }catch(error){
-        console.log(error)
+        console.error(error)
     }
 }
 
@@ -72,7 +72,7 @@ async function changePassword(req, res) {
             res.status(400).send(JSON.stringify("old password doesnt match"));
         }
     }catch(error){
-        console.log(error)
+        console.error(error)
     }
 }
 
@@ -90,7 +90,7 @@ async function chagePreferences(req, res){
             throw createError("Password dont match", 400);
         }
     }catch(error){
-        console.log("Change preferences, user accessor service error : ", error)
+        console.error("Change preferences, user accessor service error : ", error)
         throw error
     }
 }
@@ -110,7 +110,7 @@ async function chageCategoriesAndPreferences(req, res){
             throw createError("Password dont match", 400);
         }
     }catch(error){
-        console.log("Change categories and preferences, user accessor service error : ", error)
+        console.error("Change categories and preferences, user accessor service error : ", error)
         throw error
     }
 }
@@ -128,7 +128,7 @@ async function changeEmail(req, res){
             throw createError("Password dont match", 400);
         }
     }catch(error){
-        console.log("Change email, user accessor service error : ", error)
+        console.error("Change email, user accessor service error : ", error)
         throw error
     }
 }
@@ -148,7 +148,7 @@ async function getAllUsers(req, res){
         }));
         returnResAnswer(res, "All users list", transformedUsers);
     }catch(error){
-        console.log("Get all users, user accessor service error : ", error)
+        console.error("Get all users, user accessor service error : ", error)
         throw error
     }
 }

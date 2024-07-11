@@ -19,7 +19,7 @@ async function userRegister(req, res){
         res.status(200).send(JSON.stringify(returnedUser));
         res.end();
     }catch(error){
-        console.log("user register, user service error : ", error)
+        console.error("user register, user service error : ", error)
         throw error
     }
 }
@@ -40,7 +40,7 @@ async function userLogin(req, res){
         res.status(200).send(JSON.stringify(returnedData));
         res.end();
     }catch(error){
-        console.log(error)
+        console.error(error)
     }
 }
 
@@ -60,7 +60,7 @@ async function changePassword(req, res) {
         res.status(200).send(JSON.stringify(returnedData));
         res.end();
     }catch(error){
-        console.log("Change password, user service error : ", error)
+        console.error("Change password, user service error : ", error)
         throw error
     }
 }
@@ -79,7 +79,7 @@ async function deleteUser(req, res){
         res.status(200).send(JSON.stringify(returnedData));
         res.end();
     }catch(error){
-        console.log("delete user, user service error : ", error)
+        console.error("delete user, user service error : ", error)
         throw error
     }
 }
@@ -99,7 +99,7 @@ async function chageCategoriesAndPreferences(req, res){
             res.status(200).send(JSON.stringify(returnedData));
             res.end();
         }catch(error){
-            console.log("Change categories and preferences, user service error : ", error)
+            console.error("Change categories and preferences, user service error : ", error)
             throw error
         }
 }
@@ -120,7 +120,7 @@ async function chagePreferences(req, res){
             res.status(200).send(JSON.stringify(returnedData));
             res.end();
         }catch(error){
-            console.log("Change preferences, user service error : ", error)
+            console.error("Change preferences, user service error : ", error)
             throw error
         }
 }
@@ -141,7 +141,7 @@ async function changeEmail(req, res){
             res.status(200).send(JSON.stringify(returnedData));
             res.end();
         }catch(error){
-            console.log("Change email, user service error : ", error)
+            console.error("Change email, user service error : ", error)
             throw error
         }
 }
@@ -159,7 +159,7 @@ async function getAllUsers(req, res){
             res.status(200).send(JSON.stringify(allUsers));
             res.end();
         }catch(error){
-            console.log("Get all users, user service error : ", error)
+            console.error("Get all users, user service error : ", error)
             throw error
         }
 }

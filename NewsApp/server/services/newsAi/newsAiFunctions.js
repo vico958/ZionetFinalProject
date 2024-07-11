@@ -16,7 +16,7 @@ async function bestFitNewsWithAi(articles, preferences){
             { headers: { 'Content-Type': 'application/json' } },
         );
     }catch(error){
-        console.log(error);
+        console.error(error);
     }
 }
 
