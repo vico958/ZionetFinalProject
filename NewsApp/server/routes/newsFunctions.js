@@ -1,7 +1,8 @@
 const {changePasswordHelper,  changeEmailHelper, changeCategoriesAndPreferencesHelper, 
     changePreferencesHelper, userDeleteHelper,registerUserUsingAccessor, login} = require("../services/user/userFunctions")
 const { sendNewsToClient} = require("../services/general");
-const {isRegisterUserValidIfNotThrowError, isChangeCategoriesAndPreferencesIfNotThrowError} = require("../services/validation/userValidation/userValidation");
+const {isRegisterUserValidIfNotThrowError, isChangeCategoriesAndPreferencesIfNotThrowError,
+     isChangePreferencesIfNotThrowError, isChangeEmailIfNotThrowError} = require("../services/validation/userValidation/userValidation");
 async function userRegister(req, res){
     try{
         const { userToRegister} = req.body;
@@ -49,6 +50,7 @@ async function changeCategoriesAndPreferences(req, res){
 async function changePreferences(req, res){
     try{
         const userWithNewPreferences = req.body.userWithNewPreferences;
+        isChangePreferencesIfNotThrowError(userWithNewPreferences.preferences)
         const answer = await changePreferencesHelper(userWithNewPreferences)//TODO:TO TEST
         const message = `you'r info has been change`
         res.status(200).send(message);
@@ -62,6 +64,7 @@ async function changePreferences(req, res){
 async function changeEmail(req, res){
     try{
         const userWithNewEmail = req.body.userWithNewEmail;
+        isChangeEmailIfNotThrowError(userWithNewEmail.email)
         const answer = await changeEmailHelper(userWithNewEmail)//TODO:TO TEST
         const message = `you'r email has been change`
         res.status(200).send(message);

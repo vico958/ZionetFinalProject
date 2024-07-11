@@ -71,7 +71,26 @@ function isChangeCategoriesAndPreferencesIfNotThrowError(categories, preferences
   }
 }
 
+function isChangePreferencesIfNotThrowError(preferences){
+  try{
+    isPreferencesValidIfNotThrowError(preferences);
+  }catch(error){
+    console.log(error.message);
+    throw error;
+  }
+}
+
+function isChangeEmailIfNotThrowError(email){
+  try{
+    isUserEmailValidIfNotThrowError(email);
+  }catch(error){
+    console.log(error.message);
+    throw error;
+  }
+}
 module.exports = {
     isRegisterUserValidIfNotThrowError,
-    isChangeCategoriesAndPreferencesIfNotThrowError
+    isChangeCategoriesAndPreferencesIfNotThrowError,
+    isChangePreferencesIfNotThrowError,
+    isChangeEmailIfNotThrowError
   }
