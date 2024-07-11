@@ -75,11 +75,13 @@ async function changeEmail(req, res) {
         const userWithNewEmail = req.body.userWithNewEmail;
         isChangeEmailValidIfNotThrowError(userWithNewEmail.newEmail);
         const answer = await DaprUserService.changeEmail(userWithNewEmail); // TODO: TO TEST
-        const message = `Your email has been updated.`;
-        res.status(200).send(message);
+        res.status(200).send(JSON.stringify({
+            message: "Your email has been updated.",
+            data: answer.data
+        }));
     } catch (error) {
         // res.status(error.statusCode || 500).send(error.message || "Something went wrong from our side.");
-        console.log(error);
+        console.log("Change email, news app service error : ", error)
     }
 }
 

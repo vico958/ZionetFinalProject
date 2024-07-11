@@ -140,7 +140,8 @@ async function changeEmail(req, res){
             res.status(200).send(JSON.stringify(returnedData));
             res.end();
         }catch(error){
-            console.log(error)
+            console.log("Change email, user service error : ", error)
+            throw error
         }
 }
 

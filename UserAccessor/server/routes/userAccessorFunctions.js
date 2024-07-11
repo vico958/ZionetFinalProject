@@ -69,7 +69,7 @@ async function chagePreferences(req, res){
             }else{
                 res.status(200).send(JSON.stringify({
                     message: "User preferences has been updated.",
-                    data: answerPreferences
+                    data: answer
                 }));
             }
         }else{
@@ -109,15 +109,23 @@ async function chageCategoriesAndPreferences(req, res){
 async function changeEmail(req, res){
     try{//TODO :TEST
         const {email, password, newEmail } = req.body.userWithNewEmail;
-        const user = await userAccessorManger.getUserByEmail(email) // TODO: if there is no such user
+        const user = getUserByEmailHelper(email);
         if(password === user.password){//TODO: check first categories change and only then change preferences
             const answer = await userAccessorManger.changeUserEmail(user._id, newEmail)
-            res.status(200).send(JSON.stringify("user preferences and categories changed"));
+            if(answer === null){
+                throw createError("Cant update email", 400);
+            }else{
+                res.status(200).send(JSON.stringify({
+                    message: "User email has been updated.",
+                    data: answerPreferences
+                }));
+            }
         }else{
-            res.status(400).send(JSON.stringify("cant change user preferences and categories"));
+            throw createError("Password dont match", 400);
         }
     }catch(error){
-        console.log(error)
+        console.log("Change email, user accessor service error : ", error)
+        throw error
     }
 }
 
