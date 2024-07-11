@@ -12,7 +12,7 @@ async function userRegister(req, res){
         else{
             userToRegister.email = emailInLowerCase;
             const returnedUser = await userAccessorManger.register(userToRegister);
-            returnResAnswer(res, "User saved in system", returnedUser);
+            returnResAnswer(res, "User saved in system", removePasswordFieldFromObject(returnedUser));
         }
     }catch(error){
         console.log("user register, user accessor service error : ", error)
@@ -23,11 +23,11 @@ async function userRegister(req, res){
 async function deleteUser(req, res){
     try{
         const {email, password} = req.body.userToDelete;
-        const user = getUserByEmailHelper(email);
+        const user = await getUserByEmailHelper(email);
         if(password === user.password){
             const response = await userAccessorManger.deleteUser(user._id)
             if(response.deletedCount === 1){
-                returnResAnswer(res, "User deleted", response);
+                res.status(200).send("User deleted");
             }else{
                 throw createError("Cant remove user", 500);
             }
@@ -49,7 +49,7 @@ async function userLogin(req, res){
             res.status(400).send(JSON.stringify("Email or password are not valid")); // For saftey not letting them know if its email or password not good
         }
         else if(password === user.password){
-            returnResAnswer(res, "User login", user);
+            returnResAnswer(res, "User login", removePasswordFieldFromObject(user));
         }
         else{
             res.status(400).send(JSON.stringify("Email or password are not valid"))
@@ -62,7 +62,7 @@ async function userLogin(req, res){
 async function changePassword(req, res) {
     try{//TODO :TEST
         const {newPassword, oldPassword, email} = req.body.userWithNewPassword;
-        const user = getUserByEmailHelper(email);
+        const user = await getUserByEmailHelper(email);
         if(oldPassword === user.password){
             const answer = await userAccessorManger.changePassword(user.userId, newPassword)
             const messageFail = "Cant update Password";
@@ -80,7 +80,7 @@ async function changePassword(req, res) {
 async function chagePreferences(req, res){
     try{//TODO :TEST
         const {email, password, newPreferences} = req.body.userWithNewPreferences;
-        const user = getUserByEmailHelper(email);
+        const user = await getUserByEmailHelper(email);
         if(password === user.password){
             const answer = await userAccessorManger.changeUserPreferences(user._id, newPreferences)
             const messageFail = "Cant update preferences";
@@ -98,7 +98,7 @@ async function chagePreferences(req, res){
 async function chageCategoriesAndPreferences(req, res){
     try{//TODO :TEST
         const {email, password, newCategories, newPreferences} = req.body.userWithNewSettings;
-        const user = getUserByEmailHelper(email);
+        const user = await getUserByEmailHelper(email);
         if(password === user.password){//TODO: check first categories change and only then change preferences
             const {_id} = user
             const answerCategories = await userAccessorManger.changeUserCategories(_id, newCategories)
@@ -118,7 +118,7 @@ async function chageCategoriesAndPreferences(req, res){
 async function changeEmail(req, res){
     try{//TODO :TEST
         const {email, password, newEmail } = req.body.userWithNewEmail;
-        const user = getUserByEmailHelper(email);
+        const user = await getUserByEmailHelper(email);
         if(password === user.password){//TODO: check first categories change and only then change preferences
             const answer = await userAccessorManger.changeUserEmail(user._id, newEmail)
             const messageFail = "Cant update email";
@@ -154,24 +154,25 @@ async function getAllUsers(req, res){
 }
 
 async function getUserByEmailHelper(email){
-    const emailInLowerCase = email.toLowerCase();
-    const user = await userAccessorManger.getUserByEmail(emailInLowerCase);
-    if(user === null){
-        const error = createError("Email or password are not valid", 400);// For saftey not letting them know if its email or password not good
+    try{
+        const emailInLowerCase = email.toLowerCase();
+        const user = await userAccessorManger.getUserByEmail(emailInLowerCase);
+        if(user === null){
+            const error = createError("Email or password are not valid", 400);// For saftey not letting them know if its email or password not good
+            throw error
+        }
+        return user;
+    }catch(error){
         throw error
     }
-    return user;
 }
 
 function changeAfterHavingUserHelper(res, messageSuccess, messageFail, answer){
     if(answer === null){
         throw createError(messageFail, 400);
     }else{
-        returnResAnswer(res, messageSuccess, answer)
-        res.status(200).send(JSON.stringify({
-            message: messageSuccess,
-            data: answer
-        }));
+        const dataToSend = removePasswordFieldFromObject(answer)
+        returnResAnswer(res, messageSuccess, dataToSend)
     }
 }
 
@@ -181,6 +182,12 @@ function returnResAnswer(res, messageToSend, dataToSend){
         data: dataToSend
     }));
 }
+
+function removePasswordFieldFromObject(user) {
+    const { password, ...userWithoutPassword } = user;
+    return userWithoutPassword;
+}
+
 module.exports = {
     userRegister,
     changePassword,
