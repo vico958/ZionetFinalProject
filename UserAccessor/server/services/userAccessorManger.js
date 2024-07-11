@@ -9,7 +9,7 @@ class userAccessorManger{
         try{
             return await this.userDatabase.register(userToRegister);
         }catch(error){
-            console.log(error);
+            throw error;
         }
     }
 
@@ -17,7 +17,7 @@ class userAccessorManger{
         try{
             return await this.userDatabase.getUserByEmail(email);
         }catch(error){
-            console.log(error)
+            throw error;
         }
     }
 
@@ -26,23 +26,23 @@ class userAccessorManger{
         try{
             return await this.userDatabase.getUserById(userId);
         }catch(error){
-            console.log(error)
+            throw error;
         }
     }
     
     async changePassword(userId, newPassword){
         try{
-            return await this.userDatabase.changePassword(userId, newPassword)
+            return await this.userDatabase.changePassword(userId, newPassword);
         }catch(error){
-            console.log(error)
+            throw error;
         }
     }
 
     async changeFullName(userId, newFullName){
         try{
-            return await this.userDatabase.changeFullName(userId, newFullName)
+            return await this.userDatabase.changeFullName(userId, newFullName);
         }catch(error){
-            console.log(error)
+            throw error;
         }
     }
     
@@ -50,7 +50,7 @@ class userAccessorManger{
         try{
             return await this.userDatabase.changeUserCategories(userId, newCategories);
         }catch(error){
-            console.log(error)
+            throw error;
         }
     }
 
@@ -58,7 +58,7 @@ class userAccessorManger{
         try{
             return await this.userDatabase.changeUserPreferences(userId, newPreferences);
         }catch(error){
-            console.log(error);
+            throw error;
         }
     }
 
@@ -66,7 +66,7 @@ class userAccessorManger{
         try{
             return await this.userDatabase.changeUserEmail(userId, newEmail);
         }catch(error){
-            console.log(error);
+            throw error;
         }
     }
 
@@ -74,7 +74,7 @@ class userAccessorManger{
         try{
             return await this.userDatabase.deleteUser(userId)
         }catch(error){
-            console.log(error);
+            throw error;
         }
     }
 
@@ -82,7 +82,7 @@ class userAccessorManger{
         try{
             return await this.userDatabase.getAllUsers()
         }catch(error){
-            console.log(error);
+            throw error;
         }
     }
 }

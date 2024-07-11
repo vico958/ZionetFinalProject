@@ -20,7 +20,7 @@ class userDatabaseManager {
             const result = await newUser.save()
             return result;
         } catch(error){
-            console.log("shame", error)
+            throw error
         }
     }
 
@@ -28,7 +28,7 @@ class userDatabaseManager {
         try{
             return await user.findOne({email:email});
         }catch(error){
-            console.log(error);
+            throw error
         }
     }
 
@@ -37,7 +37,7 @@ class userDatabaseManager {
         try{
             return await user.findOne({_id:userId});
         }catch(error){
-            console.log(error);
+            throw error
         }
     }
     
@@ -45,7 +45,7 @@ class userDatabaseManager {
         try{
             return await changeUserDataHelper(userId, newPassword, "password")
         }catch(error){
-            console.log(error)
+            throw error
         }
     }
 
@@ -53,7 +53,7 @@ class userDatabaseManager {
         try{
             return await changeUserDataHelper(userId, newFullName, "fullName");
         }catch(error){
-            console.log(error)
+            throw error
         }
     }
 
@@ -61,7 +61,7 @@ class userDatabaseManager {
         try{
             return await changeUserDataHelper(userId, newCategories, "categories")
         }catch(error){
-            console.log(error);
+            throw error
         }
     }
 
@@ -69,7 +69,7 @@ class userDatabaseManager {
         try{
             return await changeUserDataHelper(userId, newPreferences, "preferences")
         }catch(error){
-            console.log(error)
+            throw error
         }
     }
 
@@ -77,7 +77,7 @@ class userDatabaseManager {
         try{
             return await user.findByIdAndUpdate({_id:userId}, {[dataField]: newData}, {new:true})
         }catch(error){
-            console.log(error)
+            throw error
         }
     }
 
@@ -85,7 +85,7 @@ class userDatabaseManager {
         try{
             return await changeUserDataHelper(userId, newEmail, "email")
         }catch(error){
-            console.log(error)
+            throw error
         }
     }
 
@@ -93,7 +93,7 @@ class userDatabaseManager {
         try{
             return await user.deleteOne({_id:userId})
         }catch(error){
-            console.log(error);
+            throw error
         }
     }
 
@@ -101,9 +101,8 @@ class userDatabaseManager {
         try{
             return await user.find({})
         }catch(error){
-            console.log(error);
+            throw error
         }
     }
 }
-
 module.exports = userDatabaseManager
