@@ -40,7 +40,8 @@ async function userLogin(req, res){
         res.status(200).send(JSON.stringify(returnedData));
         res.end();
     }catch(error){
-        console.error(error)
+        console.error("User login, user service error : ", error)
+        throw error
     }
 }
 
@@ -69,6 +70,10 @@ async function deleteUser(req, res){
     try{
     const userToDelete = req.body.userToDelete;
     const serviceMethod = `${urlMethodBeggining}/delete-user`;
+    for(let i=0;i<10;i++){
+
+        console.log("pppppppppppppppppppppppppppppppppppppppppppppppppp")
+    }
     const returnedData = await client.invoker.invoke(
             daprHostAndServiceAppId,
             serviceMethod,
@@ -76,11 +81,15 @@ async function deleteUser(req, res){
             {userToDelete} ,
             { headers: { 'Content-Type': 'application/json' } },
           );
+          for(let i=0;i<10;i++){
+        
+              console.log("ccccccccccccccccccccccccccccccccccccccccccccccccc")
+          }
         res.status(200).send(JSON.stringify(returnedData));
         res.end();
     }catch(error){
+        res.status(error.statusCode || 500).send(error.message || "Something went wrong from our side.");
         console.error("delete user, user service error : ", error)
-        throw error
     }
 }
 

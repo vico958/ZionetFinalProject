@@ -17,12 +17,13 @@ async function userRegister(req, res) {
         const { userToRegister } = req.body;
         isRegisterUserValidIfNotThrowError(userToRegister);
         const returnedUser = await DaprUserService.registerUserUsingAccessor(userToRegister);
+        console.log("ddddddddddddddddddddddddddddddddddd", returnedUser);
         console.log("2222222222222222222222222222222222222222222222222")
 
         const { email, fullName, preferences, categories } = returnedUser.data;
         const messageToSend = `Hello ${fullName}, you registered to the news app. We will send you the news via email.`;
         res.status(200).send(JSON.stringify({message:messageToSend, data:returnedUser.data}));
-        sendNewsToClient(categories, preferences, email, fullName);
+        // sendNewsToClient(categories, preferences, email, fullName);
     } catch (error) {
         res.status(error.statusCode || 500).send(error.message || "Something went wrong from our side.");
         console.error("user register, news app service error : ", error)

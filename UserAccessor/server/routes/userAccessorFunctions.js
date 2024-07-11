@@ -1,5 +1,6 @@
 const userAccessorManger = require("../services/userAccessor/userAccessorManger")
 const {createError} = require("../services/general")
+
 async function userRegister(req, res){
     try{
         const { userToRegister} = req.body;
@@ -12,7 +13,7 @@ async function userRegister(req, res){
         else{
             userToRegister.email = emailInLowerCase;
             const returnedUser = await userAccessorManger.register(userToRegister);
-            returnResAnswer(res, "User saved in system", removePasswordFieldFromObject(returnedUser));
+            returnResAnswer(res, "User saved in system",returnedUser);
         }
     }catch(error){
         console.error("user register, user accessor service error : ", error)
@@ -36,7 +37,7 @@ async function deleteUser(req, res){
         }
     }catch(error){
         console.error("delete user, user accessor service error : ", error)
-        throw error
+        res.status(error.statusCode || 500).send(error.message || "Something went wrong from our side.");
     }
 }
 
@@ -49,7 +50,7 @@ async function userLogin(req, res){
             res.status(400).send(JSON.stringify("Email or password are not valid")); // For saftey not letting them know if its email or password not good
         }
         else if(password === user.password){
-            returnResAnswer(res, "User login", removePasswordFieldFromObject(user));
+            returnResAnswer(res, "User login", user);
         }
         else{
             res.status(400).send(JSON.stringify("Email or password are not valid"))
@@ -163,7 +164,7 @@ async function getUserByEmailHelper(email){
         }
         return user;
     }catch(error){
-        throw error
+        console.log(error)
     }
 }
 
@@ -171,8 +172,7 @@ function changeAfterHavingUserHelper(res, messageSuccess, messageFail, answer){
     if(answer === null){
         throw createError(messageFail, 400);
     }else{
-        const dataToSend = removePasswordFieldFromObject(answer)
-        returnResAnswer(res, messageSuccess, dataToSend)
+        returnResAnswer(res, messageSuccess, answer)
     }
 }
 
@@ -181,11 +181,6 @@ function returnResAnswer(res, messageToSend, dataToSend){
         message: messageToSend,
         data: dataToSend
     }));
-}
-
-function removePasswordFieldFromObject(user) {
-    const { password, ...userWithoutPassword } = user;
-    return userWithoutPassword;
 }
 
 module.exports = {

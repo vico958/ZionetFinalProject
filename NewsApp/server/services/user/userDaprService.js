@@ -22,6 +22,7 @@ class DaprUserService {
             console.log("333333333333333333333333333333333333333333333333333333333333")
             return check;
         } catch (error) {
+            console.log("6666666666666666666666666666666666666666666")
             throw error
         }
     }
@@ -29,13 +30,15 @@ class DaprUserService {
     async userDelete(userToDelete) {
         try {
             const serviceMethod = `${this.userUrlMethodBeggining}/delete-user`;
-            return await this.userClientDapr.invoker.invoke(
+            const check = await this.userClientDapr.invoker.invoke(
                 this.userDaprHostAndServiceAppId,
                 serviceMethod,
                 HttpMethod.DELETE,
                 { userToDelete },
                 { headers: { 'Content-Type': 'application/json' } },
             );
+            console.log("777777777777777777777777777")
+            return check;
         } catch (error) {
             throw error
         }
