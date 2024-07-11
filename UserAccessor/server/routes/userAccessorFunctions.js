@@ -61,15 +61,23 @@ async function deleteUser(req, res){
 async function chagePreferences(req, res){
     try{//TODO :TEST
         const {email, password, newPreferences} = req.body.userWithNewPreferences;
-        const user = await userAccessorManger.getUserByEmail(email) // TODO: if there is no such user
+        const user = getUserByEmailHelper(email);
         if(password === user.password){
             const answer = await userAccessorManger.changeUserPreferences(user._id, newPreferences)
-            res.status(200).send(JSON.stringify("user preferences changed"));
+            if(answer === null){
+                throw createError("Cant update preferences", 400);
+            }else{
+                res.status(200).send(JSON.stringify({
+                    message: "User preferences has been updated.",
+                    data: answerPreferences
+                }));
+            }
         }else{
-            res.status(400).send(JSON.stringify("cant change user preferences"));
+            throw createError("Password dont match", 400);
         }
     }catch(error){
-        console.log(error)
+        console.log("Change preferences, user accessor service error : ", error)
+        throw error
     }
 }
 
@@ -82,7 +90,7 @@ async function chageCategoriesAndPreferences(req, res){
             const answerCategories = await userAccessorManger.changeUserCategories(_id, newCategories)
             const answerPreferences = await userAccessorManger.changeUserPreferences(_id, newPreferences)
             if(answerCategories === null){ // its enogth to check only one because same _id
-                throw createError("Cant change preferences and categories", 400);
+                throw createError("Cant update preferences and categories", 400);
             }else{
                 res.status(200).send(JSON.stringify({
                     message: "User preferences and categories has been updated.",

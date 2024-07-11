@@ -45,7 +45,7 @@ async function changeCategoriesAndPreferences(req, res) {
         isChangeCategoriesAndPreferencesValidIfNotThrowError(newCategories, newPreferences);
         const answer = await DaprUserService.changeCategoriesAndPreferences(userWithNewSettings); // TODO: TO TEST
         res.status(200).send(JSON.stringify({
-            message: "Your information has been updated.",
+            message: "Your preferences and categories has been updated.",
             data: answer.data
         }));
     } catch (error) {
@@ -60,11 +60,13 @@ async function changePreferences(req, res) {
         const userWithNewPreferences = req.body.userWithNewPreferences;
         isChangePreferencesValidIfNotThrowError(userWithNewPreferences.newPreferences);
         const answer = await DaprUserService.changePreferences(userWithNewPreferences); // TODO: TO TEST
-        const message = `Your preferences have been updated.`;
-        res.status(200).send(message);
+        res.status(200).send(JSON.stringify({
+            message: "Your preferences has been updated.",
+            data: answer.data
+        }));
     } catch (error) {
-        // res.status(error.statusCode || 500).send(error.message || "Something went wrong from our side.");
-        console.log(error);
+        res.status(error.statusCode || 500).send(error.message || "Something went wrong from our side.");
+        console.log("Change preferences, news app service error : ", error)
     }
 }
 
