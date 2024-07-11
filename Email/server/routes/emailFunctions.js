@@ -1,4 +1,5 @@
 const nodemailer = require("nodemailer");
+const {handleEmailError} = require("./emailErrors");
 
 async function sendEmail(req, res){
     try{
@@ -8,11 +9,13 @@ async function sendEmail(req, res){
             from: emailFrom, // sender address
             to: emailTo, // list of receivers
             subject: emailSubject, // Subject line
-            html: emailText, // Use 'html' instead of 'text'
+            html: emailText,
         });
-        res.status(200).send("email sent")
-    }catch(error){
-        console.log(error);
+        console.log('Message sent: %s', info.messageId);
+        res.status(200).send({ message: 'Email sent successfully', info: info });
+    } catch (error) {
+        const err = handleEmailError(error)
+        res.status(err.statusCode).send(err.message);
     }
 }
 
@@ -22,8 +25,8 @@ function createTransporter(emailHost, emailUser, emailPassword){
         port: 587,
         secure: false, // Use `true` for port 465, `false` for all other ports
         auth: {
-          user: emailUser,// zionetFinalProjectViktorDabush@outlook.com
-          pass: emailPassword, // ViktorDabushZionetFinal
+          user: emailUser,
+          pass: emailPassword,
         },
       });
     return transporter
