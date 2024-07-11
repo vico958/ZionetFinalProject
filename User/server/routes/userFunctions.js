@@ -36,7 +36,7 @@ async function userLogin(req, res){
             { headers: { 'Content-Type': 'application/json' } },
           );
 
-         //TODO : Handle returnedData
+         
         res.status(200).send(JSON.stringify(returnedData));
         res.end();
     }catch(error){
@@ -56,12 +56,13 @@ async function changePassword(req, res) {
             { headers: { 'Content-Type': 'application/json' } },
             );
     
-            //TODO : Handle returnedData
+            
         res.status(200).send(JSON.stringify(returnedData));
         res.end();
     }catch(error){
-        console.log(error)
-        }
+        console.log("Change password, user service error : ", error)
+        throw error
+    }
 }
 
 async function deleteUser(req, res){
@@ -94,7 +95,7 @@ async function chageCategoriesAndPreferences(req, res){
                 {userWithNewSettings} ,
                 { headers: { 'Content-Type': 'application/json' } },
               );
-             //TODO : Handle returnedData
+             
             res.status(200).send(JSON.stringify(returnedData));
             res.end();
         }catch(error){
@@ -115,7 +116,7 @@ async function chagePreferences(req, res){
                 { headers: { 'Content-Type': 'application/json' } },
               );
     
-             //TODO : Handle returnedData
+             
             res.status(200).send(JSON.stringify(returnedData));
             res.end();
         }catch(error){
@@ -136,7 +137,7 @@ async function changeEmail(req, res){
                 { headers: { 'Content-Type': 'application/json' } },
               );
     
-             //TODO : Handle returnedData
+             
             res.status(200).send(JSON.stringify(returnedData));
             res.end();
         }catch(error){
@@ -154,11 +155,12 @@ async function getAllUsers(req, res){
                 HttpMethod.GET,
               );
     
-             //TODO : Handle returnedData
+             
             res.status(200).send(JSON.stringify(allUsers));
             res.end();
         }catch(error){
-            console.log(error)
+            console.log("Get all users, user service error : ", error)
+            throw error
         }
 }
 

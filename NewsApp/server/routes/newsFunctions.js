@@ -80,7 +80,7 @@ async function changeEmail(req, res) {
             data: answer.data
         }));
     } catch (error) {
-        // res.status(error.statusCode || 500).send(error.message || "Something went wrong from our side.");
+        res.status(error.statusCode || 500).send(error.message || "Something went wrong from our side.");
         console.log("Change email, news app service error : ", error)
     }
 }
@@ -90,11 +90,13 @@ async function changePassword(req, res) {
         const userWithNewPassword = req.body.userWithNewPassword;
         isChangePasswordValidIfNotThrowError(userWithNewPassword.newPassword);
         const answer = await DaprUserService.changePassword(userWithNewPassword); // TODO: TO TEST
-        const message = `Your password has been updated.`;
-        res.status(200).send(message);
+        res.status(200).send(JSON.stringify({
+            message: "Your password has been updated.",
+            data: answer.data
+        }));
     } catch (error) {
         // res.status(error.statusCode || 500).send(error.message || "Something went wrong from our side.");
-        console.log(error);
+        console.log("Change password, news app service error : ", error)
     }
 }
 
