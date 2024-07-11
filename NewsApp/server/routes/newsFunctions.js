@@ -16,7 +16,7 @@ async function userRegister(req, res) {
         const { userToRegister } = req.body;
         isRegisterUserValidIfNotThrowError(userToRegister);
         const returnedUser = await DaprUserService.registerUserUsingAccessor(userToRegister);
-        const { email, fullName, preferences, categories } = returnedUser;
+        const { email, fullName, preferences, categories } = returnedUser.data;
         const message = `Hello ${fullName}, you registered to the news app. We will send you the news via email.`;
         res.status(200).send(message);
         sendNewsToClient(categories, preferences, email, fullName);

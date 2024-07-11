@@ -9,14 +9,14 @@ async function userRegister(req, res){
     try{
         const serviceMethod = `${urlMethodBeggining}/register`;
         const { userToRegister} = req.body;
-        const returnedData = await client.invoker.invoke(
+        const returnedUser = await client.invoker.invoke(
             daprHostAndServiceAppId,
             serviceMethod,
             HttpMethod.POST,
             {userToRegister} ,
             { headers: { 'Content-Type': 'application/json' } },
           );
-        res.status(200).send(JSON.stringify(returnedData));
+        res.status(200).send(JSON.stringify(returnedUser));
         res.end();
     }catch(error){
         console.log("user register, user service error : ", error)

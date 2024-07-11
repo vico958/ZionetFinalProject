@@ -11,8 +11,8 @@ async function userRegister(req, res){
         }
         else{
             userToRegister.email = emailInLowerCase;
-            const returnedData = await userAccessorManger.register(userToRegister);
-            res.status(200).send(JSON.stringify(returnedData));
+            const returnedUser = await userAccessorManger.register(userToRegister);
+            returnResAnswer(res, "User saved in system", returnedUser);
         }
     }catch(error){
         console.log("user register, user accessor service error : ", error)
@@ -27,7 +27,7 @@ async function deleteUser(req, res){
         if(password === user.password){
             const response = await userAccessorManger.deleteUser(user._id)
             if(response.deletedCount === 1){
-                res.status(200).send(JSON.stringify("User deleted"));
+                returnResAnswer(res, "User deleted", response);
             }else{
                 throw createError("Cant remove user", 500);
             }
@@ -49,7 +49,7 @@ async function userLogin(req, res){
             res.status(400).send(JSON.stringify("Email or password are not valid")); // For saftey not letting them know if its email or password not good
         }
         else if(password === user.password){
-            res.status(200).send(JSON.stringify(user));
+            returnResAnswer(res, "User login", user);
         }
         else{
             res.status(400).send(JSON.stringify("Email or password are not valid"))
@@ -137,15 +137,19 @@ async function changeEmail(req, res){
 async function getAllUsers(req, res){
     try{
         const allUsers = await userAccessorManger.getAllUsers();
+        if(allUsers === null){
+            throw createError("No users in db", 404);
+        }
         const transformedUsers = allUsers.map(user => ({
             email: user.email,
             fullName: user.fullName,
             preferences: user.preferences,
             categories: user.categories
         }));
-        res.status(200).send(JSON.stringify(transformedUsers));
+        returnResAnswer(res, "All users list", transformedUsers);
     }catch(error){
-        console.log(error);
+        console.log("Get all users, user accessor service error : ", error)
+        throw error
     }
 }
 
@@ -159,15 +163,23 @@ async function getUserByEmailHelper(email){
     return user;
 }
 
-async function changeAfterHavingUserHelper(res, messageSuccess, messageFail, answer){
+function changeAfterHavingUserHelper(res, messageSuccess, messageFail, answer){
     if(answer === null){
         throw createError(messageFail, 400);
     }else{
+        returnResAnswer(res, messageSuccess, answer)
         res.status(200).send(JSON.stringify({
             message: messageSuccess,
             data: answer
         }));
     }
+}
+
+function returnResAnswer(res, messageToSend, dataToSend){
+    res.status(200).send(JSON.stringify({
+        message: messageToSend,
+        data: dataToSend
+    }));
 }
 module.exports = {
     userRegister,
