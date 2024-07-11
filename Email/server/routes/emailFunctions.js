@@ -1,4 +1,5 @@
 const nodemailer = require("nodemailer");
+const {handleEmailError} = require("./emailErrors");
 
 async function sendEmail(req, res){
     try{
