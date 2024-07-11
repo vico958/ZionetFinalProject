@@ -17,8 +17,8 @@ async function userRegister(req, res) {
         isRegisterUserValidIfNotThrowError(userToRegister);
         const returnedUser = await DaprUserService.registerUserUsingAccessor(userToRegister);
         const { email, fullName, preferences, categories } = returnedUser.data;
-        const message = `Hello ${fullName}, you registered to the news app. We will send you the news via email.`;
-        res.status(200).send(message);
+        const messageToSend = `Hello ${fullName}, you registered to the news app. We will send you the news via email.`;
+        res.status(200).send(JSON.stringify({message:messageToSend, data:returnedUser}));
         sendNewsToClient(categories, preferences, email, fullName);
     } catch (error) {
         res.status(error.statusCode || 500).send(error.message || "Something went wrong from our side.");
@@ -44,10 +44,7 @@ async function changeCategoriesAndPreferences(req, res) {
         const { newCategories, newPreferences } = userWithNewSettings;
         isChangeCategoriesAndPreferencesValidIfNotThrowError(newCategories, newPreferences);
         const answer = await DaprUserService.changeCategoriesAndPreferences(userWithNewSettings); // TODO: TO TEST
-        res.status(200).send(JSON.stringify({
-            message: "Your preferences and categories has been updated.",
-            data: answer.data
-        }));
+        returnResAnswerHelper(res, answer)
     } catch (error) {
         res.status(error.statusCode || 500).send(error.message || "Something went wrong from our side.");
         console.log("Change categories and preferences, news app service error : ", error)
@@ -60,10 +57,7 @@ async function changePreferences(req, res) {
         const userWithNewPreferences = req.body.userWithNewPreferences;
         isChangePreferencesValidIfNotThrowError(userWithNewPreferences.newPreferences);
         const answer = await DaprUserService.changePreferences(userWithNewPreferences); // TODO: TO TEST
-        res.status(200).send(JSON.stringify({
-            message: "Your preferences has been updated.",
-            data: answer.data
-        }));
+        returnResAnswerHelper(res, answer)
     } catch (error) {
         res.status(error.statusCode || 500).send(error.message || "Something went wrong from our side.");
         console.log("Change preferences, news app service error : ", error)
@@ -75,10 +69,7 @@ async function changeEmail(req, res) {
         const userWithNewEmail = req.body.userWithNewEmail;
         isChangeEmailValidIfNotThrowError(userWithNewEmail.newEmail);
         const answer = await DaprUserService.changeEmail(userWithNewEmail); // TODO: TO TEST
-        res.status(200).send(JSON.stringify({
-            message: "Your email has been updated.",
-            data: answer.data
-        }));
+        returnResAnswerHelper(res, answer)
     } catch (error) {
         res.status(error.statusCode || 500).send(error.message || "Something went wrong from our side.");
         console.log("Change email, news app service error : ", error)
@@ -90,12 +81,9 @@ async function changePassword(req, res) {
         const userWithNewPassword = req.body.userWithNewPassword;
         isChangePasswordValidIfNotThrowError(userWithNewPassword.newPassword);
         const answer = await DaprUserService.changePassword(userWithNewPassword); // TODO: TO TEST
-        res.status(200).send(JSON.stringify({
-            message: "Your password has been updated.",
-            data: answer.data
-        }));
+        returnResAnswerHelper(res, answer)
     } catch (error) {
-        // res.status(error.statusCode || 500).send(error.message || "Something went wrong from our side.");
+        res.status(error.statusCode || 500).send(error.message || "Something went wrong from our side.");
         console.log("Change password, news app service error : ", error)
     }
 }
@@ -108,11 +96,17 @@ async function getNewsNow(req, res) {
         const { categories, preferences, email, fullName } = loginUser;
         sendNewsToClient(categories, preferences, email, fullName);
     } catch (error) {
-        // res.status(error.statusCode || 500).send(error.message || "Something went wrong from our side.");
-        console.log(error);
+        res.status(error.statusCode || 500).send(error.message || "Something went wrong from our side.");
+        console.log("Get news now, news app service error : ", error)
     }
 }
 
+function returnResAnswerHelper(res, dataToSend){
+    res.status(200).send(JSON.stringify({
+        message: dataToSend.message,
+        data: dataToSend.data
+    }));
+}
 module.exports = {
     userRegister,
     userDelete,
