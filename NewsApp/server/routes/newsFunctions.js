@@ -27,7 +27,7 @@ async function userRegister(req, res) {
 }
 
 async function userDelete(req, res) {
-    try { // TODO: check if really need validation for req.body.user (i don't think need)
+    try {
         const userToDelete = req.body.user;
         await DaprUserService.userDelete(userToDelete);
         const message = `You have been removed from the news app.`;
@@ -44,11 +44,14 @@ async function changeCategoriesAndPreferences(req, res) {
         const { newCategories, newPreferences } = userWithNewSettings;
         isChangeCategoriesAndPreferencesValidIfNotThrowError(newCategories, newPreferences);
         const answer = await DaprUserService.changeCategoriesAndPreferences(userWithNewSettings); // TODO: TO TEST
-        const message = `Your information has been updated.`;
-        res.status(200).send(message);
+        res.status(200).send(JSON.stringify({
+            message: "Your information has been updated.",
+            data: answer.data
+        }));
     } catch (error) {
-        // res.status(error.statusCode || 500).send(error.message || "Something went wrong from our side.");
-        console.log(error);
+        res.status(error.statusCode || 500).send(error.message || "Something went wrong from our side.");
+        console.log("Change categories and preferences, news app service error : ", error)
+
     }
 }
 

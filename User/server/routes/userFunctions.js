@@ -94,12 +94,12 @@ async function chageCategoriesAndPreferences(req, res){
                 {userWithNewSettings} ,
                 { headers: { 'Content-Type': 'application/json' } },
               );
-    
              //TODO : Handle returnedData
             res.status(200).send(JSON.stringify(returnedData));
             res.end();
         }catch(error){
-            console.log(error)
+            console.log("Change categories and preferences, user service error : ", error)
+            throw error
         }
 }
 

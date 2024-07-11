@@ -6,8 +6,8 @@ async function userRegister(req, res){
         const emailInLowerCase = userToRegister.email.toLowerCase()
         const isAlreadyInSytem = await userAccessorManger.getUserByEmail(emailInLowerCase);
         if(isAlreadyInSytem){
-        const error = createError("Email already use", 400);
-        throw error
+            const error = createError("Email already use", 400);
+            throw error
         }
         else{
             userToRegister.email = emailInLowerCase;
@@ -76,16 +76,25 @@ async function chagePreferences(req, res){
 async function chageCategoriesAndPreferences(req, res){
     try{//TODO :TEST
         const {email, password, newCategories, newPreferences} = req.body.userWithNewSettings;
-        const user = await userAccessorManger.getUserByEmail(email) // TODO: if there is no such user
+        const user = getUserByEmailHelper(email);
         if(password === user.password){//TODO: check first categories change and only then change preferences
-            const answerCategories = await userAccessorManger.changeUserCategories(user._id, newCategories)
-            const answerPreferences = await userAccessorManger.changeUserPreferences(user._id, newPreferences)
-            res.status(200).send(JSON.stringify("user preferences and categories changed"));
+            const {_id} = user
+            const answerCategories = await userAccessorManger.changeUserCategories(_id, newCategories)
+            const answerPreferences = await userAccessorManger.changeUserPreferences(_id, newPreferences)
+            if(answerCategories === null){ // its enogth to check only one because same _id
+                throw createError("Cant change preferences and categories", 400);
+            }else{
+                res.status(200).send(JSON.stringify({
+                    message: "User preferences and categories has been updated.",
+                    data: answerPreferences
+                }));
+            }
         }else{
-            res.status(400).send(JSON.stringify("cant change user preferences and categories"));
+            throw createError("Password dont match", 400);
         }
     }catch(error){
-        console.log(error)
+        console.log("Change categories and preferences, user accessor service error : ", error)
+        throw error
     }
 }
 
@@ -110,7 +119,7 @@ async function userLogin(req, res){
         const emailInLowerCase = email.toLowerCase()
         const user = await userAccessorManger.getUserByEmail(emailInLowerCase);
         if(user === null){
-            res.status(400).send(JSON.stringify("Email or password are not valid"));
+            res.status(400).send(JSON.stringify("Email or password are not valid")); // For saftey not letting them know if its email or password not good
         }
         else if(password === user.password){
             res.status(200).send(JSON.stringify(user));
@@ -136,6 +145,16 @@ async function getAllUsers(req, res){
     }catch(error){
         console.log(error);
     }
+}
+
+async function getUserByEmailHelper(email){
+    const emailInLowerCase = email.toLowerCase();
+    const user = await userAccessorManger.getUserByEmail(emailInLowerCase);
+    if(user === null){
+        const error = createError("Email or password are not valid", 400);// For saftey not letting them know if its email or password not good
+        throw error
+    }
+    return user;
 }
 
 module.exports = {
