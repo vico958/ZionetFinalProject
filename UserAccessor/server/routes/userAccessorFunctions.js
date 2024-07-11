@@ -36,17 +36,25 @@ async function changePassword(req, res) {
 }
 
 async function deleteUser(req, res){
-    try{//TODO: check about id of user
+    try{
         const {email, password} = req.body.userToDelete;
         const user = await userAccessorManger.getUserByEmail(email) // TODO: if there is no such user
+        if(user === null){
+            throw createError("User not found", 404)
+        }
         if(password === user.password){
-            const answer = await userAccessorManger.deleteUser(user._id)
-            res.status(200).send(JSON.stringify("user deleted"));
+            const response = await userAccessorManger.deleteUser(user._id)
+            if(response.deletedCount === 1){
+                res.status(200).send(JSON.stringify("User deleted"));
+            }else{
+            throw createError("Cant remove user", 500);
+            }
         }else{
-            res.status(400).send(JSON.stringify("cant remove user"));
+            throw createError("Unable to remove user: the provided password is incorrect.", 400);
         }
     }catch(error){
-        console.log(error)
+        console.log("delete user, user accessor service error : ", error)
+        throw error
     }
 }
 

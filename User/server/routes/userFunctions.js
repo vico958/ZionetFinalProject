@@ -16,7 +16,6 @@ async function userRegister(req, res){
             {userToRegister} ,
             { headers: { 'Content-Type': 'application/json' } },
           );
-         //TODO : Handle returnedData
         res.status(200).send(JSON.stringify(returnedData));
         res.end();
     }catch(error){
@@ -76,12 +75,11 @@ async function deleteUser(req, res){
             {userToDelete} ,
             { headers: { 'Content-Type': 'application/json' } },
           );
-
-         //TODO : Handle returnedData
         res.status(200).send(JSON.stringify(returnedData));
         res.end();
     }catch(error){
-        console.log(error)
+        console.log("delete user, user service error : ", error)
+        throw error
     }
 }
 

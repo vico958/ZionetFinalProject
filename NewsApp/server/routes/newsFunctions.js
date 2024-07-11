@@ -22,19 +22,19 @@ async function userRegister(req, res) {
         sendNewsToClient(categories, preferences, email, fullName);
     } catch (error) {
         res.status(error.statusCode || 500).send(error.message || "Something went wrong from our side.");
-        console.log(error);
+        console.log("user register, news app service error : ", error)
     }
 }
 
 async function userDelete(req, res) {
     try { // TODO: check if really need validation for req.body.user (i don't think need)
         const userToDelete = req.body.user;
-        const answer = await DaprUserService.userDelete(userToDelete); // TODO: check if really delete or not
+        await DaprUserService.userDelete(userToDelete);
         const message = `You have been removed from the news app.`;
         res.status(200).send(message);
     } catch (error) {
-        // res.status(error.statusCode || 500).send(error.message || "Something went wrong from our side.");
-        console.log(error);
+        res.status(error.statusCode || 500).send(error.message || "Something went wrong from our side.");
+        console.log("delete user, news app service error : ", error)
     }
 }
 
