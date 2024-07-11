@@ -1,6 +1,6 @@
 const {changePasswordHelper,  changeEmailHelper, changeCategoriesAndPreferencesHelper, 
-    changePreferencesHelper, userDeleteHelper,registerUserUsingAccessor, login} = require("../../services/user/userFunctions")
-const { sendNewsForClient} = require("../../services/general");
+    changePreferencesHelper, userDeleteHelper,registerUserUsingAccessor, login} = require("../services/user/userFunctions")
+const { sendNewsForClient} = require("../services/general");
 
 async function userRegister(req, res){
     try{
