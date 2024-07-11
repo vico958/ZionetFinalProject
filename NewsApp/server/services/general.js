@@ -25,7 +25,7 @@ async function sendDailyNews(){
 }
 
 function createError(message, statusCode){
-    const error = Error(message);
+    const error = new Error(message);
     error.statusCode = statusCode;
     return error;
 }

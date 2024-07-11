@@ -9,8 +9,8 @@ function isUserPasswordValidIfNotThrowError(password) {
   const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
 
   if (password.length < minLength || !hasUpperCase || !hasLowerCase || !hasDigit || !hasSpecialChar) {
-    const errorMessage = "Password should contain at least 8 characters, including one uppercase letter, one lowercase letter, and one digit."
-      throw new Error(errorMessage, 400);
+      const errorMessage = "Password should contain at least 8 characters, including one uppercase letter, one lowercase letter, and one digit."
+      throw createError(errorMessage, 400);
   }
   }
 
@@ -18,22 +18,31 @@ function isUserPasswordValidIfNotThrowError(password) {
     const fullNameRegex = /^[A-Za-z]+(?:\s[A-Za-z]+)+$/;
   
     if (!fullNameRegex.test(fullName)) {
-      return false
+      const errorMessage = "Full name must be in English and include both a first name and a last name."
+      throw createError(errorMessage, 400);
     }
-  
-    return true
+
   }
 
 function isUserEmailValidIfNotThrowError(email){
-    return isEmailValid(email)
+    if(isEmailValid(email) === false){
+      const errorMessage = "Email address is not valid."
+      throw createError(errorMessage, 400);
+    }
 }
 
 function isPreferencesValidIfNotThrowError(preferences){
-    return isListAndFromStringTypeAndNotEmpty(preferences)
+    if(isListAndFromStringTypeAndNotEmpty(preferences) === false){
+      const errorMessage = "Preferences must be an array of strings."
+      throw createError(errorMessage, 400)
+    }
 }
 
 function isCategoriesValidIfNotThrowError(categories){
-    return isListAndFromStringTypeAndNotEmpty(categories)
+    if(isListAndFromStringTypeAndNotEmpty(categories) === false){
+      const errorMessage = "Categories must be an array of strings."
+      throw createError(errorMessage, 400)
+    }
 
 }
 
@@ -54,10 +63,5 @@ function isRegisterUserValidIfNotThrowError(userToRegister){
 }
 
 module.exports = {
-    isPreferencesValid,
-    isCategoriesValid,
-    isUserPasswordValid,
-    isUserFullNameValid,
-    isUserEmailValid,
     isRegisterUserValidIfNotThrowError
   }
