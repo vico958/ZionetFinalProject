@@ -1,17 +1,16 @@
 const {changePasswordHelper,  changeEmailHelper, changeCategoriesAndPreferencesHelper, 
     changePreferencesHelper, userDeleteHelper,registerUserUsingAccessor, login} = require("../services/user/userFunctions")
 const { sendNewsToClient} = require("../services/general");
-const {isRegisterUserValidIfNotThrowError} = require("../services/validation/userValidation/userValidation");
+const {isRegisterUserValidIfNotThrowError, isChangeCategoriesAndPreferencesIfNotThrowError} = require("../services/validation/userValidation/userValidation");
 async function userRegister(req, res){
     try{
         const { userToRegister} = req.body;
         isRegisterUserValidIfNotThrowError(userToRegister)
-        const {email, password, fullName, preferences, categories} = userToRegister
         const returnedUser = await registerUserUsingAccessor(userToRegister);
-        const message = `${fullName} you signed to the news app, we will send to you via email the news`
+        const {email, fullName, preferences, categories} = returnedUser
+        const message = `${fullName} you register to the news app, we will send to you via email the news`
         res.status(200).send(message);
         res.end();
-        
         sendNewsToClient(categories, preferences, email, fullName);
     }catch(error){
         res.status(error.statusCode).send(error.message)
@@ -20,7 +19,7 @@ async function userRegister(req, res){
 }
 
 async function userDelete(req, res){
-    try{
+    try{//TODO : check if really need validation for req.body.user(i dont think need)
         const userToDelete = req.body.user;
         const answer = await userDeleteHelper(userToDelete);//TODO: check if really delete or not
         const message = `you been remove from news app`;
@@ -35,6 +34,8 @@ async function userDelete(req, res){
 async function changeCategoriesAndPreferences(req, res){
     try{
         const userWithNewSettings = req.body.userWithNewSettings;
+        const { categories, preferences } = userWithNewSettings
+        isChangeCategoriesAndPreferencesIfNotThrowError(categories, preferences)
         const answer = await changeCategoriesAndPreferencesHelper(userWithNewSettings)//TODO:TO TEST
         const message = `you'r info has been change`
         res.status(200).send(message);

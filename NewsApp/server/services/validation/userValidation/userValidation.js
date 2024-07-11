@@ -49,7 +49,6 @@ function isCategoriesValidIfNotThrowError(categories){
 function isRegisterUserValidIfNotThrowError(userToRegister){
   const {email, password, fullName, preferences, categories} = userToRegister
   try{
-
     isUserFullNameValidIfNotThrowError(email);
     isCategoriesValidIfNotThrowError(categories);
     isPreferencesValidIfNotThrowError(preferences);
@@ -62,6 +61,17 @@ function isRegisterUserValidIfNotThrowError(userToRegister){
   }
 }
 
+function isChangeCategoriesAndPreferencesIfNotThrowError(categories, preferences){
+  try{
+    isCategoriesValidIfNotThrowError(categories);
+    isPreferencesValidIfNotThrowError(preferences);
+  }catch(error){
+    console.log(error.message);
+    throw error;
+  }
+}
+
 module.exports = {
-    isRegisterUserValidIfNotThrowError
+    isRegisterUserValidIfNotThrowError,
+    isChangeCategoriesAndPreferencesIfNotThrowError
   }
