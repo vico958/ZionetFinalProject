@@ -10,9 +10,11 @@ async function sendEmail(req, res){
             subject: emailSubject, // Subject line
             html: emailText, // Use 'html' instead of 'text'
         });
-        res.status(200).send("email sent")
-    }catch(error){
-        console.log(error);
+        console.log('Message sent: %s', info.messageId);
+        res.status(200).send({ message: 'Email sent successfully', info: info });
+    } catch (error) {
+        const err = handleEmailError(error)
+        res.status(err.statusCode).send(err.message);
     }
 }
 
