@@ -1,30 +1,33 @@
 const {changePasswordHelper,  changeEmailHelper, changeCategoriesAndPreferencesHelper, 
     changePreferencesHelper, userDeleteHelper,registerUserUsingAccessor, login} = require("../services/user/userFunctions")
-const { sendNewsForClient} = require("../services/general");
-
+const { sendNewsToClient} = require("../services/general");
+const {isRegisterUserValidIfNotThrowError, isChangeCategoriesAndPreferencesValidIfNotThrowError,
+     isChangePreferencesValidIfNotThrowError, isChangeEmailValidIfNotThrowError, isChangePasswordValidIfNotThrowError} = require("../services/validation/userValidation/userValidation");
 async function userRegister(req, res){
     try{
         const { userToRegister} = req.body;
+        isRegisterUserValidIfNotThrowError(userToRegister)
         const returnedUser = await registerUserUsingAccessor(userToRegister);
-        const {categories, preferences, fullName } = returnedUser;
-        const message = `${fullName} you signed to the news app, we will send to you via email the news`
+        const {email, fullName, preferences, categories} = returnedUser
+        const message = `${fullName} you register to the news app, we will send to you via email the news`
         res.status(200).send(message);
         res.end();
-        
-        sendNewsForClient(categories, preferences, returnedUser.email, returnedUser.fullName);
+        sendNewsToClient(categories, preferences, email, fullName);
     }catch(error){
+        res.status(error.statusCode).send(error.message)
         console.log(error);
     }
 }
 
 async function userDelete(req, res){
-    try{
+    try{//TODO : check if really need validation for req.body.user(i dont think need)
         const userToDelete = req.body.user;
         const answer = await userDeleteHelper(userToDelete);//TODO: check if really delete or not
         const message = `you been remove from news app`;
         res.status(200).send(message);
         res.end();
     }catch(error){
+        res.status(error.statusCode).send(error.message)
         console.log(error);
     }
 }
@@ -32,11 +35,14 @@ async function userDelete(req, res){
 async function changeCategoriesAndPreferences(req, res){
     try{
         const userWithNewSettings = req.body.userWithNewSettings;
+        const { categories, preferences } = userWithNewSettings
+        isChangeCategoriesAndPreferencesValidIfNotThrowError(categories, preferences)
         const answer = await changeCategoriesAndPreferencesHelper(userWithNewSettings)//TODO:TO TEST
         const message = `you'r info has been change`
         res.status(200).send(message);
         res.end();
     }catch(error){
+        res.status(error.statusCode).send(error.message)
         console.log(error);
     }
 }
@@ -44,11 +50,13 @@ async function changeCategoriesAndPreferences(req, res){
 async function changePreferences(req, res){
     try{
         const userWithNewPreferences = req.body.userWithNewPreferences;
+        isChangePreferencesValidIfNotThrowError(userWithNewPreferences.preferences)
         const answer = await changePreferencesHelper(userWithNewPreferences)//TODO:TO TEST
         const message = `you'r info has been change`
         res.status(200).send(message);
         res.end();
     }catch(error){
+        res.status(error.statusCode).send(error.message)
         console.log(error);
     }
 }
@@ -56,11 +64,13 @@ async function changePreferences(req, res){
 async function changeEmail(req, res){
     try{
         const userWithNewEmail = req.body.userWithNewEmail;
+        isChangeEmailValidIfNotThrowError(userWithNewEmail.email)
         const answer = await changeEmailHelper(userWithNewEmail)//TODO:TO TEST
         const message = `you'r email has been change`
         res.status(200).send(message);
         res.end();
     }catch(error){
+        res.status(error.statusCode).send(error.message)
         console.log(error);
     }
 }
@@ -68,11 +78,13 @@ async function changeEmail(req, res){
 async function changePassword(req, res){
     try{
         const userWithNewPassword = req.body.userWithNewPassword;
+        isChangePasswordValidIfNotThrowError(userWithNewPassword.password);
         const answer = await changePasswordHelper(userWithNewPassword)//TODO:TO TEST
         const message = `you'r password has been change`
         res.status(200).send(message);
         res.end();
     }catch(error){
+        res.status(error.statusCode).send(error.message)
         console.log(error);
     }
 }
@@ -83,9 +95,10 @@ async function getNewsNow(req, res){
         const user = req.body.user;
         const loginUser = await login(user);
         const { categories, preferences, email, fullName} = loginUser
-        sendNewsForClient(categories, preferences, email, fullName);
+        sendNewsToClient(categories, preferences, email, fullName);
     }catch(error){
-
+        res.status(error.statusCode).send(error.message)
+        console.log(error);
     }
 }
 

@@ -2,7 +2,7 @@ const { bestFitNewsWithAi, } = require("./newsAi/newsAiFunctions");
 const {getNews} = require("./newsData/newsDataFunctions")
 const {sendEmailWithNews} = require("./email/emailFunctions")
 const { getAllUsersInSystem } = require("./user/userFunctions")
-async function sendNewsForClient(categories, preferences, clientEmail, clientFullName){
+async function sendNewsToClient(categories, preferences, clientEmail, clientFullName){
     try{
         const news = await getNews(categories, preferences);
         const bestNews = await bestFitNewsWithAi(news, preferences);
@@ -17,14 +17,21 @@ async function sendDailyNews(){
         const allUsers = await getAllUsersInSystem();
         for (const user of allUsers) {
             const {categories, preferences, email, fullName} = user
-            await sendNewsForClient(categories, preferences, email, fullName)
+            await sendNewsToClient(categories, preferences, email, fullName)
         }
     }catch(error){
         console.log(error)
     }
 }
 
+function createError(message, statusCode){
+    const error = new Error(message);
+    error.statusCode = statusCode;
+    return error;
+}
+
 module.exports = {
-    sendNewsForClient,
-    sendDailyNews
+    sendNewsToClient,
+    sendDailyNews,
+    createError
 }

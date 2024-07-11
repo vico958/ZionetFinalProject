@@ -1,4 +1,4 @@
-const userAccessorManger = require("../services/userAccessorManger")
+const userAccessorManger = require("../services/userAccessor/userAccessorManger")
 
 async function userRegister(req, res){
     try{
