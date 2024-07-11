@@ -1,5 +1,5 @@
 require("dotenv").config();
-const DaprUserService = require("../services/user/userFunctions");
+const DaprUserService = require("../services/user/userDaprService");
 const { sendNewsToClient } = require("../services/general");
 const {
     isRegisterUserValidIfNotThrowError,
