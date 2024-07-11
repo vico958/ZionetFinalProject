@@ -16,12 +16,12 @@ async function userRegister(req, res){
             {userToRegister} ,
             { headers: { 'Content-Type': 'application/json' } },
           );
-
          //TODO : Handle returnedData
         res.status(200).send(JSON.stringify(returnedData));
         res.end();
     }catch(error){
-        console.log(error)
+        console.log("user register, user service error : ", error)
+        throw error
     }
 }
 

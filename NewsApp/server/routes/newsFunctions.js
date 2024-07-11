@@ -17,7 +17,7 @@ async function userRegister(req, res) {
         isRegisterUserValidIfNotThrowError(userToRegister);
         const returnedUser = await DaprUserService.registerUserUsingAccessor(userToRegister);
         const { email, fullName, preferences, categories } = returnedUser;
-        const message = `${fullName}, you registered to the news app. We will send you the news via email.`;
+        const message = `Hello ${fullName}, you registered to the news app. We will send you the news via email.`;
         res.status(200).send(message);
         sendNewsToClient(categories, preferences, email, fullName);
     } catch (error) {
@@ -33,7 +33,7 @@ async function userDelete(req, res) {
         const message = `You have been removed from the news app.`;
         res.status(200).send(message);
     } catch (error) {
-        res.status(error.statusCode || 500).send(error.message || "Something went wrong from our side.");
+        // res.status(error.statusCode || 500).send(error.message || "Something went wrong from our side.");
         console.log(error);
     }
 }
@@ -47,7 +47,7 @@ async function changeCategoriesAndPreferences(req, res) {
         const message = `Your information has been updated.`;
         res.status(200).send(message);
     } catch (error) {
-        res.status(error.statusCode || 500).send(error.message || "Something went wrong from our side.");
+        // res.status(error.statusCode || 500).send(error.message || "Something went wrong from our side.");
         console.log(error);
     }
 }
@@ -60,7 +60,7 @@ async function changePreferences(req, res) {
         const message = `Your preferences have been updated.`;
         res.status(200).send(message);
     } catch (error) {
-        res.status(error.statusCode || 500).send(error.message || "Something went wrong from our side.");
+        // res.status(error.statusCode || 500).send(error.message || "Something went wrong from our side.");
         console.log(error);
     }
 }
@@ -73,7 +73,7 @@ async function changeEmail(req, res) {
         const message = `Your email has been updated.`;
         res.status(200).send(message);
     } catch (error) {
-        res.status(error.statusCode || 500).send(error.message || "Something went wrong from our side.");
+        // res.status(error.statusCode || 500).send(error.message || "Something went wrong from our side.");
         console.log(error);
     }
 }
@@ -86,7 +86,7 @@ async function changePassword(req, res) {
         const message = `Your password has been updated.`;
         res.status(200).send(message);
     } catch (error) {
-        res.status(error.statusCode || 500).send(error.message || "Something went wrong from our side.");
+        // res.status(error.statusCode || 500).send(error.message || "Something went wrong from our side.");
         console.log(error);
     }
 }
@@ -99,7 +99,7 @@ async function getNewsNow(req, res) {
         const { categories, preferences, email, fullName } = loginUser;
         sendNewsToClient(categories, preferences, email, fullName);
     } catch (error) {
-        res.status(error.statusCode || 500).send(error.message || "Something went wrong from our side.");
+        // res.status(error.statusCode || 500).send(error.message || "Something went wrong from our side.");
         console.log(error);
     }
 }

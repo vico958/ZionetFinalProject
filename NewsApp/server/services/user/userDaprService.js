@@ -21,6 +21,7 @@ class DaprUserService {
             );
         } catch (error) {
             console.log(error);
+            throw error
         }
     }
 

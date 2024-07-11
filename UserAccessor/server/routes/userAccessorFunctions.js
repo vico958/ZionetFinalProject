@@ -1,12 +1,13 @@
 const userAccessorManger = require("../services/userAccessor/userAccessorManger")
-
+const {createError} = require("../services/general")
 async function userRegister(req, res){
     try{
         const { userToRegister} = req.body;
         const emailInLowerCase = userToRegister.email.toLowerCase()
         const isAlreadyInSytem = await userAccessorManger.getUserByEmail(emailInLowerCase);
         if(isAlreadyInSytem){
-        res.status(400).send(JSON.stringify("Email already use"));
+        const error = createError("Email already use", 400);
+        throw error
         }
         else{
             userToRegister.email = emailInLowerCase;
@@ -14,7 +15,8 @@ async function userRegister(req, res){
             res.status(200).send(JSON.stringify(returnedData));
         }
     }catch(error){
-        console.log(error)
+        console.log("user register, user accessor service error : ", error)
+        throw error
     }
 }
 
