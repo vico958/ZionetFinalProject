@@ -11,4 +11,5 @@ userAccessorRouter.put("/change-categories-and-preferences", chageCategoriesAndP
 userAccessorRouter.put("/change-password", changePassword)
 userAccessorRouter.put("/change-email", changeEmail)
 userAccessorRouter.delete("/delete-user", deleteUser)
+
 module.exports = userAccessorRouter;

@@ -54,7 +54,7 @@ function isRegisterUserValidIfNotThrowError(userToRegister){
     isUserFullNameValidIfNotThrowError(fullName);
     isUserPasswordValidIfNotThrowError(password);
   }catch(error){
-    console.log(error.message);
+    console.error(error.message);
     throw error;
   }
 }
@@ -64,7 +64,7 @@ function isChangeCategoriesAndPreferencesValidIfNotThrowError(categories, prefer
     isCategoriesValidIfNotThrowError(categories);
     isPreferencesValidIfNotThrowError(preferences);
   }catch(error){
-    console.log(error.message);
+    console.error(error.message);
     throw error;
   }
 }
@@ -73,7 +73,7 @@ function isChangePreferencesValidIfNotThrowError(preferences){
   try{
     isPreferencesValidIfNotThrowError(preferences);
   }catch(error){
-    console.log(error.message);
+    console.error(error.message);
     throw error;
   }
 }
@@ -82,7 +82,7 @@ function isChangeEmailValidIfNotThrowError(email){
   try{
     isUserEmailValidIfNotThrowError(email);
   }catch(error){
-    console.log(error.message);
+    console.error(error.message);
     throw error;
   }
 }
@@ -91,7 +91,7 @@ function isChangePasswordValidIfNotThrowError(password){
   try{
     isUserPasswordValidIfNotThrowError(password);
   }catch(error){
-    console.log(error.message);
+    console.error(error.message);
     throw error;
   }
 }

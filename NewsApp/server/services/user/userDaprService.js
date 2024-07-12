@@ -12,7 +12,7 @@ class DaprUserService {
     async registerUserUsingAccessor(userToRegister) {
         try {
             const serviceMethod = `${this.userUrlMethodBeggining}/register`;
-            return await this.userClientDapr.invoker.invoke(
+            return  await this.userClientDapr.invoker.invoke(
                 this.userDaprHostAndServiceAppId,
                 serviceMethod,
                 HttpMethod.POST,
@@ -20,7 +20,7 @@ class DaprUserService {
                 { headers: { 'Content-Type': 'application/json' } },
             );
         } catch (error) {
-            console.log(error);
+            throw error
         }
     }
 
@@ -35,7 +35,7 @@ class DaprUserService {
                 { headers: { 'Content-Type': 'application/json' } },
             );
         } catch (error) {
-            console.log(error);
+            throw error
         }
     }
 
@@ -50,7 +50,7 @@ class DaprUserService {
                 { headers: { 'Content-Type': 'application/json' } },
             );
         } catch (error) {
-            console.log(error);
+            throw error
         }
     }
 
@@ -65,7 +65,7 @@ class DaprUserService {
                 { headers: { 'Content-Type': 'application/json' } },
             );
         } catch (error) {
-            console.log(error);
+            throw error
         }
     }
 
@@ -80,7 +80,7 @@ class DaprUserService {
                 { headers: { 'Content-Type': 'application/json' } },
             );
         } catch (error) {
-            console.log(error);
+            throw error
         }
     }
 
@@ -95,7 +95,7 @@ class DaprUserService {
                 { headers: { 'Content-Type': 'application/json' } },
             );
         } catch (error) {
-            console.log(error);
+            throw error
         }
     }
 
@@ -110,7 +110,7 @@ class DaprUserService {
                 { headers: { 'Content-Type': 'application/json' } },
             );
         } catch (error) {
-            console.log(error);
+            throw error
         }
     }
 
@@ -123,7 +123,7 @@ class DaprUserService {
                 HttpMethod.GET,
             );
         } catch (error) {
-            console.log(error);
+            throw error
         }
     }
 }

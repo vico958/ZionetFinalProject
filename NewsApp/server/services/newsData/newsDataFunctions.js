@@ -23,7 +23,7 @@ async function getNews(categories, preferences){
         console.log("reducedNewsreducedNews is ", reducedNews)
         return reducedNews;
     }catch(error){
-        console.log(error);
+        console.error(error);
     }
 }
 
