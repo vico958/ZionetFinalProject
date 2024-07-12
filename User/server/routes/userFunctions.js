@@ -77,7 +77,7 @@ async function deleteUser(req, res, next){
             {userToDelete} ,
             { headers: { 'Content-Type': 'application/json' } },
           );
-        res.status(200).send(JSON.stringify(returnedData));
+        res.status(200).send(returnedData);
         res.end();
     }catch(error){
         console.error("delete user, user service error ", error)

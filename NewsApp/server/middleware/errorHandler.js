@@ -1,14 +1,10 @@
-function errorHandler (error, req, res, next) {
-  for(let i=0;i<10;i++){
-    console.log("error from news app, error handler")
-  }
+function errorHandler(error, req, res, next) {
+  const parsedError = JSON.parse(error.message);
   if (res.headersSent) {
-  return next(error)
-}
-console.log("error from news app, error handler22222222222222222")
-
-    res.status(error.statusCode || 500).send(error.message || "Something went wrong from our side.");
+    return next(error);
   }
 
-  module.exports = {errorHandler};
-  
+  res.status(parsedError.status || 500).send(parsedError.error_msg || "Something went wrong from our side.");
+}
+
+module.exports = { errorHandler };
