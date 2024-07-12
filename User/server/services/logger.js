@@ -23,4 +23,6 @@ const streams = [
 ];
 const logger = pino({}, pinoMultiStream.multistream(streams));
 
-module.exports = logger;
+const userLogger = logger.child({ service: "user" });
+
+module.exports = userLogger;

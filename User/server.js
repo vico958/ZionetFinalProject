@@ -3,7 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const {loggerMiddleware} = require("./server/middleware/loggerMiddleware");
 const {errorHandler} = require("./server/middleware/errorHandler");
-const logger = require("./server/services/logger");
+const userLogger = require("./server/services/logger");
 const bodyParser = require("body-parser");
 const user = require("./server/routes/user")
 const app = express();
@@ -18,12 +18,12 @@ const port = process.env.port || "3002";
 
 
 app.get("/", (req, res) =>{
-    logger.info("hello world user service")
+    userLogger.info("hello world user service")
     res.send("hello world user service")
 })
 
 app.use(errorHandler);
 
 app.listen(port, async () =>{
-    logger.info(`Server started on port - ${port}`)
+    userLogger.info(`Server started on port - ${port}`)
 })

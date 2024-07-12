@@ -1,6 +1,6 @@
-const logger = require("../services/logger");
+const userLogger = require("../services/logger");
 function loggerMiddleware(req, res, next) {
-    logger.info(`${req.method} ${req.path}`);
+  userLogger.info(`${req.method} ${req.path}`);
     next();
   }
   
