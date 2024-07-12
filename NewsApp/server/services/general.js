@@ -33,8 +33,24 @@ function createError(message, statusCode){
     return error;
 }
 
+async function sendRequestWithDaprHelper(data, httpMethod,urlBeggining, urlEnding, daprClient, serviceId){
+    try {
+        const serviceMethod = `${urlBeggining}/${urlEnding}`;
+        return await daprClient.invoker.invoke(
+            serviceId,
+            serviceMethod,
+            httpMethod,
+            { data },
+            { headers: { 'Content-Type': 'application/json' } },
+        );
+    } catch (error) {
+        throw error
+    }
+}
+
 module.exports = {
     sendNewsToClient,
     sendDailyNews,
-    createError
+    createError,
+    sendRequestWithDaprHelper
 }

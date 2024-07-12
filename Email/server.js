@@ -20,5 +20,5 @@ app.get("/", (req, res) =>{
 })
 app.use(errorHandler)
 app.listen(port, async () =>{
-    onsole.log("Server started on port", port)
+    console.log("Server started on port", port)
 })

@@ -27,7 +27,7 @@ async function deleteUser(req, res, next){
         if(password === user.password){
             const response = await userAccessorManger.deleteUser(user._id)
             if(response.deletedCount === 1){
-                res.status(200).send("User deleted");
+                returnResAnswer(res, "User deleted", response)
             }else{
                 throw createError("Cant remove user", 500);
             }

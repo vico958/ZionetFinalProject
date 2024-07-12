@@ -153,8 +153,6 @@ async function getAllUsers(req, res, next){
                 serviceMethod,
                 HttpMethod.GET,
               );
-    
-             
             res.status(200).send(JSON.stringify(allUsers));
             res.end();
         }catch(error){

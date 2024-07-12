@@ -13,17 +13,13 @@ const {
 
 async function userRegister(req, res, next) {
     try {
-        console.log("11111111111111111111111111111111111111111111111111111111")
         const { userToRegister } = req.body;
         isRegisterUserValidIfNotThrowError(userToRegister);
         const returnedUser = await DaprUserService.registerUserUsingAccessor(userToRegister);
-        console.log("ddddddddddddddddddddddddddddddddddd", returnedUser);
-        console.log("2222222222222222222222222222222222222222222222222")
-
         const { email, fullName, preferences, categories } = returnedUser.data;
         const messageToSend = `Hello ${fullName}, you registered to the news app. We will send you the news via email.`;
-        res.status(200).send(JSON.stringify({message:messageToSend, data:returnedUser.data}));
-        // sendNewsToClient(categories, preferences, email, fullName);
+        returnResAnswerHelper(res, messageToSend, returnedUser.data)
+        sendNewsToClient(categories, preferences, email, fullName);
     } catch (error) {
         console.error("user register, news app service error : ", error);
         next(error);
@@ -33,10 +29,9 @@ async function userRegister(req, res, next) {
 async function userDelete(req, res, next) {
     try {
         const userToDelete = req.body.user;
-        await DaprUserService.userDelete(userToDelete);
+        const answer = await DaprUserService.userDelete(userToDelete);
         const message = `You have been removed from the news app.`;
-        console.log("interisnsdsoidfnsodfinsdiofniosdfiodsnfoidsnfoidsnfiodsnfidof")
-        res.status(200).send(message);
+        returnResAnswerHelper(res, message, answer.data)
     } catch (error) {
         console.error("delete user, news app service error : ", error)
         next(error);
@@ -49,7 +44,7 @@ async function changeCategoriesAndPreferences(req, res, next) {
         const { newCategories, newPreferences } = userWithNewSettings;
         isChangeCategoriesAndPreferencesValidIfNotThrowError(newCategories, newPreferences);
         const answer = await DaprUserService.changeCategoriesAndPreferences(userWithNewSettings); // TODO: TO TEST
-        returnResAnswerHelper(res, answer)
+        returnResAnswerHelper(res, answer.message, answer.data)
     } catch (error) {
         console.error("Change categories and preferences, news app service error : ", error);
         next(error);
@@ -61,7 +56,7 @@ async function changePreferences(req, res, next) {
         const userWithNewPreferences = req.body.userWithNewPreferences;
         isChangePreferencesValidIfNotThrowError(userWithNewPreferences.newPreferences);
         const answer = await DaprUserService.changePreferences(userWithNewPreferences); // TODO: TO TEST
-        returnResAnswerHelper(res, answer)
+        returnResAnswerHelper(res, answer.message, answer.data)
     } catch (error) {
         console.error("Change preferences, news app service error : ", error);
         next(error);
@@ -73,7 +68,7 @@ async function changeEmail(req, res, next) {
         const userWithNewEmail = req.body.userWithNewEmail;
         isChangeEmailValidIfNotThrowError(userWithNewEmail.newEmail);
         const answer = await DaprUserService.changeEmail(userWithNewEmail); // TODO: TO TEST
-        returnResAnswerHelper(res, answer)
+        returnResAnswerHelper(res, answer.message, answer.data)
     } catch (error) {
         console.error("Change email, news app service error : ", error);
         next(error);
@@ -85,7 +80,7 @@ async function changePassword(req, res, next) {
         const userWithNewPassword = req.body.userWithNewPassword;
         isChangePasswordValidIfNotThrowError(userWithNewPassword.newPassword);
         const answer = await DaprUserService.changePassword(userWithNewPassword); // TODO: TO TEST
-        returnResAnswerHelper(res, answer)
+        returnResAnswerHelper(res, answer.message, answer.data)
     } catch (error) {
         console.error("Change password, news app service error : ", error);
         next(error);
@@ -105,10 +100,10 @@ async function getNewsNow(req, res, next) {
     }
 }
 
-function returnResAnswerHelper(res, dataToSend){
+function returnResAnswerHelper(res, messageToSend, dataToSend){
     res.status(200).send(JSON.stringify({
-        message: dataToSend.message,
-        data: dataToSend.data
+        message: messageToSend,
+        data: dataToSend
     }));
 }
 module.exports = {

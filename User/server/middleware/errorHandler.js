@@ -1,15 +1,13 @@
-function errorHandler (error, req, res, next) {
-  if (res.headersSent) {
-    for(let i=0;i<10;i++){
-        console.log("check userrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-    }
-  return next(error)
-}
-for(let i=0;i<10;i++){
-    console.log("check user 2222222222222222222222222222222222222222222222");
-}
-    res.status(error.statusCode || 500).send(error.message || "Something went wrong from our side.");
+function errorHandler(error, req, res, next) {
+  for (let i = 0; i < 10; i++) {
+    console.log("error from user, error handler");
   }
+  if (res.headersSent) {
+    return next(error);
+  }
+  console.log("error from user, error handler222222222222222222");
 
-  module.exports = {errorHandler};
-  
+  res.status(error.statusCode || 500).send(error.message || "Something went wrong from our side.");
+}
+
+module.exports = { errorHandler };
