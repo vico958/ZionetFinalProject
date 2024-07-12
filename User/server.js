@@ -25,5 +25,5 @@ app.get("/", (req, res) =>{
 app.use(errorHandler);
 
 app.listen(port, async () =>{
-    logger.info("Server started on port", port)
+    logger.info(`Server started on port - ${port}`)
 })

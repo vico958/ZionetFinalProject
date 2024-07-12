@@ -12,7 +12,7 @@ const fileTransport = pino.transport({
     options: {
         translateTime: "SYS:dd-mm-yyyy HH:MM:ss",
         ignore: "pid",
-        destination: `${__dirname}/userService.log`,
+        destination: `${__dirname}/newsDataService.log`,
         colorize: false
     }
 })
