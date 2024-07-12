@@ -1,6 +1,6 @@
 require("dotenv").config();
 const { DaprClient, HttpMethod } = require("@dapr/dapr");
-const {sendRequestWithDaprHelper} = require("../general")
+
 class DaprUserService {
     constructor() {
         this.userDaprHostAndServiceAppId = "user"; // Dapr Sidecar Host
@@ -11,8 +11,14 @@ class DaprUserService {
 
     async registerUserUsingAccessor(userToRegister) {
         try {
-            const urlEnding = "register";
-            return await sendRequestWithDaprHelper(userToRegister, HttpMethod.POST, this.userUrlMethodBeggining, urlEnding, this.userClientDapr, userDaprHostAndServiceAppId);
+            const serviceMethod = `${this.userUrlMethodBeggining}/register`;
+            return  await this.userClientDapr.invoker.invoke(
+                this.userDaprHostAndServiceAppId,
+                serviceMethod,
+                HttpMethod.POST,
+                { userToRegister },
+                { headers: { 'Content-Type': 'application/json' } },
+            );
         } catch (error) {
             throw error
         }
@@ -20,8 +26,14 @@ class DaprUserService {
 
     async userDelete(userToDelete) {
         try {
-            const urlEnding = "delete-user";
-            return await sendRequestWithDaprHelper(userToDelete, HttpMethod.DELETE, this.userUrlMethodBeggining, urlEnding, this.userClientDapr, userDaprHostAndServiceAppId);
+            const serviceMethod = `${this.userUrlMethodBeggining}/delete-user`;
+            return await this.userClientDapr.invoker.invoke(
+                this.userDaprHostAndServiceAppId,
+                serviceMethod,
+                HttpMethod.DELETE,
+                { userToDelete },
+                { headers: { 'Content-Type': 'application/json' } },
+            );
         } catch (error) {
             throw error
         }
@@ -29,8 +41,14 @@ class DaprUserService {
 
     async changeCategoriesAndPreferences(userWithNewSettings) {
         try {
-            const urlEnding = "change-categories-and-preferences";
-            return await sendRequestWithDaprHelper(userWithNewSettings, HttpMethod.PUT, this.userUrlMethodBeggining, urlEnding, this.userClientDapr, userDaprHostAndServiceAppId);
+            const serviceMethod = `${this.userUrlMethodBeggining}/change-categories-and-preferences`;
+            return await this.userClientDapr.invoker.invoke(
+                this.userDaprHostAndServiceAppId,
+                serviceMethod,
+                HttpMethod.PUT,
+                { userWithNewSettings },
+                { headers: { 'Content-Type': 'application/json' } },
+            );
         } catch (error) {
             throw error
         }
@@ -38,8 +56,14 @@ class DaprUserService {
 
     async changePreferences(userWithNewPreferences) {
         try {
-            const urlEnding = "change-preferences";
-            return await sendRequestWithDaprHelper(userWithNewPreferences, HttpMethod.PUT, this.userUrlMethodBeggining, urlEnding, this.userClientDapr, userDaprHostAndServiceAppId);
+            const serviceMethod = `${this.userUrlMethodBeggining}/change-preferences`;
+            return await this.userClientDapr.invoker.invoke(
+                this.userDaprHostAndServiceAppId,
+                serviceMethod,
+                HttpMethod.PUT,
+                { userWithNewPreferences },
+                { headers: { 'Content-Type': 'application/json' } },
+            );
         } catch (error) {
             throw error
         }
@@ -47,8 +71,14 @@ class DaprUserService {
 
     async changePassword(userWithNewPassword) {
         try {
-            const urlEnding = "change-password";
-            return await sendRequestWithDaprHelper(userWithNewPassword, HttpMethod.PUT, this.userUrlMethodBeggining, urlEnding, this.userClientDapr, userDaprHostAndServiceAppId);
+            const serviceMethod = `${this.userUrlMethodBeggining}/change-password`;
+            return await this.userClientDapr.invoker.invoke(
+                this.userDaprHostAndServiceAppId,
+                serviceMethod,
+                HttpMethod.PUT,
+                { userWithNewPassword },
+                { headers: { 'Content-Type': 'application/json' } },
+            );
         } catch (error) {
             throw error
         }
@@ -56,8 +86,14 @@ class DaprUserService {
 
     async changeEmail(userWithNewEmail) {
         try {
-            const urlEnding = "change-email";
-            return await sendRequestWithDaprHelper(userWithNewEmail, HttpMethod.PUT, this.userUrlMethodBeggining, urlEnding, this.userClientDapr, userDaprHostAndServiceAppId);
+            const serviceMethod = `${this.userUrlMethodBeggining}/change-email`;
+            return await this.userClientDapr.invoker.invoke(
+                this.userDaprHostAndServiceAppId,
+                serviceMethod,
+                HttpMethod.PUT,
+                { userWithNewEmail },
+                { headers: { 'Content-Type': 'application/json' } },
+            );
         } catch (error) {
             throw error
         }
@@ -65,8 +101,14 @@ class DaprUserService {
 
     async login(userToLogin) {
         try {
-            const urlEnding = "login";
-            return await sendRequestWithDaprHelper(userToLogin, HttpMethod.POST, this.userUrlMethodBeggining, urlEnding, this.userClientDapr, userDaprHostAndServiceAppId);
+            const serviceMethod = `${this.userUrlMethodBeggining}/login`;
+            return await this.userClientDapr.invoker.invoke(
+                this.userDaprHostAndServiceAppId,
+                serviceMethod,
+                HttpMethod.POST,
+                { userToLogin },
+                { headers: { 'Content-Type': 'application/json' } },
+            );
         } catch (error) {
             throw error
         }
