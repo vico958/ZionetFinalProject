@@ -1,6 +1,6 @@
 const userAccessorManger = require("../services/userAccessor/userAccessorManger")
 const {createError} = require("../services/general")
-
+const userAccessorLogger = require("../services/logger/logger");
 async function userRegister(req, res, next){
     try{
         const { userToRegister} = req.body;
