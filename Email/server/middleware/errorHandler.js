@@ -9,7 +9,7 @@ function errorHandler(error, req, res, next) {
     return next(error);
   }
   res.status(statusCode || 500).send(message || "Something went wrong from our side.");
-  userLogger.info({
+  emailLogger.info({
     status: statusCode, 
     error_msg: message
   }, "Error response sent");
