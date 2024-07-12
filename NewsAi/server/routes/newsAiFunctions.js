@@ -1,23 +1,29 @@
 require("dotenv").config();
 const { GoogleGenerativeAI } = require("@google/generative-ai");
+const newsAiLogger = require("../services/logger");
 const aiApiKey = process.env.AI_API_KEY
 const genAI = new GoogleGenerativeAI(aiApiKey);
 
 async function whichOneIsTheBestArticle(req, res, next){
     try{
+        newsAiLogger.info("News Ai which one is the best article event at the top of event")
         const preferences = req.body.preferences;
         const articles = req.body.articles;
         const response = await talkWithAi(articles, preferences);
         res.status(200).send(JSON.stringify(response));
         res.end();
+        newsAiLogger.info("News Ai which one is the best article event after send answer")
     }catch(error){
-        console.error("Error from which one is the best article, news ai service error : ", error);
+        newsAiLogger.fatal({
+            error: error,
+        }, "Error occurred in which one is the best article event");
         next(error)
     }
 }
 
 async function talkWithAi(articlesInfo, preferences){
     try{
+        newsAiLogger.info("News Ai talk with ai event at the top of event")
         // TODO: make ai to give me results only about my preferences
         const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash", generationConfig: { responseMimeType: "application/json" }});
         const prompt =`take this list, for each link in the list,
@@ -36,8 +42,12 @@ async function talkWithAi(articlesInfo, preferences){
     const response = result.response;
     const text = response.text();
     const jsonResponse = JSON.parse(text);
+    newsAiLogger.info("News Ai talk with ai event, After of parsing answer of ai")
     return jsonResponse;
     }catch(error){
+        newsAiLogger.fatal({
+            error: error,
+        }, "Error occurred in talk with ai event");
         throw error
     }
 }
