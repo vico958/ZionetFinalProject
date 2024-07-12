@@ -3,7 +3,7 @@ const { DaprClient, HttpMethod } = require("@dapr/dapr");
 const daprHostAndServiceAppId = "useraccessor"; // Dapr Sidecar Host
 const daprPort = "3500"; // Dapr Sidecar Port for user service
 const client = new DaprClient({ daprHostAndServiceAppId, daprPort });
-
+const logger = require("../services/logger");
 const urlMethodBeggining = "user-accessor"
 async function userRegister(req, res, next){
     try{
@@ -19,7 +19,7 @@ async function userRegister(req, res, next){
         res.status(200).send(JSON.stringify(returnedUser));
         res.end();
     }catch(error){
-        console.error("user register, user service error : ", error)
+        logger.fatal("user register, user service error : ", error)
         next(error);
     }
 }
@@ -40,7 +40,7 @@ async function userLogin(req, res, next){
         res.status(200).send(JSON.stringify(returnedData));
         res.end();
     }catch(error){
-        console.error("User login, user service error : ", error)
+        logger.fatal("User login, user service error : ", error)
         next(error);
     }
 }
@@ -61,7 +61,7 @@ async function changePassword(req, res, next) {
         res.status(200).send(JSON.stringify(returnedData));
         res.end();
     }catch(error){
-        console.error("Change password, user service error : ", error)
+        logger.fatal("Change password, user service error : ", error)
         next(error);
     }
 }
@@ -80,7 +80,7 @@ async function deleteUser(req, res, next){
         res.status(200).send(returnedData);
         res.end();
     }catch(error){
-        console.error("delete user, user service error ", error)
+        logger.fatal("delete user, user service error ", error)
         next(error);
     }
 }
@@ -100,7 +100,7 @@ async function chageCategoriesAndPreferences(req, res, next){
             res.status(200).send(JSON.stringify(returnedData));
             res.end();
         }catch(error){
-            console.error("Change categories and preferences, user service error : ", error);
+            logger.fatal("Change categories and preferences, user service error : ", error);
             next(error);
         }
 }
@@ -121,7 +121,7 @@ async function chagePreferences(req, res, next){
             res.status(200).send(JSON.stringify(returnedData));
             res.end();
         }catch(error){
-            console.error("Change preferences, user service error : ", error);
+            logger.fatal("Change preferences, user service error : ", error);
             next(error);
         }
 }
@@ -140,7 +140,7 @@ async function changeEmail(req, res, next){
             res.status(200).send(JSON.stringify(returnedData));
             res.end();
         }catch(error){
-            console.error("Change email, user service error : ", error);
+            logger.fatal("Change email, user service error : ", error);
             next(error);
         }
 }
@@ -156,7 +156,7 @@ async function getAllUsers(req, res, next){
             res.status(200).send(JSON.stringify(allUsers));
             res.end();
         }catch(error){
-            console.error("Get all users, user service error : ", error);
+            logger.fatal("Get all users, user service error : ", error);
             next(error);
         }
 }

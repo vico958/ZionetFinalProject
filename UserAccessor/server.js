@@ -17,7 +17,6 @@ const port = process.env.port || "3003";
 app.get("/", (req, res) =>{
     res.send("hello world user accessor service")
 })
-
 app.use(errorHandler);
 
 app.listen(port, () =>{
