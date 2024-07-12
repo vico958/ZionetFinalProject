@@ -1,6 +1,7 @@
 const { createError } = require("../general");
-
+const userAccessorLogger = require("../logger/logger");
 function handleDatabaseError(error) {
+    userAccessorLogger.warn("Entering handle database error function");
     let message;
     let statusCode;
 
@@ -32,8 +33,10 @@ function handleDatabaseError(error) {
             message = 'Database Error: ' + error.message;
             statusCode = 500;
     }
-
-    console.error(message);
+    userAccessorLogger.fatal({
+        status:statusCode,
+        error: message
+    },  "A database error occurred");
     throw createError(message, statusCode);
 }
 
