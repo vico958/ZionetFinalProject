@@ -44,7 +44,7 @@ class userDatabaseManager {
     
     changePassword = async (userId, newPassword) => {
         try{
-            return await changeUserDataHelper(userId, newPassword, "password")
+            return await this.changeUserDataHelper(userId, newPassword, "password")
         }catch(error){
             handleDatabaseError(error);
         }
@@ -52,7 +52,7 @@ class userDatabaseManager {
 
     changeFullName = async (userId, newFullName) => {
         try{
-            return await changeUserDataHelper(userId, newFullName, "fullName");
+            return await this.changeUserDataHelper(userId, newFullName, "fullName");
         }catch(error){
             handleDatabaseError(error);
         }
@@ -60,7 +60,7 @@ class userDatabaseManager {
 
     changeUserCategories = async (userId, newCategories) => {
         try{
-            return await changeUserDataHelper(userId, newCategories, "categories")
+            return await this.changeUserDataHelper(userId, newCategories, "categories")
         }catch(error){
             handleDatabaseError(error);
         }
@@ -68,7 +68,7 @@ class userDatabaseManager {
 
     changeUserPreferences = async (userId, newPreferences) => {
         try{
-            return await changeUserDataHelper(userId, newPreferences, "preferences")
+            return await this.changeUserDataHelper(userId, newPreferences, "preferences")
         }catch(error){
             handleDatabaseError(error);
         }
@@ -77,7 +77,7 @@ class userDatabaseManager {
     
     changeUserEmail = async(userId, newEmail) =>{
         try{
-            return await changeUserDataHelper(userId, newEmail, "email")
+            return await this.changeUserDataHelper(userId, newEmail, "email")
         }catch(error){
             handleDatabaseError(error);
         }

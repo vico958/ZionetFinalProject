@@ -23,7 +23,7 @@ async function userRegister(req, res, next){
 async function deleteUser(req, res, next){
     try{
         const {email, password} = req.body.userToDelete;
-        const user = await getUserByEmailHelper(email);
+        const user = await getUserByEmailAndIfNotFoundThrowError(email);
         if(password === user.password){
             const response = await userAccessorManger.deleteUser(user._id)
             if(response.deletedCount === 1){
@@ -43,7 +43,7 @@ async function deleteUser(req, res, next){
 async function userLogin(req, res, next){
     try{
         const { email, password} = req.body.userToLogin;
-        const user = await getUserByEmailHelper(email);
+        const user = await getUserByEmailAndIfNotFoundThrowError(email);
         if(password === user.password){
             returnResAnswer(res, "User login", user);
         }
@@ -59,7 +59,7 @@ async function userLogin(req, res, next){
 async function changePassword(req, res, next) {
     try{//TODO :TEST
         const {newPassword, oldPassword, email} = req.body.userWithNewPassword;
-        const user = await getUserByEmailHelper(email);
+        const user = await getUserByEmailAndIfNotFoundThrowError(email);
         if(oldPassword === user.password){
             const answer = await userAccessorManger.changePassword(user.userId, newPassword)
             const messageFail = "Cant update Password";
@@ -78,7 +78,7 @@ async function changePassword(req, res, next) {
 async function chagePreferences(req, res, next){
     try{//TODO :TEST
         const {email, password, newPreferences} = req.body.userWithNewPreferences;
-        const user = await getUserByEmailHelper(email);
+        const user = await getUserByEmailAndIfNotFoundThrowError(email);
         if(password === user.password){
             const answer = await userAccessorManger.changeUserPreferences(user._id, newPreferences)
             const messageFail = "Cant update preferences";
@@ -96,7 +96,7 @@ async function chagePreferences(req, res, next){
 async function chageCategoriesAndPreferences(req, res, next){
     try{//TODO :TEST
         const {email, password, newCategories, newPreferences} = req.body.userWithNewSettings;
-        const user = await getUserByEmailHelper(email);
+        const user = await getUserByEmailAndIfNotFoundThrowError(email);
         if(password === user.password){//TODO: check first categories change and only then change preferences
             const {_id} = user
             const answerCategories = await userAccessorManger.changeUserCategories(_id, newCategories)
@@ -116,8 +116,13 @@ async function chageCategoriesAndPreferences(req, res, next){
 async function changeEmail(req, res, next){
     try{//TODO :TEST
         const {email, password, newEmail } = req.body.userWithNewEmail;
-        const user = await getUserByEmailHelper(email);
+        const user = await getUserByEmailAndIfNotFoundThrowError(email);
         if(password === user.password){//TODO: check first categories change and only then change preferences
+            const newEmailInLowerCase = newEmail.toLowerCase();
+            const userWithNewEmail = await userAccessorManger.getUserByEmail(newEmailInLowerCase);
+            if(userWithNewEmail){
+                throw createError("Email already use", 400);
+            }
             const answer = await userAccessorManger.changeUserEmail(user._id, newEmail)
             const messageFail = "Cant update email";
             const messageSuccess = "User email has been updated.";
@@ -151,7 +156,7 @@ async function getAllUsers(req, res, next){
     }
 }
 
-async function getUserByEmailHelper(email){
+async function getUserByEmailAndIfNotFoundThrowError(email){
     try{
         const emailInLowerCase = email.toLowerCase();
         const user = await userAccessorManger.getUserByEmail(emailInLowerCase);

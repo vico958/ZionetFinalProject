@@ -3,16 +3,17 @@ const {handleEmailError} = require("./emailErrors");
 
 async function sendEmail(req, res, next){
     try{
-        const { emailHost, emailUser, emailPassword, emailFrom, emailTo, emailSubject, emailText } = req.body.emailInfo
+        const { emailHost, emailUser, emailPassword, emailFrom, emailTo, emailSubject, emailTextHtml } = req.body.emailInfo
         const transporter = createTransporter(emailHost, emailUser, emailPassword);
-        const info = await transporter.sendMail({
-            from: emailFrom, // sender address
-            to: emailTo, // list of receivers
-            subject: emailSubject, // Subject line
-            html: emailText,
-        });
-        console.log('Message sent: %s', info.messageId);
-        res.status(200).send({ message: 'Email sent successfully', info: info });
+        // const info = await transporter.sendMail({
+        //     from: emailFrom, // sender address
+        //     to: emailTo, // list of receivers
+        //     subject: emailSubject, // Subject line
+        //     html: emailTextHtml,
+        // });
+        // console.log('Message sent: %s', info.messageId);
+        // res.status(200).send({ message: 'Email sent successfully', info: info }); // TODO : to remove before final project send
+        res.status(200).send({ message: 'Email sent successfully', info: "info" });
     } catch (error) {
         const err = handleEmailError(error)
         next(err)

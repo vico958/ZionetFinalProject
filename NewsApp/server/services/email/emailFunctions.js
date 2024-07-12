@@ -11,11 +11,12 @@ const emailFrom = process.env.EMAIL_FROM;
 
 async function sendEmailWithNews(newsData, clientEmail, clientName){
     const emailTo = clientEmail;
-    const { emailSubject, emailText} = createEmailNewsContent(newsData, clientName);  
+    const { emailSubject, emailTextHtml} = createEmailNewsContent(newsData, clientName);  
     const emailInfo = {
-      emailHost, emailUser, emailPassword, emailFrom, emailTo, emailSubject, emailText
+      emailHost, emailUser, emailPassword, emailFrom, emailTo, emailSubject, emailTextHtml
     };
-    await sendEmail(emailInfo);
+    // await sendEmail(emailInfo); // TODO : to remove before send to check my final project
+    console.log("send email but right now i will just log it : ", emailInfo)
 }
 
 async function sendEmail(emailInfo){
@@ -37,14 +38,14 @@ async function sendEmail(emailInfo){
 function createEmailNewsContent(newsData, clientName){
     const newsDataForEmailContent = formattedNewsData(newsData);
     const emailSubject = "Your interesting news is ready!!!"
-    const emailText = `<p style="color: black;">Hello ${clientName},</p>
+    const emailTextHtml = `<p style="color: black;">Hello ${clientName},</p>
   <p style="color: black;">This is the news app you signed up for. Here is your news:</p>
   ${newsDataForEmailContent}
   <p style="color: black;">We hope you like it. In 24 hours, you'll get a new update. Until then, have a nice day!</p>`; //|| text;
 
   return {
     emailSubject,
-    emailText
+    emailTextHtml
   };
 }
 

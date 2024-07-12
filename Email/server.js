@@ -18,7 +18,7 @@ const port = process.env.port || "3006";
 app.get("/", (req, res) =>{
     res.send("hello world email service")
 })
-app.use(errorHandler)
+app.use(errorHandler);
 app.listen(port, async () =>{
     console.log("Server started on port", port)
 })
