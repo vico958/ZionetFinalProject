@@ -18,12 +18,12 @@ const port = process.env.port || "3002";
 
 
 app.get("/", (req, res) =>{
-    userLogger.info("hello world user service")
-    res.send("hello world user service")
+    userLogger.info("Hello world from user service")
+    res.send("Hello world from user service")
 })
 
 app.use(errorHandler);
 
 app.listen(port, async () =>{
-    userLogger.info(`Server started on port - ${port}`)
+    userLogger.info(`User server started on port - ${port}`)
 })

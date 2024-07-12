@@ -23,4 +23,6 @@ const streams = [
 ];
 const logger = pino({}, pinoMultiStream.multistream(streams));
 
-module.exports = logger;
+const newsAiLogger = logger.child({ service: "newsAi" });
+
+module.exports = newsAiLogger;
