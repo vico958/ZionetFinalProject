@@ -1,7 +1,7 @@
 const nodemailer = require("nodemailer");
 const {handleEmailError} = require("./emailErrors");
 
-async function sendEmail(req, res){
+async function sendEmail(req, res, next){
     try{
         const { emailHost, emailUser, emailPassword, emailFrom, emailTo, emailSubject, emailText } = req.body.emailInfo
         const transporter = createTransporter(emailHost, emailUser, emailPassword);
@@ -15,7 +15,7 @@ async function sendEmail(req, res){
         res.status(200).send({ message: 'Email sent successfully', info: info });
     } catch (error) {
         const err = handleEmailError(error)
-        throw err
+        next(err)
     }
 }
 

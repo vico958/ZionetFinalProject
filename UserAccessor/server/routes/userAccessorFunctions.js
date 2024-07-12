@@ -1,14 +1,13 @@
 const userAccessorManger = require("../services/userAccessor/userAccessorManger")
 const {createError} = require("../services/general")
 
-async function userRegister(req, res){
+async function userRegister(req, res, next){
     try{
         const { userToRegister} = req.body;
         const emailInLowerCase = userToRegister.email.toLowerCase()
         const isAlreadyInSytem = await userAccessorManger.getUserByEmail(emailInLowerCase);
         if(isAlreadyInSytem){
-            const error = createError("Email already use", 400);
-            throw error
+            throw createError("Email already use", 400);
         }
         else{
             userToRegister.email = emailInLowerCase;
@@ -16,12 +15,12 @@ async function userRegister(req, res){
             returnResAnswer(res, "User saved in system",returnedUser);
         }
     }catch(error){
-        console.error("user register, user accessor service error : ", error)
-        throw error
+        console.error("user register, user accessor service error : ", error);
+        next(error);
     }
 }
 
-async function deleteUser(req, res){
+async function deleteUser(req, res, next){
     try{
         const {email, password} = req.body.userToDelete;
         const user = await getUserByEmailHelper(email);
@@ -36,31 +35,28 @@ async function deleteUser(req, res){
             throw createError("Unable to remove user: the provided password is incorrect.", 400);
         }
     }catch(error){
-        console.error("delete user, user accessor service error : ", error)
-        res.status(error.statusCode || 500).send(error.message || "Something went wrong from our side.");
+        console.error("delete user, user accessor service ", error);
+        next(error);
     }
 }
 
-async function userLogin(req, res){
+async function userLogin(req, res, next){
     try{
         const { email, password} = req.body.userToLogin;
-        const emailInLowerCase = email.toLowerCase()
-        const user = await userAccessorManger.getUserByEmail(emailInLowerCase);
-        if(user === null){
-            res.status(400).send(JSON.stringify("Email or password are not valid")); // For saftey not letting them know if its email or password not good
-        }
-        else if(password === user.password){
+        const user = await getUserByEmailHelper(email);
+        if(password === user.password){
             returnResAnswer(res, "User login", user);
         }
         else{
-            res.status(400).send(JSON.stringify("Email or password are not valid"))
+            throw createError("Email or password are not valid", 400);// For saftey not letting them know if its email or password not good
         }
     }catch(error){
-        console.error(error)
+        console.error("user login, user accessor service ", error);
+        next(error);
     }
 }
 
-async function changePassword(req, res) {
+async function changePassword(req, res, next) {
     try{//TODO :TEST
         const {newPassword, oldPassword, email} = req.body.userWithNewPassword;
         const user = await getUserByEmailHelper(email);
@@ -70,15 +66,16 @@ async function changePassword(req, res) {
             const messageSuccess = "Password updated";
             changeAfterHavingUserHelper(res, messageSuccess, messageFail, answer)
         }else{
-            res.status(400).send(JSON.stringify("old password doesnt match"));
+            throw createError("old password doesnt match", 400);
         }
     }catch(error){
-        console.error(error)
+        console.error("change password, user accessor service ", error);
+        next(error);
     }
 }
 
 
-async function chagePreferences(req, res){
+async function chagePreferences(req, res, next){
     try{//TODO :TEST
         const {email, password, newPreferences} = req.body.userWithNewPreferences;
         const user = await getUserByEmailHelper(email);
@@ -92,11 +89,11 @@ async function chagePreferences(req, res){
         }
     }catch(error){
         console.error("Change preferences, user accessor service error : ", error)
-        throw error
+        next(error);
     }
 }
 
-async function chageCategoriesAndPreferences(req, res){
+async function chageCategoriesAndPreferences(req, res, next){
     try{//TODO :TEST
         const {email, password, newCategories, newPreferences} = req.body.userWithNewSettings;
         const user = await getUserByEmailHelper(email);
@@ -112,11 +109,11 @@ async function chageCategoriesAndPreferences(req, res){
         }
     }catch(error){
         console.error("Change categories and preferences, user accessor service error : ", error)
-        throw error
+        next(error);
     }
 }
 
-async function changeEmail(req, res){
+async function changeEmail(req, res, next){
     try{//TODO :TEST
         const {email, password, newEmail } = req.body.userWithNewEmail;
         const user = await getUserByEmailHelper(email);
@@ -130,12 +127,12 @@ async function changeEmail(req, res){
         }
     }catch(error){
         console.error("Change email, user accessor service error : ", error)
-        throw error
+        next(error);
     }
 }
 
 
-async function getAllUsers(req, res){
+async function getAllUsers(req, res, next){
     try{
         const allUsers = await userAccessorManger.getAllUsers();
         if(allUsers === null){
@@ -150,7 +147,7 @@ async function getAllUsers(req, res){
         returnResAnswer(res, "All users list", transformedUsers);
     }catch(error){
         console.error("Get all users, user accessor service error : ", error)
-        throw error
+        next(error);
     }
 }
 
@@ -159,12 +156,11 @@ async function getUserByEmailHelper(email){
         const emailInLowerCase = email.toLowerCase();
         const user = await userAccessorManger.getUserByEmail(emailInLowerCase);
         if(user === null){
-            const error = createError("Email or password are not valid", 400);// For saftey not letting them know if its email or password not good
-            throw error
+            throw createError("Email or password are not valid", 400);// For saftey not letting them know if its email or password not good
         }
         return user;
     }catch(error){
-        console.log(error)
+        throw error
     }
 }
 
@@ -172,7 +168,7 @@ function changeAfterHavingUserHelper(res, messageSuccess, messageFail, answer){
     if(answer === null){
         throw createError(messageFail, 400);
     }else{
-        returnResAnswer(res, messageSuccess, answer)
+        returnResAnswer(res, messageSuccess, answer);
     }
 }
 

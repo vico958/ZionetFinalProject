@@ -3,7 +3,7 @@ const { GoogleGenerativeAI } = require("@google/generative-ai");
 const aiApiKey = process.env.AI_API_KEY
 const genAI = new GoogleGenerativeAI(aiApiKey);
 
-async function whichOneIsTheBestArticle(req, res){
+async function whichOneIsTheBestArticle(req, res, next){
     try{
         const preferences = req.body.preferences;
         const articles = req.body.articles;
@@ -12,7 +12,7 @@ async function whichOneIsTheBestArticle(req, res){
         res.end();
     }catch(error){
         console.error("Error from which one is the best article, news ai service error : ", error);
-        throw error
+        next(error)
     }
 }
 
