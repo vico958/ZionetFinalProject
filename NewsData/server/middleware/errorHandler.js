@@ -1,12 +1,18 @@
+const newsDataLogger = require("../services/logger");
 function errorHandler(error, req, res, next) {
-  for(let i=0;i<10;i++){
-    console.log("error from news data, error handler")
-  }
+  const {statusCode, message} = error
+  newsDataLogger.error({
+    error: message,
+  }, "Inside middleware error handler");
   if (res.headersSent) {
+    newsDataLogger.warn("Headers already sent. Passing the error to the next middleware.");
     return next(error);
   }
-  console.log("error from news data, error handler2222222222222222222")
-  res.status(error.statusCode || 500).send(error.message || "Something went wrong from our side.");
+  res.status(statusCode || 500).send(message || "Something went wrong from our side.");
+  newsDataLogger.info({
+    status: statusCode, 
+    error_msg: message
+  }, "Error response sent");
 }
 
 module.exports = { errorHandler };

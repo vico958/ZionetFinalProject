@@ -17,8 +17,8 @@ app.use("/email", email)
 const port = process.env.port || "3006";
 
 app.get("/", (req, res) =>{
-    emailLogger.info("hello world email service");
-    res.send("hello world email service");
+    emailLogger.info("hello world from email service");
+    res.send("hello world from email service");
 })
 app.use(errorHandler);
 app.listen(port, async () =>{

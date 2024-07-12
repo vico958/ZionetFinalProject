@@ -18,8 +18,8 @@ const port = process.env.port || "3002";
 
 
 app.get("/", (req, res) =>{
-    userLogger.info("Hello world user service")
-    res.send("Hello world user service")
+    userLogger.info("Hello world from user service")
+    res.send("Hello world from user service")
 })
 
 app.use(errorHandler);
