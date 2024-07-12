@@ -1,4 +1,5 @@
 require("dotenv").config();
+const newsDataLogger = require("../services/logger");
 const apiKey = process.env.DATA_NEWS_IO_API_KEY
 const url = `https://newsdata.io/api/1/latest?apikey=${apiKey}`
 
@@ -6,20 +7,24 @@ async function getNews(req, res){
     // TODO: URGENTTTTTTTTTTTTTT
     // TODO : fix getting news with categories and inside with preferences
     try{
+        newsDataLogger.info("News data get news event at the top of event")
         const categories = req.body.categories;
         const preferences = req.body.preferences;
         const query = preferences.join(` OR `)
         const urlWithQuery = `${url}&category=${categories.toString()}&language=en&q=${query}`
         const data = await fetch(urlWithQuery).then(async (res)=> res.json());
         res.status(200).send(data);
-        res.end();
+        newsDataLogger.info("News data get news event after sending back the news")
     }catch(error){
-        console.error("get news, news data service ", error);
+        newsDataLogger.fatal({
+            error: error
+        }, "Error occurred in News data service during get news event");
         next(error);
     }
 }
 
 async function getCategoriesRules(req, res){
+    newsDataLogger.info("News data get categories rules event at the top of event")
     const categoriesAmount = 5;
     const categoriesList = ["business",
         "crime",
@@ -42,7 +47,8 @@ async function getCategoriesRules(req, res){
             categoriesAmount: categoriesAmount,
             categoriesList: categoriesList
         };
-    res.status(200).send(JSON.stringify(responsePayload))
+    res.status(200).send(JSON.stringify(responsePayload));
+    newsDataLogger.info("News data get categories rules event after sending results");
 }
 
 

@@ -20,7 +20,7 @@ async function sendEmail(req, res, next){
         emailLogger.info('Email sent successfully')
     } catch (error) {
         const err = handleEmailError(error)
-        logger.fatal({
+        emailLogger.fatal({
             error: error
         }, "Error occurred in Email service during send email event");
         next(err)
