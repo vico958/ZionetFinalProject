@@ -1,3 +1,4 @@
+const emailLogger = require("../services/logger");
 function createError(message, statusCode) {
     const error = new Error(message);
     error.statusCode = statusCode;
@@ -46,8 +47,10 @@ function handleEmailError(error) {
             statusCode = 500;
             break;
     }
-
-    console.error(message);
+    emailLogger.warn({
+        status:statusCode,
+        error: message
+    }, "Inside handle email error");
     return createError(message, statusCode);
 }
 
