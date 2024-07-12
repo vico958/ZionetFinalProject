@@ -23,7 +23,7 @@ async function userRegister(req, res, next){
     }catch(error){
         logger.fatal({
             error: error
-        }, "Error occurred in user service during register method");
+        }, "Error occurred in user service during register event");
         next(error);
     }
 }
@@ -46,7 +46,7 @@ async function userLogin(req, res, next){
     }catch(error){
         logger.fatal({
             error: error
-        }, "Error occurred in user service during login method");
+        }, "Error occurred in user service during login event");
         next(error);
     }
 }
@@ -69,7 +69,7 @@ async function changePassword(req, res, next) {
     }catch(error){
         logger.fatal({
             error: error
-        }, "Error occurred in user service during change password method");
+        }, "Error occurred in user service during change password event");
         
         next(error);
     }
@@ -93,7 +93,7 @@ async function deleteUser(req, res, next){
     }catch(error){
         logger.fatal({
             error: error
-        }, "Error occurred in user service during delete user method");
+        }, "Error occurred in user service during delete user event");
         next(error);
     }
 }
@@ -117,7 +117,7 @@ async function changeCategoriesAndPreferences(req, res, next){
         }catch(error){
             logger.fatal({
                 error: error
-            }, "Error occurred in user service during change categories and preferences method");
+            }, "Error occurred in user service during change categories and preferences event");
             next(error);
         }
 }
@@ -142,7 +142,7 @@ async function chagePreferences(req, res, next){
         }catch(error){
             logger.fatal({
                 error: error
-            }, "Error occurred in user service during change preferences method");
+            }, "Error occurred in user service during change preferences event");
             next(error);
         }
 }
@@ -165,7 +165,7 @@ async function changeEmail(req, res, next){
         }catch(error){
             logger.fatal({
                 error: error
-            }, "Error occurred in user service during change email method");
+            }, "Error occurred in user service during change email event");
             next(error);
         }
 }
@@ -185,7 +185,7 @@ async function getAllUsers(req, res, next){
         }catch(error){
             logger.fatal({
                 error: error
-            }, "Error occurred in user service during get all users method");
+            }, "Error occurred in user service during get all users event");
             next(error);
         }
 }

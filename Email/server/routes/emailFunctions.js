@@ -1,8 +1,9 @@
 const nodemailer = require("nodemailer");
 const {handleEmailError} = require("./emailErrors");
-
+const emailLogger = require("../services/logger");
 async function sendEmail(req, res, next){
     try{
+        emailLogger.info("Email send email event at the top of event")
         const { emailHost, emailUser, emailPassword, emailFrom, emailTo, emailSubject, emailTextHtml } = req.body.emailInfo
         const transporter = createTransporter(emailHost, emailUser, emailPassword);
         // const info = await transporter.sendMail({
@@ -11,16 +12,23 @@ async function sendEmail(req, res, next){
         //     subject: emailSubject, // Subject line
         //     html: emailTextHtml,
         // });
-        // console.log('Message sent: %s', info.messageId);
+        // emailLogger.info({
+        //     messageId: info.messageId
+        // }, 'Email sent successfully');
         // res.status(200).send({ message: 'Email sent successfully', info: info }); // TODO : to remove before final project send
         res.status(200).send({ message: 'Email sent successfully', info: "info" });
+        emailLogger.info('Email sent successfully')
     } catch (error) {
         const err = handleEmailError(error)
+        logger.fatal({
+            error: error
+        }, "Error occurred in Email service during send email event");
         next(err)
     }
 }
 
 function createTransporter(emailHost, emailUser, emailPassword){
+    emailLogger.info('Email create transporter event before create transporter')
     const transporter = nodemailer.createTransport({
         host: emailHost,
         port: 587,
@@ -30,6 +38,7 @@ function createTransporter(emailHost, emailUser, emailPassword){
           pass: emailPassword,
         },
       });
+    emailLogger.info('Email create transporter event after create transporter')
     return transporter
 }
 
