@@ -1,12 +1,12 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
-const {logger} = require("./server/middleware/logger");
+const {loggerMiddleware} = require("./server/middleware/loggerMiddleware");
 const {errorHandler} = require("./server/middleware/errorHandler");
 const newsAi = require("./server/routes/newsAi");
 const bodyParser = require("body-parser");
 const app = express();
-app.use(logger);
+app.use(loggerMiddleware);
 app.use(express.json());
 app.use(cors());
 app.use(bodyParser.json());
