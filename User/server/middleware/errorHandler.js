@@ -1,4 +1,4 @@
-const userLogger = require("../services/logger");
+const userLogger = require("../services/logger/logger");
 
 function errorHandler(error, req, res, next) {
   let parsedError;
