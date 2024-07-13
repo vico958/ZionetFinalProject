@@ -1,6 +1,6 @@
 require("dotenv").config();
 const DaprUserService = require("../services/user/userDaprService");
-const { sendNewsToClient } = require("../services/general");
+const { sendNewsToClient } = require("../services/general/general");
 const {
     isRegisterUserValidIfNotThrowError,
     isChangeCategoriesAndPreferencesValidIfNotThrowError,
@@ -13,58 +13,56 @@ const newsAppLogger = require("../services/logger/logger");
 
 async function userRegister(req, res, next) {
     try {
-        newsAppLogger.info("User register event before user service use")
+        newsAppLogger.info("User register end point event in newsFunctions");
         const { userToRegister } = req.body;
         isRegisterUserValidIfNotThrowError(userToRegister);
         const returnedUser = await DaprUserService.registerUserUsingAccessor(userToRegister);
         const { email, fullName, preferences, categories } = returnedUser.data;
         const messageToSend = `Hello ${fullName}, you registered to the news app. We will send you the news via email.`;
         returnResAnswerHelper(res, messageToSend, returnedUser.data)
-        newsAppLogger.info("User register event after user service use")
         sendNewsToClient(categories, preferences, email, fullName);
     } catch (error) {
         newsAppLogger.fatal({
             error: error
-        }, "Error occurred in news app service during register event");
+        }, "Error occurred during register event");
         next(error);
     }
 }
 
 async function userDelete(req, res, next) {
     try {
-        newsAppLogger.info("User delete event before user service use")
+        newsAppLogger.info("User delete end point event in newsFunctions");
         const userToDelete = req.body.user;
         const answer = await DaprUserService.userDelete(userToDelete);
         const message = `You have been removed from the news app.`;
         returnResAnswerHelper(res, message, answer.data)
-        newsAppLogger.info("User delete event after user service use")
     } catch (error) {
         newsAppLogger.fatal({
             error: error
-        }, "Error occurred in news app service during delete event");
+        }, "Error occurred during userDelete event");
         next(error);
     }
 }
 
 async function changeCategoriesAndPreferences(req, res, next) {
     try {
-        newsAppLogger.info("User change categories and preferences event before user service use")
+        newsAppLogger.info("Change categories and preferences end point event in newsFunctions");
         const userWithNewSettings = req.body.userWithNewSettings;
         const { newCategories, newPreferences } = userWithNewSettings;
         isChangeCategoriesAndPreferencesValidIfNotThrowError(newCategories, newPreferences);
         const answer = await DaprUserService.changeCategoriesAndPreferences(userWithNewSettings); // TODO: TO TEST
         returnResAnswerHelper(res, answer.message, answer.data)
-        newsAppLogger.info("User change categories and preferences event after user service use")
     } catch (error) {
         newsAppLogger.fatal({
             error: error
-        }, "Error occurred in user service during change categories and preferences event");
+        }, "Error occurred during changeCategoriesAndPreferences event");
         next(error);
     }
 }
 
 async function changePreferences(req, res, next) {
     try {
+        newsAppLogger.info("Change preferences end point event in newsFunctions");
         const userWithNewPreferences = req.body.userWithNewPreferences;
         isChangePreferencesValidIfNotThrowError(userWithNewPreferences.newPreferences);
         const answer = await DaprUserService.changePreferences(userWithNewPreferences); // TODO: TO TEST
@@ -72,13 +70,14 @@ async function changePreferences(req, res, next) {
     } catch (error) {
         newsAppLogger.fatal({
             error: error
-        }, "Error occurred in user service during change preferences event");
+        }, "Error occurred during changePreferences event");
         next(error);
     }
 }
 
 async function changeEmail(req, res, next) {
     try {
+        newsAppLogger.info("Change email end point event in newsFunctions");
         const userWithNewEmail = req.body.userWithNewEmail;
         isChangeEmailValidIfNotThrowError(userWithNewEmail.newEmail);
         const answer = await DaprUserService.changeEmail(userWithNewEmail); // TODO: TO TEST
@@ -86,13 +85,14 @@ async function changeEmail(req, res, next) {
     } catch (error) {
         newsAppLogger.fatal({
             error: error
-        }, "Error occurred in user service during change email event");
+        }, "Error occurred during changeEmail event");
         next(error);
     }
 }
 
 async function changePassword(req, res, next) {
     try {
+        newsAppLogger.info("Change password end point event in newsFunctions")
         const userWithNewPassword = req.body.userWithNewPassword;
         isChangePasswordValidIfNotThrowError(userWithNewPassword.newPassword);
         const answer = await DaprUserService.changePassword(userWithNewPassword); // TODO: TO TEST
@@ -100,22 +100,24 @@ async function changePassword(req, res, next) {
     } catch (error) {
         newsAppLogger.fatal({
             error: error
-        }, "Error occurred in user service during change password event");
+        }, "Error occurred during changePassword event");
         next(error);
     }
 }
 
 async function getNewsNow(req, res, next) {
     try {
+        newsAppLogger.info("Get news now end point event in newsFunctions")
         res.status(200).send("We received your request. If you are in the system, you will receive news shortly.");
         const user = req.body.user;
         const loginUser = await DaprUserService.login(user);
         const { categories, preferences, email, fullName } = loginUser;
+        newsAppLogger.info("User is legit, start process of sending news");
         sendNewsToClient(categories, preferences, email, fullName);
     } catch (error) {
         newsAppLogger.fatal({
             error: error
-        }, "Error occurred in user service during get news now event");
+        }, "Error occurred during getNewsNow event");
         next(error);
     }
 }
@@ -125,7 +127,7 @@ function returnResAnswerHelper(res, messageToSend, dataToSend){
         message: messageToSend,
         data: dataToSend
     }));
-    newsAppLogger.info("News app after finishing event in status code 200 and sending answer")
+    newsAppLogger.info(messageToSend)
 }
 module.exports = {
     userRegister,

@@ -1,5 +1,5 @@
 const {isListAndFromStringTypeAndNotEmpty, isEmailValid} = require("../general/generalValidation")
-const {createError} = require("../../general");
+const {createError} = require("../../general/general");
 
 function isUserPasswordValidIfNotThrowError(password) {
   const minLength = 8;

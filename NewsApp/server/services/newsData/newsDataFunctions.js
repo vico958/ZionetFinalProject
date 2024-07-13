@@ -4,9 +4,11 @@ const newsDaprHostAndServiceAppId = "newsdata"
 const daprPort = "3500"; // Dapr Sidecar Port for user service
 const newsDataClientDapr = new DaprClient({ newsDaprHostAndServiceAppId, daprPort });
 const newsDataUrlMethodBeggining = "news-data"
+const newsAppLogger = require("../logger/logger");
 
 async function getNews(categories, preferences){
     try{
+        newsAppLogger.info("Get news in newsDataFunctions event")
         const serviceMethod = `${newsDataUrlMethodBeggining}/get-news`;
         const news = await newsDataClientDapr.invoker.invoke(
             newsDaprHostAndServiceAppId,
@@ -19,11 +21,13 @@ async function getNews(categories, preferences){
             title: item.title,
             link: item.link,
         }));
-        console.log("newsssssss is ", news)
-        console.log("reducedNewsreducedNews is ", reducedNews)
+        newsAppLogger.info("Return fetched news")
         return reducedNews;
     }catch(error){
-        console.error(error);
+        newsAppLogger.fatal({
+            error: error
+        }, "Error occurred during getNews event");
+        throw error;
     }
 }
 

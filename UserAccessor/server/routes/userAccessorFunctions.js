@@ -19,7 +19,7 @@ async function userRegister(req, res, next){
     }catch(error){
         userAccessorLogger.fatal({
             error: error
-        }, "Error occurred userRegister event");
+        }, "Error occurred during userRegister event");
         next(error);
     }
 }
@@ -42,7 +42,7 @@ async function deleteUser(req, res, next){
     }catch(error){
         userAccessorLogger.fatal({
             error: error
-        }, "Error occurred deleteUser event");
+        }, "Error occurred during deleteUser event");
         next(error);
     }
 }
@@ -61,7 +61,7 @@ async function userLogin(req, res, next){
     }catch(error){
         userAccessorLogger.fatal({
             error: error
-        }, "Error occurred userLogin event");
+        }, "Error occurred during userLogin event");
         next(error);
     }
 }
@@ -82,7 +82,7 @@ async function changePassword(req, res, next) {
     }catch(error){
         userAccessorLogger.fatal({
             error: error
-        }, "Error occurred changePassword event");
+        }, "Error occurred during changePassword event");
         next(error);
     }
 }
@@ -104,7 +104,7 @@ async function chagePreferences(req, res, next){
     }catch(error){
         userAccessorLogger.fatal({
             error: error
-        }, "Error occurred chagePreferences event");
+        }, "Error occurred during chagePreferences event");
         next(error);
     }
 }
@@ -127,7 +127,7 @@ async function chageCategoriesAndPreferences(req, res, next){
     }catch(error){
         userAccessorLogger.fatal({
             error: error
-        }, "Error occurred chageCategoriesAndPreferences event");
+        }, "Error occurred during chageCategoriesAndPreferences event");
         next(error);
     }
 }
@@ -153,7 +153,7 @@ async function changeEmail(req, res, next){
     }catch(error){
         userAccessorLogger.fatal({
             error: error
-        }, "Error occurred changeEmail event");
+        }, "Error occurred during changeEmail event");
         next(error);
     }
 }
@@ -176,7 +176,7 @@ async function getAllUsers(req, res, next){
     }catch(error){
         userAccessorLogger.fatal({
             error: error
-        }, "Error occurred getAllUsers event");
+        }, "Error occurred during getAllUsers event");
         next(error);
     }
 }
