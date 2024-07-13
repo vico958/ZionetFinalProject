@@ -4,7 +4,7 @@ const newsAiDaprHostAndServiceAppId = "newsai"
 const daprPort = "3500"; // Dapr Sidecar Port for user service
 const newsAiClientDapr = new DaprClient({ newsAiDaprHostAndServiceAppId, daprPort });
 const newsAiUrlMethodBeggining = "news-ai"
-
+const newsAppLogger= require("../logger/logger");
 async function bestFitNewsWithAi(articles, preferences){
     try{
         newsAppLogger.info("Best fit news with ai in newsAiFunctions event")

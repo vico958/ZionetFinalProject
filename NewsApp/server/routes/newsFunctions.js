@@ -16,6 +16,7 @@ async function userRegister(req, res, next) {
         newsAppLogger.info("User register end point event in newsFunctions");
         const { userToRegister } = req.body;
         isRegisterUserValidIfNotThrowError(userToRegister);
+        newsAppLogger.info("Passed validation");
         const returnedUser = await DaprUserService.registerUserUsingAccessor(userToRegister);
         const { email, fullName, preferences, categories } = returnedUser.data;
         const messageToSend = `Hello ${fullName}, you registered to the news app. We will send you the news via email.`;
