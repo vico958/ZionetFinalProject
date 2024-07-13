@@ -1,16 +1,12 @@
 
-const port = process.env.port || "3002";
-
-
-
 const swaggerAutogen = require('swagger-autogen')();
 
 const doc = {
   info: {
-    title: 'My API',
-    description: 'Description'
+    title: 'UserAccessor service api',
+    description: 'UserAccessor service api'
   },
-  host: 'localhost:3002'
+  host: 'localhost:3003'
 };
 
 const outputFile = './swagger-output.json';

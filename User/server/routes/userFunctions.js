@@ -6,7 +6,7 @@ const client = new DaprClient({ daprHostAndServiceAppId, daprPort });
 const userLogger = require("../services/logger/logger");
 const urlMethodBeggining = "user-accessor"
 
-async function hellowWorldCheck(req, res, next){
+async function hellowWorldCheck(req, res){
     userLogger.info("Hello world from user service")
     res.send("Hello world from user service")
 }
