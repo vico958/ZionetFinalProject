@@ -20,7 +20,7 @@ async function sendEmailWithNews(newsData, clientEmail, clientName){
             emailHost, emailUser, emailPassword, emailFrom, emailTo, emailSubject, emailTextHtml
         };
         // await sendEmail(emailInfo); // TODO : to remove before send to check my final project
-        console.log("send email but right now i will just log it : ", emailInfo)
+        newsAppLogger.info({emailInfo:emailInfo},"send email but right now i will just log it");// TODO : remove as well
         newsAppLogger.info("Email sent");
     }catch(error){
         newsAppLogger.fatal({
