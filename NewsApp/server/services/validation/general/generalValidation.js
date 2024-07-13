@@ -26,7 +26,7 @@ function isListAndFromStringTypeAndNotEmpty(listToCheck) {
     return true
 }
 
-function isEmailValid(emailToCheck){
+function isEmailValidAsEmail(emailToCheck){
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(emailToCheck);
   }
@@ -39,5 +39,5 @@ module.exports = {
     isStringType,
     isArrayAndNotEmpty,
     isListAndFromStringTypeAndNotEmpty,
-    isEmailValid
+    isEmailValidAsEmail
   }
