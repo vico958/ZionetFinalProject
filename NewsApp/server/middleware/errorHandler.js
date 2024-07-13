@@ -1,4 +1,4 @@
-const newsAppLogger = require("../services/logger");
+const newsAppLogger = require("../services/logger/logger");
 function errorHandler(error, req, res, next) {
   const parsedError = JSON.parse(error.message);
   newsAppLogger.error({
