@@ -1,6 +1,12 @@
 const userAccessorManger = require("../services/userAccessor/userAccessorManger")
 const {createError} = require("../services/general")
 const userAccessorLogger = require("../services/logger/logger");
+
+
+async function hellowWorldCheck(req, res){
+    userAccessorLogger.info("Hello world from user accessor service");
+    res.send("Hello world from user accessor service");
+};
 async function userRegister(req, res, next){
     try{
         userAccessorLogger.info("Enter userRegister end point")
@@ -218,5 +224,6 @@ module.exports = {
     chageCategoriesAndPreferences,
     changeEmail,
     userLogin,
-    getAllUsers
+    getAllUsers,
+    hellowWorldCheck
 }

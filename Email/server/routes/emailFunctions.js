@@ -1,6 +1,13 @@
 const nodemailer = require("nodemailer");
 const {handleEmailError} = require("./emailErrors");
-const emailLogger = require("../services/logger");
+const emailLogger = require("../services/logger/logger");
+
+async function hellowWorldCheck(req, res){
+    emailLogger.info("hello world from email service");
+    res.send("hello world from email service");
+}
+
+
 async function sendEmail(req, res, next){
     try{
         emailLogger.info("Email send email event at the top of event")
@@ -43,5 +50,6 @@ function createTransporter(emailHost, emailUser, emailPassword){
 }
 
 module.exports = {
-    sendEmail
+    sendEmail,
+    hellowWorldCheck
 }

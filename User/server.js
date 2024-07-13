@@ -3,24 +3,24 @@ const express = require("express");
 const cors = require("cors");
 const {loggerMiddleware} = require("./server/middleware/loggerMiddleware");
 const {errorHandler} = require("./server/middleware/errorHandler");
-const userLogger = require("./server/services/logger");
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocs = require("./server/services/swagger/swagger-output.json");
+const userLogger = require("./server/services/logger/logger");
 const bodyParser = require("body-parser");
 const user = require("./server/routes/user")
 const app = express();
+
+
+const port = process.env.port || "3002";
+
+
 app.use(loggerMiddleware);
 app.use(express.json());
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use("/user", user)
-const port = process.env.port || "3002";
-
-
-
-app.get("/", (req, res) =>{
-    userLogger.info("Hello world from user service")
-    res.send("Hello world from user service")
-})
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 app.use(errorHandler);
 

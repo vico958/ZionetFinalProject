@@ -3,6 +3,8 @@ const express = require("express");
 const cors = require("cors");
 const { loggerMiddleware } = require("./server/middleware/loggerMiddleware");
 const { errorHandler } = require("./server/middleware/errorHandler");
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocs = require("./server/services/swagger/swagger-output.json");
 const mongoose = require('mongoose');
 const dbUri = 'mongodb://mongoDb:27017/userDb';
 const userAccessorLogger = require("./server/services/logger/logger");
@@ -17,11 +19,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use("/user-accessor", userAccessor);
-
-app.get("/", (req, res) => {
-    userAccessorLogger.info("Hello world from user accessor service");
-    res.send("Hello world from user accessor service");
-});
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 app.use(errorHandler);
 

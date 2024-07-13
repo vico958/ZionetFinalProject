@@ -1,4 +1,4 @@
-const newsDataLogger = require("../services/logger");
+const newsDataLogger = require("../services/logger/logger");
 function errorHandler(error, req, res, next) {
   const {statusCode, message} = error
   newsDataLogger.error({

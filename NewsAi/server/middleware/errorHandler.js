@@ -1,4 +1,4 @@
-const newsAiLogger = require("../services/logger");
+const newsAiLogger = require("../services/logger/logger");
 function errorHandler(error, req, res, next) {
   const {statusCode, message} = error
   newsAiLogger.error({

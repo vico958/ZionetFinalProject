@@ -1,7 +1,13 @@
 require("dotenv").config();
-const newsDataLogger = require("../services/logger");
+const newsDataLogger = require("../services/logger/logger");
 const apiKey = process.env.DATA_NEWS_IO_API_KEY
 const url = `https://newsdata.io/api/1/latest?apikey=${apiKey}`
+
+
+async function hellowWorldCheck(req, res){
+    newsDataLogger.info("Hello world from news data service")
+    res.send("Hello world from news data service")
+}
 
 async function getNews(req, res){
     // TODO: URGENTTTTTTTTTTTTTT
@@ -54,5 +60,6 @@ async function getCategoriesRules(req, res){
 
 module.exports = {
     getNews,
-    getCategoriesRules
+    getCategoriesRules,
+    hellowWorldCheck
 }

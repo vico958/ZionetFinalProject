@@ -5,6 +5,8 @@ const express = require("express");
 const cors = require("cors");
 const {loggerMiddleware} = require("./server/middleware/loggerMiddleware");
 const {errorHandler} = require("./server/middleware/errorHandler");
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocs = require("./server/services/swagger/swagger-output.json");
 const newsAppLogger = require("./server/services/logger/logger");
 const news = require("./server/routes/news");
 const bodyParser = require("body-parser");
@@ -15,12 +17,8 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use("/news", news);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 const port = process.env.port || "3001";
-
-app.get("/", (req, res) =>{
-  newsAppLogger.info("Hellow world from news app")
-  res.send("Hello world from news app")
-})
 
 app.listen(port, () => {
   newsAppLogger.info(`News app server started on port - ${port}`)

@@ -1,8 +1,15 @@
 require("dotenv").config();
 const { GoogleGenerativeAI } = require("@google/generative-ai");
-const newsAiLogger = require("../services/logger");
+const newsAiLogger = require("../services/logger/logger");
 const aiApiKey = process.env.AI_API_KEY
 const genAI = new GoogleGenerativeAI(aiApiKey);
+
+
+async function hellowWorldCheck(req, res){
+    newsAiLogger.info("Hello world from news ai service");
+    res.send("Hello world from news ai service");
+}
+
 
 async function whichOneIsTheBestArticle(req, res, next){
     try{
@@ -52,5 +59,6 @@ async function talkWithAi(articlesInfo, preferences){
     }
 }
 module.exports = {
-    whichOneIsTheBestArticle
+    whichOneIsTheBestArticle,
+    hellowWorldCheck
 }

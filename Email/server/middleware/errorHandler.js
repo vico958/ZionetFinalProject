@@ -1,4 +1,4 @@
-const emailLogger = require("../services/logger");
+const emailLogger = require("../services/logger/logger");
 function errorHandler(error, req, res, next) {
   const {statusCode, message} = error
   emailLogger.error({

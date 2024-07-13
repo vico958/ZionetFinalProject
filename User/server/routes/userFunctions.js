@@ -3,8 +3,14 @@ const { DaprClient, HttpMethod } = require("@dapr/dapr");
 const daprHostAndServiceAppId = "useraccessor"; // Dapr Sidecar Host
 const daprPort = "3500"; // Dapr Sidecar Port for user service
 const client = new DaprClient({ daprHostAndServiceAppId, daprPort });
-const userLogger = require("../services/logger");
+const userLogger = require("../services/logger/logger");
 const urlMethodBeggining = "user-accessor"
+
+async function hellowWorldCheck(req, res){
+    userLogger.info("Hello world from user service")
+    res.send("Hello world from user service")
+}
+
 async function userRegister(req, res, next){
     try{     
         userLogger.info("Register event before accessor use")
@@ -198,5 +204,6 @@ module.exports = {
     chagePreferences,
     changeEmail,
     userLogin,
-    getAllUsers
+    getAllUsers,
+    hellowWorldCheck
 }
