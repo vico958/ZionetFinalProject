@@ -10,6 +10,10 @@ const {
 } = require("../services/validation/userValidation/userValidation");
 const newsAppLogger = require("../services/logger/logger");
 
+async function hellowWorldCheck(req, res){
+    newsAppLogger.info("Hellow world from news app")
+    res.send("Hello world from news app")
+  }
 
 async function userRegister(req, res, next) {
     try {
@@ -137,5 +141,6 @@ module.exports = {
     changePreferences,
     changeEmail,
     changePassword,
-    getNewsNow
+    getNewsNow,
+    hellowWorldCheck
 };

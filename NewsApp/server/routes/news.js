@@ -1,6 +1,6 @@
 const express = require("express");
 const { userRegister, userDelete, changeCategoriesAndPreferences, changePreferences,
-    changeEmail, changePassword, getNewsNow} = require("./newsFunctions");
+    changeEmail, changePassword, getNewsNow, hellowWorldCheck} = require("./newsFunctions");
 
 const newsRouter = express.Router();
 
@@ -11,5 +11,6 @@ newsRouter.put("/change-user-preferences", changePreferences);
 newsRouter.put("/change-user-email", changeEmail);
 newsRouter.put("/change-password", changePassword)
 newsRouter.post("/get-news-now", getNewsNow)
+newsRouter.get("/", hellowWorldCheck)
 
 module.exports = newsRouter;
