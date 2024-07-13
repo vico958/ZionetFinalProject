@@ -8,7 +8,6 @@ function isUserPasswordValidIfNotThrowError(password) {
   const hasLowerCase = /[a-z]/.test(password);
   const hasDigit = /\d/.test(password);
   if (password.length < minLength || !hasUpperCase || !hasLowerCase || !hasDigit) {
-    newsAppLogger.error("Password validation fail");
       const errorMessage = "Password should contain at least 8 characters, including one uppercase letter, one lowercase letter, and one digit."
       throw createError(errorMessage, 400);
   }
@@ -21,7 +20,6 @@ function isUserPasswordValidIfNotThrowError(password) {
     const fullNameRegex = /^[A-Za-z]+(?:\s[A-Za-z]+)+$/;
     
     if (!fullNameRegex.test(fullName)) {
-    newsAppLogger.error("Full name validation fail");
       const errorMessage = "Full name must be in English and include both a first name and a last name."
       throw createError(errorMessage, 400);
     }
@@ -33,7 +31,6 @@ function isUserPasswordValidIfNotThrowError(password) {
 function isUserEmailValidIfNotThrowError(email){
   newsAppLogger.info("Email validtion");
     if(isEmailValidAsEmail(email) === false){
-  newsAppLogger.error("Email address is not valid.");
       const errorMessage = "Email address is not valid."
       throw createError(errorMessage, 400);
     }
@@ -44,7 +41,6 @@ function isUserEmailValidIfNotThrowError(email){
 function isPreferencesValidIfNotThrowError(preferences){
   newsAppLogger.info("Preferences validtion");
     if(isListAndFromStringTypeAndNotEmpty(preferences) === false){
-  newsAppLogger.error("Preferences must be an array of strings.");
       const errorMessage = "Preferences must be an array of strings."
       throw createError(errorMessage, 400)
     }
@@ -55,7 +51,6 @@ function isPreferencesValidIfNotThrowError(preferences){
 function isCategoriesValidIfNotThrowError(categories){
   newsAppLogger.info("Categories validtion");
     if(isListAndFromStringTypeAndNotEmpty(categories) === false){
-  newsAppLogger.error("Categories must be an array of strings.");
       const errorMessage = "Categories must be an array of strings."
       throw createError(errorMessage, 400)
     }
@@ -80,8 +75,11 @@ function isRegisterUserValidIfNotThrowError(userToRegister){
 
 function isChangeCategoriesAndPreferencesValidIfNotThrowError(categories, preferences){
   try{
+  newsAppLogger.info("Change categories and preferences validtion");
     isCategoriesValidIfNotThrowError(categories);
     isPreferencesValidIfNotThrowError(preferences);
+  newsAppLogger.info("Passed change categories and preferences validtion");
+
   }catch(error){
     throw error;
   }
@@ -89,7 +87,9 @@ function isChangeCategoriesAndPreferencesValidIfNotThrowError(categories, prefer
 
 function isChangePreferencesValidIfNotThrowError(preferences){
   try{
+  newsAppLogger.info("Change preferences validtion");
     isPreferencesValidIfNotThrowError(preferences);
+  newsAppLogger.info("Passed change preferences validtion");
   }catch(error){
     throw error;
   }
@@ -97,7 +97,9 @@ function isChangePreferencesValidIfNotThrowError(preferences){
 
 function isChangeEmailValidIfNotThrowError(email){
   try{
+  newsAppLogger.info("Change email validtion");
     isUserEmailValidIfNotThrowError(email);
+  newsAppLogger.info("Passed change email validtion");
   }catch(error){
     throw error;
   }
@@ -105,7 +107,9 @@ function isChangeEmailValidIfNotThrowError(email){
 
 function isChangePasswordValidIfNotThrowError(password){
   try{
+  newsAppLogger.info("Change password validtion");
     isUserPasswordValidIfNotThrowError(password);
+  newsAppLogger.info("Passed change password validtion");
   }catch(error){
     throw error;
   }

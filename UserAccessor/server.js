@@ -30,6 +30,7 @@ const connectToDatabase = async (retries = 3) => {
         try {
             userAccessorLogger.info("Trying to connect to db and start server");
             await mongoose.connect(dbUri);
+            userAccessorLogger.info("Connected to db");
             app.listen(port, () => {
                 userAccessorLogger.info(`User accessor server started on port - ${port}`);
             });
