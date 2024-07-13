@@ -8,45 +8,57 @@ const {
     isChangeEmailValidIfNotThrowError,
     isChangePasswordValidIfNotThrowError
 } = require("../services/validation/userValidation/userValidation");
-
+const newsAppLogger = require("../services/logger/logger");
 
 
 async function userRegister(req, res, next) {
     try {
+        newsAppLogger.info("User register event before user service use")
         const { userToRegister } = req.body;
         isRegisterUserValidIfNotThrowError(userToRegister);
         const returnedUser = await DaprUserService.registerUserUsingAccessor(userToRegister);
         const { email, fullName, preferences, categories } = returnedUser.data;
         const messageToSend = `Hello ${fullName}, you registered to the news app. We will send you the news via email.`;
         returnResAnswerHelper(res, messageToSend, returnedUser.data)
+        newsAppLogger.info("User register event after user service use")
         sendNewsToClient(categories, preferences, email, fullName);
     } catch (error) {
-        console.error("user register, news app service error : ", error);
+        newsAppLogger.fatal({
+            error: error
+        }, "Error occurred in news app service during register event");
         next(error);
     }
 }
 
 async function userDelete(req, res, next) {
     try {
+        newsAppLogger.info("User delete event before user service use")
         const userToDelete = req.body.user;
         const answer = await DaprUserService.userDelete(userToDelete);
         const message = `You have been removed from the news app.`;
         returnResAnswerHelper(res, message, answer.data)
+        newsAppLogger.info("User delete event after user service use")
     } catch (error) {
-        console.error("delete user, news app service error : ", error)
+        newsAppLogger.fatal({
+            error: error
+        }, "Error occurred in news app service during delete event");
         next(error);
     }
 }
 
 async function changeCategoriesAndPreferences(req, res, next) {
     try {
+        newsAppLogger.info("User change categories and preferences event before user service use")
         const userWithNewSettings = req.body.userWithNewSettings;
         const { newCategories, newPreferences } = userWithNewSettings;
         isChangeCategoriesAndPreferencesValidIfNotThrowError(newCategories, newPreferences);
         const answer = await DaprUserService.changeCategoriesAndPreferences(userWithNewSettings); // TODO: TO TEST
         returnResAnswerHelper(res, answer.message, answer.data)
+        newsAppLogger.info("User change categories and preferences event after user service use")
     } catch (error) {
-        console.error("Change categories and preferences, news app service error : ", error);
+        newsAppLogger.fatal({
+            error: error
+        }, "Error occurred in user service during change categories and preferences event");
         next(error);
     }
 }
@@ -58,7 +70,9 @@ async function changePreferences(req, res, next) {
         const answer = await DaprUserService.changePreferences(userWithNewPreferences); // TODO: TO TEST
         returnResAnswerHelper(res, answer.message, answer.data)
     } catch (error) {
-        console.error("Change preferences, news app service error : ", error);
+        newsAppLogger.fatal({
+            error: error
+        }, "Error occurred in user service during change preferences event");
         next(error);
     }
 }
@@ -70,7 +84,9 @@ async function changeEmail(req, res, next) {
         const answer = await DaprUserService.changeEmail(userWithNewEmail); // TODO: TO TEST
         returnResAnswerHelper(res, answer.message, answer.data)
     } catch (error) {
-        console.error("Change email, news app service error : ", error);
+        newsAppLogger.fatal({
+            error: error
+        }, "Error occurred in user service during change email event");
         next(error);
     }
 }
@@ -82,7 +98,9 @@ async function changePassword(req, res, next) {
         const answer = await DaprUserService.changePassword(userWithNewPassword); // TODO: TO TEST
         returnResAnswerHelper(res, answer.message, answer.data)
     } catch (error) {
-        console.error("Change password, news app service error : ", error);
+        newsAppLogger.fatal({
+            error: error
+        }, "Error occurred in user service during change password event");
         next(error);
     }
 }
@@ -95,7 +113,9 @@ async function getNewsNow(req, res, next) {
         const { categories, preferences, email, fullName } = loginUser;
         sendNewsToClient(categories, preferences, email, fullName);
     } catch (error) {
-        console.error("Get news now, news app service error : ", error);
+        newsAppLogger.fatal({
+            error: error
+        }, "Error occurred in user service during get news now event");
         next(error);
     }
 }
@@ -105,6 +125,7 @@ function returnResAnswerHelper(res, messageToSend, dataToSend){
         message: messageToSend,
         data: dataToSend
     }));
+    newsAppLogger.info("News app after finishing event in status code 200 and sending answer")
 }
 module.exports = {
     userRegister,

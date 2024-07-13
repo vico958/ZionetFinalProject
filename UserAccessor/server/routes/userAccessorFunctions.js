@@ -1,12 +1,14 @@
 const userAccessorManger = require("../services/userAccessor/userAccessorManger")
 const {createError} = require("../services/general")
-
+const userAccessorLogger = require("../services/logger/logger");
 async function userRegister(req, res, next){
     try{
+        userAccessorLogger.info("Enter userRegister end point")
         const { userToRegister} = req.body;
         const emailInLowerCase = userToRegister.email.toLowerCase()
         const isAlreadyInSytem = await userAccessorManger.getUserByEmail(emailInLowerCase);
         if(isAlreadyInSytem){
+            userAccessorLogger.warn("Email already use")
             throw createError("Email already use", 400);
         }
         else{
@@ -15,13 +17,16 @@ async function userRegister(req, res, next){
             returnResAnswer(res, "User saved in system",returnedUser);
         }
     }catch(error){
-        console.error("user register, user accessor service error : ", error);
+        userAccessorLogger.fatal({
+            error: error
+        }, "Error occurred userRegister event");
         next(error);
     }
 }
 
 async function deleteUser(req, res, next){
     try{
+        userAccessorLogger.info("Enter deleteUser end point")
         const {email, password} = req.body.userToDelete;
         const user = await getUserByEmailAndIfNotFoundThrowError(email);
         if(password === user.password){
@@ -35,13 +40,16 @@ async function deleteUser(req, res, next){
             throw createError("Unable to remove user: the provided password is incorrect.", 400);
         }
     }catch(error){
-        console.error("delete user, user accessor service ", error);
+        userAccessorLogger.fatal({
+            error: error
+        }, "Error occurred deleteUser event");
         next(error);
     }
 }
 
 async function userLogin(req, res, next){
     try{
+        userAccessorLogger.info("Enter userLogin end point")
         const { email, password} = req.body.userToLogin;
         const user = await getUserByEmailAndIfNotFoundThrowError(email);
         if(password === user.password){
@@ -51,13 +59,16 @@ async function userLogin(req, res, next){
             throw createError("Email or password are not valid", 400);// For saftey not letting them know if its email or password not good
         }
     }catch(error){
-        console.error("user login, user accessor service ", error);
+        userAccessorLogger.fatal({
+            error: error
+        }, "Error occurred userLogin event");
         next(error);
     }
 }
 
 async function changePassword(req, res, next) {
     try{//TODO :TEST
+        userAccessorLogger.info("Enter changePassword end point")
         const {newPassword, oldPassword, email} = req.body.userWithNewPassword;
         const user = await getUserByEmailAndIfNotFoundThrowError(email);
         if(oldPassword === user.password){
@@ -69,7 +80,9 @@ async function changePassword(req, res, next) {
             throw createError("old password doesnt match", 400);
         }
     }catch(error){
-        console.error("change password, user accessor service ", error);
+        userAccessorLogger.fatal({
+            error: error
+        }, "Error occurred changePassword event");
         next(error);
     }
 }
@@ -77,6 +90,7 @@ async function changePassword(req, res, next) {
 
 async function chagePreferences(req, res, next){
     try{//TODO :TEST
+        userAccessorLogger.info("Enter chagePreferences end point")
         const {email, password, newPreferences} = req.body.userWithNewPreferences;
         const user = await getUserByEmailAndIfNotFoundThrowError(email);
         if(password === user.password){
@@ -88,13 +102,16 @@ async function chagePreferences(req, res, next){
             throw createError("Password dont match", 400);
         }
     }catch(error){
-        console.error("Change preferences, user accessor service error : ", error)
+        userAccessorLogger.fatal({
+            error: error
+        }, "Error occurred chagePreferences event");
         next(error);
     }
 }
 
 async function chageCategoriesAndPreferences(req, res, next){
     try{//TODO :TEST
+        userAccessorLogger.info("Enter chageCategoriesAndPreferences end point")
         const {email, password, newCategories, newPreferences} = req.body.userWithNewSettings;
         const user = await getUserByEmailAndIfNotFoundThrowError(email);
         if(password === user.password){//TODO: check first categories change and only then change preferences
@@ -108,13 +125,16 @@ async function chageCategoriesAndPreferences(req, res, next){
             throw createError("Password dont match", 400);
         }
     }catch(error){
-        console.error("Change categories and preferences, user accessor service error : ", error)
+        userAccessorLogger.fatal({
+            error: error
+        }, "Error occurred chageCategoriesAndPreferences event");
         next(error);
     }
 }
 
 async function changeEmail(req, res, next){
     try{//TODO :TEST
+        userAccessorLogger.info("Enter changeEmail end point")
         const {email, password, newEmail } = req.body.userWithNewEmail;
         const user = await getUserByEmailAndIfNotFoundThrowError(email);
         if(password === user.password){//TODO: check first categories change and only then change preferences
@@ -131,7 +151,9 @@ async function changeEmail(req, res, next){
             throw createError("Password dont match", 400);
         }
     }catch(error){
-        console.error("Change email, user accessor service error : ", error)
+        userAccessorLogger.fatal({
+            error: error
+        }, "Error occurred changeEmail event");
         next(error);
     }
 }
@@ -139,6 +161,7 @@ async function changeEmail(req, res, next){
 
 async function getAllUsers(req, res, next){
     try{
+        userAccessorLogger.info("Enter getAllUsers end point")
         const allUsers = await userAccessorManger.getAllUsers();
         if(allUsers === null){
             throw createError("No users in db", 404);
@@ -151,7 +174,9 @@ async function getAllUsers(req, res, next){
         }));
         returnResAnswer(res, "All users list", transformedUsers);
     }catch(error){
-        console.error("Get all users, user accessor service error : ", error)
+        userAccessorLogger.fatal({
+            error: error
+        }, "Error occurred getAllUsers event");
         next(error);
     }
 }
@@ -182,6 +207,7 @@ function returnResAnswer(res, messageToSend, dataToSend){
         message: messageToSend,
         data: dataToSend
     }));
+    userAccessorLogger.info(`${messageToSend}`);
 }
 
 module.exports = {

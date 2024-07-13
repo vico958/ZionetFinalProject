@@ -1,5 +1,5 @@
 const userDatabaseManager = require("./userAccessorDatabaseManger")
-
+// No need to logs here because next file do the logs
 class userAccessorManger{
     constructor(){
         this.userDatabase = new userDatabaseManager();

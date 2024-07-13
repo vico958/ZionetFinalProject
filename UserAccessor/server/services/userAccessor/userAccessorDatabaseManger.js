@@ -1,6 +1,7 @@
 const { user } = require("../../storages/models/user")
 const mongoose = require('mongoose');
 const {handleDatabaseError} = require("./errorHandlerDatabaseManger");
+const userAccessorLogger = require("../logger/logger");
 const dbUri = 'mongodb://mongoDb:27017/userDb';
 
 mongoose.connect(dbUri, { //TODO: change location of connect and try catch and so ...
@@ -10,6 +11,7 @@ mongoose.connect(dbUri, { //TODO: change location of connect and try catch and s
 
 class userDatabaseManager {
     register = async (userToRegister) => {
+        userAccessorLogger.info(`Entering register function in userDatabaseManager`);
         const newUser = new user({
             email:userToRegister.email,
             password:userToRegister.password,
@@ -19,6 +21,7 @@ class userDatabaseManager {
         })
         try{
             const result = await newUser.save()
+            userAccessorLogger.info(`Exiting register function in userDatabaseManager`);
             return result;
         } catch(error){
             handleDatabaseError(error);
@@ -27,7 +30,10 @@ class userDatabaseManager {
 
     getUserByEmail = async (email) => {
         try{
-            return await user.findOne({email:email});
+            userAccessorLogger.info(`Entering getUserByEmail function in userDatabaseManager`);
+            const result = await user.findOne({email:email});
+            userAccessorLogger.info(`Exiting getUserByEmail function in userDatabaseManager`);
+            return result;
         }catch(error){
             handleDatabaseError(error);
         }
@@ -36,7 +42,10 @@ class userDatabaseManager {
     
     getUserById = async (userId) => {
         try{
-            return await user.findOne({_id:userId});
+            userAccessorLogger.info(`Entering getUserById function in userDatabaseManager`);
+            const result = await user.findOne({_id:userId});
+            userAccessorLogger.info(`Exiting getUserById function in userDatabaseManager`);
+            return result;
         }catch(error){
             handleDatabaseError(error);
         }
@@ -44,7 +53,10 @@ class userDatabaseManager {
     
     changePassword = async (userId, newPassword) => {
         try{
-            return await this.changeUserDataHelper(userId, newPassword, "password")
+            userAccessorLogger.info(`Entering changePassword function in userDatabaseManager`);
+            const result = await this.changeUserDataHelper(userId, newPassword, "password")
+            userAccessorLogger.info(`Exiting changePassword function in userDatabaseManager`);
+            return result;
         }catch(error){
             handleDatabaseError(error);
         }
@@ -52,7 +64,10 @@ class userDatabaseManager {
 
     changeFullName = async (userId, newFullName) => {
         try{
-            return await this.changeUserDataHelper(userId, newFullName, "fullName");
+            userAccessorLogger.info(`Entering changeFullName function in userDatabaseManager`);
+            const result = await this.changeUserDataHelper(userId, newFullName, "fullName");
+            userAccessorLogger.info(`Exiting changeFullName function in userDatabaseManager`);
+            return result;
         }catch(error){
             handleDatabaseError(error);
         }
@@ -60,7 +75,10 @@ class userDatabaseManager {
 
     changeUserCategories = async (userId, newCategories) => {
         try{
-            return await this.changeUserDataHelper(userId, newCategories, "categories")
+            userAccessorLogger.info(`Entering changeUserCategories function in userDatabaseManager`);
+            const result = await this.changeUserDataHelper(userId, newCategories, "categories");
+            userAccessorLogger.info(`Exiting changeUserCategories function in userDatabaseManager`);
+            return result
         }catch(error){
             handleDatabaseError(error);
         }
@@ -68,7 +86,10 @@ class userDatabaseManager {
 
     changeUserPreferences = async (userId, newPreferences) => {
         try{
-            return await this.changeUserDataHelper(userId, newPreferences, "preferences")
+            userAccessorLogger.info(`Entering changeUserPreferences function in userDatabaseManager`);
+            const result = await this.changeUserDataHelper(userId, newPreferences, "preferences");
+            userAccessorLogger.info(`Exiting changeUserPreferences function in userDatabaseManager`);
+            return result;
         }catch(error){
             handleDatabaseError(error);
         }
@@ -77,7 +98,10 @@ class userDatabaseManager {
     
     changeUserEmail = async(userId, newEmail) =>{
         try{
-            return await this.changeUserDataHelper(userId, newEmail, "email")
+            userAccessorLogger.info(`Entering changeUserEmail function in userDatabaseManager`);
+            const result = await this.changeUserDataHelper(userId, newEmail, "email");
+            userAccessorLogger.info(`Exiting changeUserEmail function in userDatabaseManager`);
+            return result;
         }catch(error){
             handleDatabaseError(error);
         }
@@ -85,7 +109,10 @@ class userDatabaseManager {
     
     changeUserDataHelper = async(userId, newData, dataField) => {
         try{
-            return await user.findByIdAndUpdate({_id:userId}, {[dataField]: newData}, {new:true})
+            userAccessorLogger.info(`Entering changeUserDataHelper function in userDatabaseManager`);
+            const result = await user.findByIdAndUpdate({_id:userId}, {[dataField]: newData}, {new:true});
+            userAccessorLogger.info(`Exiting changeUserDataHelper function in userDatabaseManager`);
+            return result;
         }catch(error){
             handleDatabaseError(error);
         }
@@ -93,7 +120,10 @@ class userDatabaseManager {
     
     deleteUser = async(userId) => {
         try{
-            return await user.deleteOne({_id:userId})
+            userAccessorLogger.info(`Entering deleteUser function in userDatabaseManager`);
+            const result = await user.deleteOne({_id:userId});
+            userAccessorLogger.info(`Exiting deleteUser function in userDatabaseManager`);
+            return result;
         }catch(error){
             handleDatabaseError(error);
         }
@@ -101,7 +131,10 @@ class userDatabaseManager {
 
     getAllUsers = async() => {
         try{
-            return await user.find({})
+            userAccessorLogger.info(`Entering getAllUsers function in userDatabaseManager`);
+            const result = await user.find({})
+            userAccessorLogger.info(`Exiting getAllUsers function in userDatabaseManager`);
+            return result;
         }catch(error){
             handleDatabaseError(error);
         }
