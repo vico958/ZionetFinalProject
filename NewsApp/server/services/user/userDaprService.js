@@ -1,6 +1,6 @@
 require("dotenv").config();
 const { DaprClient, HttpMethod } = require("@dapr/dapr");
-
+const newsAppLogger = require("../logger/logger");
 class DaprUserService {
     constructor() {
         this.userDaprHostAndServiceAppId = "user"; // Dapr Sidecar Host
@@ -11,6 +11,7 @@ class DaprUserService {
 
     async registerUserUsingAccessor(userToRegister) {
         try {
+            newsAppLogger.info("Register user using accessor in class DaprUserService event")
             const serviceMethod = `${this.userUrlMethodBeggining}/register`;
             return  await this.userClientDapr.invoker.invoke(
                 this.userDaprHostAndServiceAppId,
@@ -26,6 +27,7 @@ class DaprUserService {
 
     async userDelete(userToDelete) {
         try {
+            newsAppLogger.info("User delete in class DaprUserService event")
             const serviceMethod = `${this.userUrlMethodBeggining}/delete-user`;
             return await this.userClientDapr.invoker.invoke(
                 this.userDaprHostAndServiceAppId,
@@ -41,6 +43,7 @@ class DaprUserService {
 
     async changeCategoriesAndPreferences(userWithNewSettings) {
         try {
+            newsAppLogger.info("Change categories and preferences in class DaprUserService event")
             const serviceMethod = `${this.userUrlMethodBeggining}/change-categories-and-preferences`;
             return await this.userClientDapr.invoker.invoke(
                 this.userDaprHostAndServiceAppId,
@@ -56,6 +59,7 @@ class DaprUserService {
 
     async changePreferences(userWithNewPreferences) {
         try {
+            newsAppLogger.info("Change preferences in class DaprUserService event")
             const serviceMethod = `${this.userUrlMethodBeggining}/change-preferences`;
             return await this.userClientDapr.invoker.invoke(
                 this.userDaprHostAndServiceAppId,
@@ -71,6 +75,7 @@ class DaprUserService {
 
     async changePassword(userWithNewPassword) {
         try {
+            newsAppLogger.info("Change password in class DaprUserService event")
             const serviceMethod = `${this.userUrlMethodBeggining}/change-password`;
             return await this.userClientDapr.invoker.invoke(
                 this.userDaprHostAndServiceAppId,
@@ -86,6 +91,7 @@ class DaprUserService {
 
     async changeEmail(userWithNewEmail) {
         try {
+            newsAppLogger.info("Change email in class DaprUserService event")
             const serviceMethod = `${this.userUrlMethodBeggining}/change-email`;
             return await this.userClientDapr.invoker.invoke(
                 this.userDaprHostAndServiceAppId,
@@ -101,6 +107,7 @@ class DaprUserService {
 
     async login(userToLogin) {
         try {
+            newsAppLogger.info("Login in class DaprUserService event")
             const serviceMethod = `${this.userUrlMethodBeggining}/login`;
             return await this.userClientDapr.invoker.invoke(
                 this.userDaprHostAndServiceAppId,
@@ -116,6 +123,7 @@ class DaprUserService {
 
     async getAllUsersInSystem() {
         try {
+            newsAppLogger.info("Get all users in system in class DaprUserService event")
             const serviceMethod = `${this.userUrlMethodBeggining}/get-all-users`;
             return await this.userClientDapr.invoker.invoke(
                 this.userDaprHostAndServiceAppId,

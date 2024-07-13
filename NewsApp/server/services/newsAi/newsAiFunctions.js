@@ -7,16 +7,22 @@ const newsAiUrlMethodBeggining = "news-ai"
 
 async function bestFitNewsWithAi(articles, preferences){
     try{
+        newsAppLogger.info("Best fit news with ai in newsAiFunctions event")
         const serviceMethod = `${newsAiUrlMethodBeggining}/best-articles`;
-        return await newsAiClientDapr.invoker.invoke(
+        const result = await newsAiClientDapr.invoker.invoke(
             newsAiDaprHostAndServiceAppId,
             serviceMethod,
             HttpMethod.POST,
             {articles, preferences} ,
             { headers: { 'Content-Type': 'application/json' } },
         );
+        newsAppLogger.info("Return selected news by ai")
+        return result;
     }catch(error){
-        console.error(error);
+        newsAppLogger.fatal({
+            error: error
+        }, "Error occurred during bestFitNewsWithAi event");
+        throw error
     }
 }
 

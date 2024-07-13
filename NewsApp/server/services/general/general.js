@@ -1,29 +1,35 @@
-const { bestFitNewsWithAi, } = require("./newsAi/newsAiFunctions");
-const {getNews} = require("./newsData/newsDataFunctions")
-const {sendEmailWithNews} = require("./email/emailFunctions")
-const DaprUserService = require("./user/userDaprService");
-
+const { bestFitNewsWithAi, } = require("../newsAi/newsAiFunctions");
+const {getNews} = require("../newsData/newsDataFunctions")
+const {sendEmailWithNews} = require("../email/emailFunctions")
+const DaprUserService = require("../user/userDaprService");
+const newsAppLogger = require("../logger/logger");
 
 async function sendNewsToClient(categories, preferences, clientEmail, clientFullName){
     try{
+        newsAppLogger.info("Send news to client event")
         const news = await getNews(categories, preferences);
         const bestNews = await bestFitNewsWithAi(news, preferences);
         sendEmailWithNews(bestNews, clientEmail, clientFullName);
     }catch(error){
-        console.error(error);
+        newsAppLogger.fatal({
+            error: error
+        }, "Error occurred during sendNewsToClient event");
         throw error
     }
 }
 
 async function sendDailyNews(){
     try{//TODO: a retry for the ones that fail
+        newsAppLogger.info("Send daily news event")
         const allUsers = await DaprUserService.getAllUsersInSystem();
         for (const user of allUsers) {
             const {categories, preferences, email, fullName} = user
             await sendNewsToClient(categories, preferences, email, fullName)
         }
     }catch(error){
-        console.error(error)
+        newsAppLogger.fatal({
+            error: error
+        }, "Error occurred during sendDailyNews event");
     }
 }
 

@@ -1,5 +1,6 @@
 require("dotenv").config()
 const { DaprClient, HttpMethod } = require("@dapr/dapr");
+const newsAppLogger = require("../logger/logger");
 const emailDaprHostAndServiceAppId = "email"
 const daprPort = "3500"; // Dapr Sidecar Port for user service
 const emailClientDapr = new DaprClient({ emailDaprHostAndServiceAppId, daprPort });
@@ -10,17 +11,28 @@ const emailPassword = process.env.EMAIL_PASSWORD;
 const emailFrom = process.env.EMAIL_FROM;
 
 async function sendEmailWithNews(newsData, clientEmail, clientName){
-    const emailTo = clientEmail;
-    const { emailSubject, emailTextHtml} = createEmailNewsContent(newsData, clientName);  
-    const emailInfo = {
-      emailHost, emailUser, emailPassword, emailFrom, emailTo, emailSubject, emailTextHtml
-    };
-    // await sendEmail(emailInfo); // TODO : to remove before send to check my final project
-    console.log("send email but right now i will just log it : ", emailInfo)
+    try{
+
+        newsAppLogger.info("Send email with news in emailFunctions event")
+        const emailTo = clientEmail;
+        const { emailSubject, emailTextHtml} = createEmailNewsContent(newsData, clientName);  
+        const emailInfo = {
+            emailHost, emailUser, emailPassword, emailFrom, emailTo, emailSubject, emailTextHtml
+        };
+        // await sendEmail(emailInfo); // TODO : to remove before send to check my final project
+        console.log("send email but right now i will just log it : ", emailInfo)
+        newsAppLogger.info("Email sent");
+    }catch(error){
+        newsAppLogger.fatal({
+            error: error
+        }, "Error occurred during sendEmailWithNews event");
+        throw error
+    }
 }
 
 async function sendEmail(emailInfo){
     try{
+        newsAppLogger.info("Send email in emailFunctions event");
         const serviceMethod = `${emailUrlMethodBeggining}/send-email`;
         return await emailClientDapr.invoker.invoke(
             emailDaprHostAndServiceAppId,
@@ -30,12 +42,13 @@ async function sendEmail(emailInfo){
             { headers: { 'Content-Type': 'application/json' } },
         );
     }catch(error){
-        console.error(error.message);
         throw error
     }
 }
 
 function createEmailNewsContent(newsData, clientName){
+    newsAppLogger.info("Create email news content in emailFunctions event");
+
     const newsDataForEmailContent = formattedNewsData(newsData);
     const emailSubject = "Your interesting news is ready!!!"
     const emailTextHtml = `<p style="color: black;">Hello ${clientName},</p>
@@ -50,6 +63,8 @@ function createEmailNewsContent(newsData, clientName){
 }
 
 function formattedNewsData(news){
+    newsAppLogger.info("Formatted news data in emailFunctions event")
+
     return news.map((item) => {
         return `<p><strong style="color: black;">${item.title}</strong></p>
                 <p style="color: black;">${item.summary}</p>

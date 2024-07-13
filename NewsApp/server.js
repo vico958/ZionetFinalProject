@@ -1,5 +1,5 @@
 require("dotenv").config();
-const { sendDailyNews } =require("./server/services/general")
+const { sendDailyNews } =require("./server/services/general/general")
 const cron = require('node-cron');
 const express = require("express");
 const cors = require("cors");
