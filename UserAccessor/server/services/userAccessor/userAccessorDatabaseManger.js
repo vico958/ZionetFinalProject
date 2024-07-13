@@ -1,13 +1,6 @@
 const { user } = require("../../storages/models/user")
-const mongoose = require('mongoose');
 const {handleDatabaseError} = require("./errorHandlerDatabaseManger");
 const userAccessorLogger = require("../logger/logger");
-const dbUri = 'mongodb://mongoDb:27017/userDb';
-
-mongoose.connect(dbUri, { //TODO: change location of connect and try catch and so ...
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
 
 class userDatabaseManager {
     register = async (userToRegister) => {
