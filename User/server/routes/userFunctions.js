@@ -23,7 +23,7 @@ async function userRegister(req, res, next){
     }catch(error){
         userLogger.fatal({
             error: error
-        }, "Error occurred in user service during register event");
+        }, "Error occurred during register event");
         next(error);
     }
 }
