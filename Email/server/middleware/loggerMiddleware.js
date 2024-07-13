@@ -1,4 +1,4 @@
-const emailLogger = require("../services/logger");
+const emailLogger = require("../services/logger/logger");
 function loggerMiddleware(req, res, next) {
   emailLogger.info(`${req.method} ${req.path}`);
     next();

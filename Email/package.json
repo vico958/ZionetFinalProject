@@ -16,6 +16,8 @@
     "nodemailer": "^6.9.14",
     "pino": "^9.2.0",
     "pino-multi-stream": "^6.0.0",
-    "pino-pretty": "^11.2.1"
+    "pino-pretty": "^11.2.1",
+    "swagger-autogen": "^2.23.7",
+    "swagger-ui-express": "^5.0.1"
   }
 }

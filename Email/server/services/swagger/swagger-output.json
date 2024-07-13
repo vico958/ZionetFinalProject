@@ -1,0 +1,75 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Email service api",
+    "description": "Email service api",
+    "version": "1.0.0"
+  },
+  "host": "localhost:3006",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/email/send-email": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "emailInfo": {
+                  "type": "object",
+                  "properties": {
+                    "emailHost": {
+                      "type": "string"
+                    },
+                    "emailUser": {
+                      "type": "string",
+                      "format": "email"
+                    },
+                    "emailPassword": {
+                      "type": "string"
+                    },
+                    "emailFrom": {
+                      "type": "string",
+                      "format": "email"
+                    },
+                    "emailTo": {
+                      "type": "string",
+                      "format": "email"
+                    },
+                    "emailSubject": {
+                      "type": "string"
+                    },
+                    "emailTextHtml": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/email/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  }
+}
