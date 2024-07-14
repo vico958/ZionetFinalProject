@@ -232,7 +232,7 @@ services:
       - newsai
       - email
     working_dir: /test-runner
-    command: ["sh", "-c", "sleep 20 && npm test"]
+    command: ["sh", "-c", "sleep 120 && npm test"] # To make sure before run test that all is on, so waiting 2 minutes
 
 networks:
   newsApp:
