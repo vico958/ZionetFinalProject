@@ -78,9 +78,9 @@ async function changePassword(req, res, next) {
         const {newPassword, oldPassword, email} = req.body.userWithNewPassword;
         const user = await getUserByEmailAndIfNotFoundThrowError(email);
         if(oldPassword === user.password){
-            const answer = await userAccessorManger.changePassword(user.userId, newPassword)
+            const answer = await userAccessorManger.changePassword(user._id, newPassword)
             const messageFail = "Cant update Password";
-            const messageSuccess = "Password updated";
+            const messageSuccess = "User password has been updated.";
             changeAfterHavingUserHelper(res, messageSuccess, messageFail, answer)
         }else{
             throw createError("old password doesnt match", 400);
@@ -102,7 +102,7 @@ async function chagePreferences(req, res, next){
         if(password === user.password){
             const answer = await userAccessorManger.changeUserPreferences(user._id, newPreferences)
             const messageFail = "Cant update preferences";
-            const messageSuccess = "User preferences has been updated."
+            const messageSuccess = "User preferences have been updated."
             changeAfterHavingUserHelper(res, messageSuccess, messageFail, answer)
         }else{
             throw createError("Password dont match", 400);
@@ -125,7 +125,7 @@ async function chageCategoriesAndPreferences(req, res, next){
             const answerCategories = await userAccessorManger.changeUserCategories(_id, newCategories)
             const answerPreferences = await userAccessorManger.changeUserPreferences(_id, newPreferences)
             const messageFail = "Cant update preferences and categories";
-            const messageSuccess = "User preferences and categories has been updated.";
+            const messageSuccess = "User preferences and categories have been updated.";
             changeAfterHavingUserHelper(res, messageSuccess, messageFail, answerPreferences) // its enough to check only one because same _id
         }else{
             throw createError("Password dont match", 400);

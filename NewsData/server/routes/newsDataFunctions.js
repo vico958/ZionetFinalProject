@@ -9,7 +9,7 @@ async function hellowWorldCheck(req, res){
     res.send("Hello world from news data service")
 }
 
-async function getNews(req, res){
+async function getNews(req, res, next){
     // TODO: URGENTTTTTTTTTTTTTT
     // TODO : fix getting news with categories and inside with preferences
     try{

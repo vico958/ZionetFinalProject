@@ -61,7 +61,7 @@ async function changePassword(req, res, next) {
     try{
         userLogger.info("Change password event before accessor use")
         const serviceMethod = `${urlMethodBeggining}/change-password`;
-        const { userWithNewPassword} = req.body.userWithNewPassword;
+        const { userWithNewPassword} = req.body;
         const returnedData = await client.invoker.invoke(
             daprHostAndServiceAppId,
             serviceMethod,
