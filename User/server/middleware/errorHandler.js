@@ -7,7 +7,7 @@ function errorHandler(error, req, res, next) {
     parsedError = JSON.parse(error.message);
   } catch (e) {
     parsedError = {
-      error_msg: error.message,
+      error_msg: error.message || "Something went wrong from our side.",
       status: error.statusCode || 500
     };
   }

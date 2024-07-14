@@ -212,6 +212,29 @@ services:
     networks:
       - newsApp 
 
+  test-runner:
+    image: node:20.10.0
+    volumes:
+      - ./tests:/tests
+      - ./test-runner:/test-runner
+      - ./NewsApp:/NewsApp
+      - ./User:/User
+      - ./UserAccessor:/UserAccessor
+      - ./NewsData:/NewsData
+      - ./NewsAi:/NewsAi
+      - ./Email:/Email
+    networks:
+      - newsApp
+    depends_on:
+      - newsapp
+      - user
+      - useraccessor
+      - newsdata
+      - newsai
+      - email
+    working_dir: /test-runner
+    entrypoint: ["/test-runner/entrypoint.sh"]
+
 networks:
   newsApp:
     driver: bridge
