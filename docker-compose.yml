@@ -215,7 +215,6 @@ services:
   test-runner:
     image: node:20.10.0
     volumes:
-      - ./tests:/tests
       - ./test-runner:/test-runner
       - ./NewsApp:/NewsApp
       - ./User:/User
@@ -233,7 +232,7 @@ services:
       - newsai
       - email
     working_dir: /test-runner
-    command: ["sh", "-c", "sleep 120 && npm test"]
+    command: ["sh", "-c", "sleep 20 && npm test"]
 
 networks:
   newsApp:
