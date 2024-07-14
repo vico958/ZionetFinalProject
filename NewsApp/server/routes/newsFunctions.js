@@ -116,7 +116,7 @@ async function getNewsNow(req, res, next) {
         res.status(200).send("We received your request. If you are in the system, you will receive news shortly.");
         const user = req.body.user;
         const loginUser = await DaprUserService.login(user);
-        const { categories, preferences, email, fullName } = loginUser;
+        const { categories, preferences, email, fullName } = loginUser.data;
         newsAppLogger.info("User is legit, start process of sending news");
         sendNewsToClient(categories, preferences, email, fullName);
     } catch (error) {

@@ -233,7 +233,7 @@ services:
       - newsai
       - email
     working_dir: /test-runner
-    entrypoint: ["/test-runner/entrypoint.sh"]
+    command: ["sh", "-c", "sleep 120 && npm test"]
 
 networks:
   newsApp:

@@ -22,8 +22,6 @@ async function getNews(req, res, next) {
             const categories = req.body.categories;
             const preferences = req.body.preferences;
             const query = preferences.join(` OR `);
-            newsDataLogger.fatal(`fail and categories is ${categories}, and preferences is ${preferences}`)
-            newsDataLogger.fatal(`fail and req.body is ${req.body}`)
             const urlWithQuery = `${url}&category=${categories.toString()}&language=en&q=${query}`;
             const response = await fetch(urlWithQuery);
             const data = await response.json();
