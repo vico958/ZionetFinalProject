@@ -119,5 +119,10 @@ module.exports = {
     isChangeCategoriesAndPreferencesValidIfNotThrowError,
     isChangePreferencesValidIfNotThrowError,
     isChangeEmailValidIfNotThrowError,
-    isChangePasswordValidIfNotThrowError
+    isChangePasswordValidIfNotThrowError,
+    isUserPasswordValidIfNotThrowError, // For testing
+    isUserFullNameValidIfNotThrowError,  // For testing
+    isUserEmailValidIfNotThrowError, // For testing
+    isPreferencesValidIfNotThrowError, // For testing
+    isCategoriesValidIfNotThrowError, // For testing
   }
