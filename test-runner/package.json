@@ -1,0 +1,13 @@
+{
+  "name": "test-runner",
+  "version": "1.0.0",
+  "description": "tester",
+  "scripts": {
+    "test": "mocha tests/**/*.test.js"
+  },
+  "dependencies": {
+    "chai": "^4.4.1",
+    "chai-http": "^4.4.0",
+    "mocha": "^9.2.2"
+  }
+}
