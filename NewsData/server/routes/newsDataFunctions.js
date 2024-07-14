@@ -1,5 +1,6 @@
 require("dotenv").config();
 const newsDataLogger = require("../services/logger/logger");
+const {createError} = require("../services/general/general");
 const apiKey = process.env.DATA_NEWS_IO_API_KEY
 const url = `https://newsdata.io/api/1/latest?apikey=${apiKey}`
 
@@ -9,25 +10,44 @@ async function hellowWorldCheck(req, res){
     res.send("Hello world from news data service")
 }
 
-async function getNews(req, res, next){
+async function getNews(req, res, next) {
+    const MAX_RETRIES = 3;
+    let attempts = 0;
+
     // TODO: URGENTTTTTTTTTTTTTT
-    // TODO : fix getting news with categories and inside with preferences
-    try{
-        newsDataLogger.info("News data get news event at the top of event")
-        const categories = req.body.categories;
-        const preferences = req.body.preferences;
-        const query = preferences.join(` OR `)
-        const urlWithQuery = `${url}&category=${categories.toString()}&language=en&q=${query}`
-        const data = await fetch(urlWithQuery).then(async (res)=> res.json());
-        res.status(200).send(data);
-        newsDataLogger.info("News data get news event after sending back the news")
-    }catch(error){
-        newsDataLogger.fatal({
-            error: error
-        }, "Error occurred in News data service during get news event");
-        next(error);
+    // TODO: fix getting news with categories and inside with preferences
+    while (attempts < MAX_RETRIES) {
+        try {
+            newsDataLogger.info("News data get news event at the top of event");
+            const categories = req.body.categories;
+            const preferences = req.body.preferences;
+            const query = preferences.join(` OR `);
+            newsDataLogger.fatal(`fail and categories is ${categories}, and preferences is ${preferences}`)
+            newsDataLogger.fatal(`fail and req.body is ${req.body}`)
+            const urlWithQuery = `${url}&category=${categories.toString()}&language=en&q=${query}`;
+            const response = await fetch(urlWithQuery);
+            const data = await response.json();
+
+            if (response.ok) {
+                res.status(200).send(data);
+                newsDataLogger.info("News data get news event after sending back the news");
+                return; // Exit the function if successful
+            } else {
+                throw createError(`Request failed with status ${response.status}`, response.status);
+            }
+        } catch (error) {
+            attempts += 1;
+
+            if (attempts >= MAX_RETRIES) {
+                newsDataLogger.fatal({
+                    error: error
+                }, "Error occurred in News data service during get news event");
+                next(error);
+            }
+        }
     }
 }
+
 
 async function getCategoriesRules(req, res){
     newsDataLogger.info("News data get categories rules event at the top of event")
