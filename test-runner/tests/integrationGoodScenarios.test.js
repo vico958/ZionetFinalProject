@@ -1,6 +1,7 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 chai.use(chaiHttp);
+const { jsonParseTextProperty } = require('./utils');
 const { expect } = chai;
 
 describe('Integration Test - User Registration', () => {
@@ -185,8 +186,3 @@ describe('Integration Test - Hello World Check', () => {
     expect(res.text).to.equal("Hello world from news app");
   });
 });
-
-function jsonParseTextProperty(res){
-    const responseBody = JSON.parse(res.text);
-    return responseBody;
-}

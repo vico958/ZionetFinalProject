@@ -43,7 +43,7 @@ async function deleteUser(req, res, next){
                 throw createError("Cant remove user", 500);
             }
         }else{
-            throw createError("Unable to remove user: the provided password is incorrect.", 400);
+            throw createError("Unable to remove user: email or password are not valid.", 400);
         }
     }catch(error){
         userAccessorLogger.fatal({
