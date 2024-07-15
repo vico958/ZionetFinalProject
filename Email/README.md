@@ -3,9 +3,6 @@
 ## Overview
 This API provides functionality for sending emails. It is designed to be a simple yet effective service for integrating email capabilities into your applications.
 
-Version: 1.0.0
-Host: localhost:3006
-Base Path: /
 
 ## Endpoints
 
@@ -28,19 +25,19 @@ Base Path: /
   }
 }
 ```
-Parameters
+#### Parameters
 
-emailHost: The email server host.
-emailUser: The email account user.
-emailPassword: The email account password.
-emailFrom: The sender's email address.
-emailTo: The recipient's email address.
-emailSubject: The subject of the email.
-emailTextHtml: The HTML content of the email.
+emailHost: The email server host.\
+emailUser: The email account user.\
+emailPassword: The email account password.\
+emailFrom: The sender's email address.\
+emailTo: The recipient's email address.\
+emailSubject: The subject of the email.\
+emailTextHtml: The HTML content of the email.\
 
-Responses
+###### Responses
 
-200 OK: Email sent successfully
+200 OK:\ Email sent successfully
 
 ```json
 {
@@ -50,7 +47,7 @@ Responses
 
 ```
 
-Default Error Response:
+#### Default Error Response:
 
 
 ```json
@@ -62,19 +59,18 @@ Default Error Response:
 
 ```
 
-2. Health Check
+### 2. Health Check
 
-URL: /email/
-Method: GET
+URL: /email/\
+Method: GET\
 Description: Health check endpoint for the email service.
 
-Response
+###### Response
 
-200 OK: Returns "Hello world from email service"
+200 OK:\ Returns "Hello world from email service"
 
-Usage
+#### Usage
 To use this API, send HTTP requests to the appropriate endpoints. Make sure to include all required parameters in your requests.
 Security
-Please note that this API handles sensitive information such as email passwords. Ensure that you implement proper security measures when using this API, such as HTTPS and secure storage of credentials.
-Support
+Please note that this API handles sensitive information such as email passwords. Ensure that you implement proper security measures when using this API.\
 For any issues or questions regarding this API, please contact the development team.
