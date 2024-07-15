@@ -35,7 +35,7 @@ An array of strings representing user preferences to filter the best articles.
 ##### articles:
 An array of article objects to be evaluated, each containing:
 ###### title:
-The title of the article.\
+The title of the article.
 ###### link:
 The link to the article.
 
@@ -81,9 +81,9 @@ For the best articles endpoint:
 Prepare a list of user preferences.\
 Gather a list of articles with their titles and links.\
 Send a POST request to /news-ai/best-articles with the preferences and articles in the request body.\
-The API will return a list of the best articles, including summaries, based on the provided preferences.\
+The API will return a list of the best articles, including summaries, based on the provided preferences.
 
  #### Security
-While this API doesn't handle sensitive user data directly, consider implementing proper security measures such as rate limiting and input validation to protect against potential abuse.\
+While this API doesn't handle sensitive user data directly, consider implementing proper security measures such as rate limiting and input validation to protect against potential abuse.
 #### Support
 For any issues or questions regarding this API, please contact the development team.
