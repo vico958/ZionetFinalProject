@@ -388,7 +388,7 @@
     },
     "/news/": {
       "get": {
-        "description": "Hello world to check server works.",
+        "description": "Health check endpoint for the newsApp service.",
         "responses": {
           "200": {
             "description": "Hello world from news app",

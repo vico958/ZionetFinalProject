@@ -1,8 +1,8 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "NewsAi service api",
-    "description": "NewsAi service api",
+    "title": "NewsAi Service API",
+    "description": "API for determining the best articles based on user preferences",
     "version": "1.0.0"
   },
   "host": "localhost:3005",
@@ -13,7 +13,7 @@
   "paths": {
     "/news-ai/best-articles": {
       "post": {
-        "description": "",
+        "description": "Get the best articles based on user preferences.",
         "parameters": [
           {
             "name": "body",
@@ -25,7 +25,8 @@
                   "type": "array",
                   "items": {
                     "type": "string"
-                  }
+                  },
+                  "description": "User preferences to filter the best articles."
                 },
                 "articles": {
                   "type": "array",
@@ -33,13 +34,16 @@
                     "type": "object",
                     "properties": {
                       "title": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Title of the article."
                       },
                       "link": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Link to the article."
                       }
                     }
-                  }
+                  },
+                  "description": "List of articles to be evaluated."
                 }
               }
             }
@@ -47,17 +51,41 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Best articles based on preferences",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "title": { "type": "string" },
+                  "link": { "type": "string" },
+                  "summary": { "type": "string" }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": { "type": "string" },
+                "error": { "type": "string" }
+              }
+            }
           }
         }
       }
     },
     "/news-ai/": {
       "get": {
-        "description": "",
+        "description": "Health check endpoint for the NewsAi service.",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Hello world from news ai service",
+            "schema": {
+              "type": "string"
+            }
           }
         }
       }
