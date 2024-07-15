@@ -67,8 +67,8 @@ Request Body
 ```json
 {
   "userToLogin": {
-    "email": "user@example.com",  // The user's email address
-    "password": "password123"     // The user's password
+    "email": "user@example.com",
+    "password": "password123"
   }
 }
 ```
@@ -137,10 +137,10 @@ Request Body
 ```json
 {
   "userWithNewSettings": {
-    "email": "user@example.com",           // The user's email address
-    "password": "password123",             // The user's password
-    "newPreferences": ["science", "arts"], // An array of new user preferences
-    "newCategories": ["business", "health"] // An array of new user categories
+    "email": "user@example.com",
+    "password": "password123",
+    "newPreferences": ["science", "arts"],
+    "newCategories": ["business", "health"]
   }
 }
 ```
@@ -179,9 +179,9 @@ Request Body
 ```json
 {
   "userWithNewPreferences": {
-    "email": "user@example.com",       // The user's email address
-    "password": "password123",         // The user's password
-    "newPreferences": ["science", "arts"] // An array of new user preferences
+    "email": "user@example.com",
+    "password": "password123",
+    "newPreferences": ["science", "arts"]
   }
 }
 ```
@@ -220,9 +220,9 @@ Request Body
 ```json
 {
   "userWithNewPassword": {
-    "email": "user@example.com",   // The user's email address
-    "newPassword": "newpassword123", // The new password
-    "oldPassword": "oldpassword123"  // The old password
+    "email": "user@example.com",
+    "newPassword": "newpassword123",
+    "oldPassword": "oldpassword123"
   }
 }
 ```
@@ -261,9 +261,9 @@ Request Body
 ```json
 {
   "userWithNewEmail": {
-    "email": "user@example.com",       // The user's current email address
-    "password": "password123",         // The user's password
-    "newEmail": "newuser@example.com"  // The new email address
+    "email": "user@example.com",
+    "password": "password123",
+    "newEmail": "newuser@example.com"
   }
 }
 ```
@@ -302,8 +302,8 @@ Request Body
 ```json
 {
   "userToDelete": {
-    "email": "user@example.com",   // The user's email address
-    "password": "password123"      // The user's password
+    "email": "user@example.com",
+    "password": "password123"
   }
 }
 ```
