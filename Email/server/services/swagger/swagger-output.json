@@ -23,15 +23,6 @@
               "properties": {
                 "emailInfo": {
                   "type": "object",
-                  "required": [
-                    "emailHost",
-                    "emailUser",
-                    "emailPassword",
-                    "emailFrom",
-                    "emailTo",
-                    "emailSubject",
-                    "emailTextHtml"
-                  ],
                   "properties": {
                     "emailHost": {
                       "type": "string",
