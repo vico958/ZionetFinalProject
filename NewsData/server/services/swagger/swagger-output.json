@@ -1,8 +1,8 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "NewsData service api",
-    "description": "NewsData service api",
+    "title": "NewsData Service API",
+    "description": "API for fetching news articles and categories",
     "version": "1.0.0"
   },
   "host": "localhost:3004",
@@ -13,7 +13,7 @@
   "paths": {
     "/news-data/get-news": {
       "post": {
-        "description": "",
+        "description": "Fetch news articles based on categories and preferences.",
         "parameters": [
           {
             "name": "body",
@@ -25,13 +25,15 @@
                   "type": "array",
                   "items": {
                     "type": "string"
-                  }
+                  },
+                  "description": "List of categories to filter news articles."
                 },
                 "preferences": {
                   "type": "array",
                   "items": {
                     "type": "string"
-                  }
+                  },
+                  "description": "List of preferences to filter news articles."
                 }
               }
             }
@@ -39,27 +41,110 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "News articles fetched successfully.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": { "type": "string" },
+                "totalResults": { "type": "integer" },
+                "results": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "article_id": { "type": "string" },
+                      "title": { "type": "string" },
+                      "link": { "type": "string", "format": "uri" },
+                      "keywords": {
+                        "type": "array",
+                        "items": { "type": "string" }
+                      },
+                      "creator": {
+                        "type": "array",
+                        "items": { "type": "string" }
+                      },
+                      "video_url": { "type": "string", "format": "uri" },
+                      "description": { "type": "string" },
+                      "content": { "type": "string" },
+                      "pubDate": { "type": "string", "format": "date-time" },
+                      "image_url": { "type": "string", "format": "uri" },
+                      "source_id": { "type": "string" },
+                      "source_priority": { "type": "integer" },
+                      "source_url": { "type": "string", "format": "uri" },
+                      "source_icon": { "type": "string", "format": "uri" },
+                      "language": { "type": "string" },
+                      "country": {
+                        "type": "array",
+                        "items": { "type": "string" }
+                      },
+                      "category": {
+                        "type": "array",
+                        "items": { "type": "string" }
+                      },
+                      "ai_tag": { "type": "string" },
+                      "sentiment": { "type": "string" },
+                      "sentiment_stats": { "type": "string" },
+                      "ai_region": { "type": "string" },
+                      "ai_org": { "type": "string" }
+                    }
+                  }
+                },
+                "nextPage": { "type": "string" }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": { "type": "string" },
+                "error": { "type": "string" }
+              }
+            }
           }
         }
       }
     },
     "/news-data/categories-rules": {
       "get": {
-        "description": "",
+        "description": "Get the rules for news categories.",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Categories rules fetched successfully.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "categoriesAmount": { "type": "integer" },
+                "categoriesList": {
+                  "type": "array",
+                  "items": { "type": "string" }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": { "type": "string" },
+                "error": { "type": "string" }
+              }
+            }
           }
         }
       }
     },
     "/news-data/": {
       "get": {
-        "description": "",
+        "description": "Health check endpoint for the NewsData service.",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Hello world from news data service",
+            "schema": {
+              "type": "string"
+            }
           }
         }
       }
