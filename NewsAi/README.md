@@ -30,20 +30,22 @@ Base Path: /
 
 #### Parameters
 
-preferences: An array of strings representing user preferences to filter the best articles.\
-articles: An array of article objects to be evaluated, each containing:\
-
-title:\
-The title of the article.
-link:\
+##### preferences:
+An array of strings representing user preferences to filter the best articles.
+##### articles:
+An array of article objects to be evaluated, each containing:
+###### title:
+The title of the article.\
+###### link:
 The link to the article.
 
 
 
 #### Responses
 
-200 OK: Best articles based on preferences
-
+200 OK:\
+Best articles based on preferences
+```json
 [
   {
     "title": "string",
@@ -51,7 +53,7 @@ The link to the article.
     "summary": "string"
   }
 ]
-
+```
 #### Default Error Response:
 
 ```json
@@ -69,7 +71,8 @@ The link to the article.
 
 #### Response
 
-200 OK: Returns "Hello world from news ai service"
+200 OK:\
+Returns "Hello world from news ai service"
 
 #### Usage
 To use this API, send HTTP requests to the appropriate endpoints. Make sure to include all required parameters in your requests.
@@ -79,26 +82,6 @@ Prepare a list of user preferences.\
 Gather a list of articles with their titles and links.\
 Send a POST request to /news-ai/best-articles with the preferences and articles in the request body.\
 The API will return a list of the best articles, including summaries, based on the provided preferences.\
-
-#### Example
-
-```json
-curl -X POST http://localhost:3005/news-ai/best-articles \
-  -H "Content-Type: application/json" \
-  -d '{
-    "preferences": ["technology", "science"],
-    "articles": [
-      {
-        "title": "New Advancements in AI",
-        "link": "https://example.com/ai-news"
-      },
-      {
-        "title": "Latest Discoveries in Astronomy",
-        "link": "https://example.com/astronomy-news"
-      }
-    ]
-  }'
-```
 
  #### Security
 While this API doesn't handle sensitive user data directly, consider implementing proper security measures such as rate limiting and input validation to protect against potential abuse.\
