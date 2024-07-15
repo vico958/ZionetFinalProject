@@ -4,7 +4,7 @@
 The NewsData Service API provides functionality for fetching news articles based on categories and user preferences, as well as retrieving rules for news categories.
 
 Host: localhost:3004\
-You can go to localhost:3004\api-docs and test this api with the swagger
+You can go to [localhost:3004\api-docs](http://localhost:3004/api-docs) and test this api with the swagger
 
 ## Endpoints
 
