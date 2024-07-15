@@ -1,8 +1,8 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "Email service api",
-    "description": "Email service api",
+    "title": "Email Service API",
+    "description": "API for sending emails",
     "version": "1.0.0"
   },
   "host": "localhost:3006",
@@ -13,7 +13,7 @@
   "paths": {
     "/email/send-email": {
       "post": {
-        "description": "",
+        "description": "Send an email with the specified details.",
         "parameters": [
           {
             "name": "body",
@@ -23,30 +23,46 @@
               "properties": {
                 "emailInfo": {
                   "type": "object",
+                  "required": [
+                    "emailHost",
+                    "emailUser",
+                    "emailPassword",
+                    "emailFrom",
+                    "emailTo",
+                    "emailSubject",
+                    "emailTextHtml"
+                  ],
                   "properties": {
                     "emailHost": {
-                      "type": "string"
+                      "type": "string",
+                      "description": "The email server host."
                     },
                     "emailUser": {
                       "type": "string",
-                      "format": "email"
+                      "format": "email",
+                      "description": "The email account user."
                     },
                     "emailPassword": {
-                      "type": "string"
+                      "type": "string",
+                      "description": "The email account password."
                     },
                     "emailFrom": {
                       "type": "string",
-                      "format": "email"
+                      "format": "email",
+                      "description": "The sender's email address."
                     },
                     "emailTo": {
                       "type": "string",
-                      "format": "email"
+                      "format": "email",
+                      "description": "The recipient's email address."
                     },
                     "emailSubject": {
-                      "type": "string"
+                      "type": "string",
+                      "description": "The subject of the email."
                     },
                     "emailTextHtml": {
-                      "type": "string"
+                      "type": "string",
+                      "description": "The HTML content of the email."
                     }
                   }
                 }
@@ -56,17 +72,37 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Email sent successfully.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": { "type": "string" },
+                "info": { "type": "string" }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": { "type": "string" },
+                "error": { "type": "string" }
+              }
+            }
           }
         }
       }
     },
     "/email/": {
       "get": {
-        "description": "",
+        "description": "Health check endpoint for the email service.",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Hello world from email service",
+            "schema": {
+              "type": "string"
+            }
           }
         }
       }

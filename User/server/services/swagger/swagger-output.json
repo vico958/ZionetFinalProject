@@ -1,8 +1,8 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "User service api",
-    "description": "User service api",
+    "title": "User Service API",
+    "description": "API for managing users and their preferences in the User service",
     "version": "1.0.0"
   },
   "host": "localhost:3002",
@@ -13,7 +13,7 @@
   "paths": {
     "/user/register": {
       "post": {
-        "description": "",
+        "description": "Register a new user with email, password, full name, preferences, and categories.",
         "parameters": [
           {
             "name": "body",
@@ -24,26 +24,16 @@
                 "userToRegister": {
                   "type": "object",
                   "properties": {
-                    "email": {
-                      "type": "string"
-                    },
-                    "password": {
-                      "type": "string"
-                    },
-                    "fullName": {
-                      "type": "string"
-                    },
+                    "email": { "type": "string" },
+                    "password": { "type": "string" },
+                    "fullName": { "type": "string" },
                     "preferences": {
                       "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
+                      "items": { "type": "string" }
                     },
                     "categories": {
                       "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
+                      "items": { "type": "string" }
                     }
                   }
                 }
@@ -53,14 +43,41 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
-          }
+            "description": "User registered successfully and a confirmation message sent.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": { "type": "string" },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "email": { "type": "string" },
+                    "password": { "type": "string" },
+                    "fullName": { "type": "string" },
+                    "preferences": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    },
+                    "categories": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    },
+                    "_id": { "type": "string" },
+                    "createdAt": { "type": "string", "format": "date-time" },
+                    "updatedAt": { "type": "string", "format": "date-time" },
+                    "__v": { "type": "integer" }
+                  }
+                }
+              }
+            }
+          },
+          "default": { "description": "Unexpected error" }
         }
       }
     },
     "/user/login": {
       "post": {
-        "description": "",
+        "description": "Log in a user with email and password.",
         "parameters": [
           {
             "name": "body",
@@ -71,12 +88,8 @@
                 "userToLogin": {
                   "type": "object",
                   "properties": {
-                    "email": {
-                      "type": "string"
-                    },
-                    "password": {
-                      "type": "string"
-                    }
+                    "email": { "type": "string" },
+                    "password": { "type": "string" }
                   }
                 }
               }
@@ -85,24 +98,79 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
-          }
+            "description": "User logged in successfully and the user object is returned.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": { "type": "string" },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "email": { "type": "string" },
+                    "password": { "type": "string" },
+                    "fullName": { "type": "string" },
+                    "preferences": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    },
+                    "categories": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    },
+                    "_id": { "type": "string" },
+                    "createdAt": { "type": "string", "format": "date-time" },
+                    "updatedAt": { "type": "string", "format": "date-time" },
+                    "__v": { "type": "integer" }
+                  }
+                }
+              }
+            }
+          },
+          "default": { "description": "Unexpected error" }
         }
       }
     },
     "/user/get-all-users": {
       "get": {
-        "description": "",
+        "description": "Get all registered users.",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Users fetched successfully.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "email": { "type": "string" },
+                  "fullName": { "type": "string" },
+                  "preferences": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                  },
+                  "categories": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": { "type": "string" },
+                "error": { "type": "string" }
+              }
+            }
           }
         }
       }
     },
     "/user/change-categories-and-preferences": {
       "put": {
-        "description": "",
+        "description": "Change user categories and preferences.",
         "parameters": [
           {
             "name": "body",
@@ -113,23 +181,15 @@
                 "userWithNewSettings": {
                   "type": "object",
                   "properties": {
-                    "email": {
-                      "type": "string"
-                    },
-                    "password": {
-                      "type": "string"
-                    },
+                    "email": { "type": "string" },
+                    "password": { "type": "string" },
                     "newPreferences": {
                       "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
+                      "items": { "type": "string" }
                     },
                     "newCategories": {
                       "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
+                      "items": { "type": "string" }
                     }
                   }
                 }
@@ -139,14 +199,41 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
-          }
+            "description": "User categories and preferences updated successfully and a confirmation message sent.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": { "type": "string" },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "email": { "type": "string" },
+                    "password": { "type": "string" },
+                    "fullName": { "type": "string" },
+                    "preferences": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    },
+                    "categories": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    },
+                    "_id": { "type": "string" },
+                    "createdAt": { "type": "string", "format": "date-time" },
+                    "updatedAt": { "type": "string", "format": "date-time" },
+                    "__v": { "type": "integer" }
+                  }
+                }
+              }
+            }
+          },
+          "default": { "description": "Unexpected error" }
         }
       }
     },
     "/user/change-preferences": {
       "put": {
-        "description": "",
+        "description": "Change user preferences.",
         "parameters": [
           {
             "name": "body",
@@ -157,17 +244,11 @@
                 "userWithNewPreferences": {
                   "type": "object",
                   "properties": {
-                    "email": {
-                      "type": "string"
-                    },
-                    "password": {
-                      "type": "string"
-                    },
+                    "email": { "type": "string" },
+                    "password": { "type": "string" },
                     "newPreferences": {
                       "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
+                      "items": { "type": "string" }
                     }
                   }
                 }
@@ -177,14 +258,41 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
-          }
+            "description": "User preferences updated successfully and a confirmation message sent.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": { "type": "string" },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "email": { "type": "string" },
+                    "password": { "type": "string" },
+                    "fullName": { "type": "string" },
+                    "preferences": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    },
+                    "categories": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    },
+                    "_id": { "type": "string" },
+                    "createdAt": { "type": "string", "format": "date-time" },
+                    "updatedAt": { "type": "string", "format": "date-time" },
+                    "__v": { "type": "integer" }
+                  }
+                }
+              }
+            }
+          },
+          "default": { "description": "Unexpected error" }
         }
       }
     },
     "/user/change-password": {
       "put": {
-        "description": "",
+        "description": "Change user password.",
         "parameters": [
           {
             "name": "body",
@@ -195,15 +303,9 @@
                 "userWithNewPassword": {
                   "type": "object",
                   "properties": {
-                    "email": {
-                      "type": "string"
-                    },
-                    "newPassword": {
-                      "type": "string"
-                    },
-                    "oldPassword": {
-                      "type": "string"
-                    }
+                    "email": { "type": "string" },
+                    "newPassword": { "type": "string" },
+                    "oldPassword": { "type": "string" }
                   }
                 }
               }
@@ -212,14 +314,41 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
-          }
+            "description": "User password updated successfully and a confirmation message sent.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": { "type": "string" },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "email": { "type": "string" },
+                    "password": { "type": "string" },
+                    "fullName": { "type": "string" },
+                    "preferences": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    },
+                    "categories": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    },
+                    "_id": { "type": "string" },
+                    "createdAt": { "type": "string", "format": "date-time" },
+                    "updatedAt": { "type": "string", "format": "date-time" },
+                    "__v": { "type": "integer" }
+                  }
+                }
+              }
+            }
+          },
+          "default": { "description": "Unexpected error" }
         }
       }
     },
     "/user/change-email": {
       "put": {
-        "description": "",
+        "description": "Change user email.",
         "parameters": [
           {
             "name": "body",
@@ -230,15 +359,9 @@
                 "userWithNewEmail": {
                   "type": "object",
                   "properties": {
-                    "email": {
-                      "type": "string"
-                    },
-                    "password": {
-                      "type": "string"
-                    },
-                    "newEmail": {
-                      "type": "string"
-                    }
+                    "email": { "type": "string" },
+                    "password": { "type": "string" },
+                    "newEmail": { "type": "string" }
                   }
                 }
               }
@@ -247,14 +370,41 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
-          }
+            "description": "User email updated successfully and a confirmation message sent.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": { "type": "string" },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "email": { "type": "string" },
+                    "password": { "type": "string" },
+                    "fullName": { "type": "string" },
+                    "preferences": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    },
+                    "categories": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    },
+                    "_id": { "type": "string" },
+                    "createdAt": { "type": "string", "format": "date-time" },
+                    "updatedAt": { "type": "string", "format": "date-time" },
+                    "__v": { "type": "integer" }
+                  }
+                }
+              }
+            }
+          },
+          "default": { "description": "Unexpected error" }
         }
       }
     },
     "/user/delete-user": {
       "delete": {
-        "description": "",
+        "description": "Delete a user.",
         "parameters": [
           {
             "name": "body",
@@ -265,12 +415,8 @@
                 "userToDelete": {
                   "type": "object",
                   "properties": {
-                    "email": {
-                      "type": "string"
-                    },
-                    "password": {
-                      "type": "string"
-                    }
+                    "email": { "type": "string" },
+                    "password": { "type": "string" }
                   }
                 }
               }
@@ -279,17 +425,34 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
-          }
+            "description": "User deleted successfully and a confirmation message sent.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": { "type": "string" },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "acknowledged": { "type": "boolean" },
+                    "deletedCount": { "type": "integer" }
+                  }
+                }
+              }
+            }
+          },
+          "default": { "description": "Unexpected error" }
         }
       }
     },
     "/user/": {
       "get": {
-        "description": "",
+        "description": "Health check endpoint for the User service.",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Hello world from User service",
+            "schema": {
+              "type": "string"
+            }
           }
         }
       }
