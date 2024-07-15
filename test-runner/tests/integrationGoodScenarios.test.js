@@ -1,7 +1,6 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 chai.use(chaiHttp);
-const { jsonParseTextProperty } = require('./utils');
 const { expect } = chai;
 
 describe('Integration Test - User Registration', () => {
@@ -147,6 +146,15 @@ describe('Integration Test - Change Password', () => {
   });
 });
 
+/*
+  ===============================================================================
+  IMPORTANT NOTICE:
+  
+  THIS TEST SHOULD BE USED, BUT BECAUSE WE USE A FREE EMAIL SERVICE, I DON'T WANT 
+  TO SEND ANOTHER EMAIL. SO UNTIL WE MOVE TO A 
+  PAID EMAIL SERVICE, THIS TEST WILL REMAIN COMMENTED OUT.
+  ===============================================================================
+
 describe('Integration Test - Get News Now', () => {
   it('Should receive a confirmation message and send news to the user', async () => {
     const user = { email: "newtest@example.com", password: "newPassworD123" };
@@ -158,6 +166,9 @@ describe('Integration Test - Get News Now', () => {
     expect(res.text).to.equal("We received your request. If you are in the system, you will receive news shortly.");
   });
 });
+*/
+
+
 
 describe('Integration Test - User Deletion', () => {
   it('Should delete an existing user and send a confirmation message', async () => {
@@ -186,3 +197,8 @@ describe('Integration Test - Hello World Check', () => {
     expect(res.text).to.equal("Hello world from news app");
   });
 });
+
+function jsonParseTextProperty(res){
+    const responseBody = JSON.parse(res.text);
+    return responseBody;
+}

@@ -24,7 +24,8 @@
                 "userToRegister": {
                   "type": "object",
                   "properties": {
-                    "email": { "type": "string" },
+                    "email": { "type": "string",
+                  "format": "email" },
                     "password": { "type": "string" },
                     "fullName": { "type": "string" },
                     "preferences": {
@@ -51,7 +52,8 @@
                 "data": {
                   "type": "object",
                   "properties": {
-                    "email": { "type": "string" },
+                    "email": { "type": "string",
+                  "format": "email" },
                     "password": { "type": "string" },
                     "fullName": { "type": "string" },
                     "preferences": {
@@ -88,7 +90,8 @@
                 "user": {
                   "type": "object",
                   "properties": {
-                    "email": { "type": "string" },
+                    "email": { "type": "string",
+                  "format": "email" },
                     "password": { "type": "string" }
                   }
                 }
@@ -130,7 +133,8 @@
                 "userWithNewSettings": {
                   "type": "object",
                   "properties": {
-                    "email": { "type": "string" },
+                    "email": { "type": "string",
+                  "format": "email" },
                     "password": { "type": "string" },
                     "newPreferences": {
                       "type": "array",
@@ -156,7 +160,8 @@
                 "data": {
                   "type": "object",
                   "properties": {
-                    "email": { "type": "string" },
+                    "email": { "type": "string",
+                  "format": "email" },
                     "password": { "type": "string" },
                     "fullName": { "type": "string" },
                     "preferences": {
@@ -193,7 +198,8 @@
                 "userWithNewPreferences": {
                   "type": "object",
                   "properties": {
-                    "email": { "type": "string" },
+                    "email": { "type": "string",
+                  "format": "email" },
                     "password": { "type": "string" },
                     "newPreferences": {
                       "type": "array",
@@ -215,7 +221,8 @@
                 "data": {
                   "type": "object",
                   "properties": {
-                    "email": { "type": "string" },
+                    "email": { "type": "string",
+                  "format": "email" },
                     "password": { "type": "string" },
                     "fullName": { "type": "string" },
                     "preferences": {
@@ -252,9 +259,11 @@
                 "userWithNewEmail": {
                   "type": "object",
                   "properties": {
-                    "email": { "type": "string" },
+                    "email": { "type": "string",
+                  "format": "email" },
                     "password": { "type": "string" },
-                    "newEmail": { "type": "string" }
+                    "newEmail": { "type": "string",
+                  "format": "email" }
                   }
                 }
               }
@@ -271,7 +280,8 @@
                 "data": {
                   "type": "object",
                   "properties": {
-                    "email": { "type": "string" },
+                    "email": { "type": "string",
+                  "format": "email" },
                     "password": { "type": "string" },
                     "fullName": { "type": "string" },
                     "preferences": {
@@ -308,7 +318,8 @@
                 "userWithNewPassword": {
                   "type": "object",
                   "properties": {
-                    "email": { "type": "string" },
+                    "email": { "type": "string",
+                  "format": "email" },
                     "newPassword": { "type": "string" },
                     "oldPassword": { "type": "string" }
                   }
@@ -327,7 +338,8 @@
                 "data": {
                   "type": "object",
                   "properties": {
-                    "email": { "type": "string" },
+                    "email": { "type": "string",
+                  "format": "email" },
                     "password": { "type": "string" },
                     "fullName": { "type": "string" },
                     "preferences": {
@@ -364,7 +376,8 @@
                 "user": {
                   "type": "object",
                   "properties": {
-                    "email": { "type": "string" },
+                    "email": { "type": "string",
+                  "format": "email" },
                     "password": { "type": "string" }
                   }
                 }

@@ -111,7 +111,7 @@ async function changePassword(req, res, next) {
 }
 
 async function getNewsNow(req, res, next) {
-    try {
+    try {//TODO: check what happen if user is not legit, i think its problems
         newsAppLogger.info("Get news now end point event in newsFunctions")
         res.status(200).send("We received your request. If you are in the system, you will receive news shortly.");
         const user = req.body.user;
