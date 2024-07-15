@@ -3,6 +3,8 @@
 ## Overview
 This API provides functionality for sending emails. It is designed to be a simple yet effective service for integrating email capabilities into your applications.
 
+Host: localhost:3006\
+You can go to [localhost:3006\api-docs](http://localhost:3006/api-docs) and test this api with the swagger
 
 ## Endpoints
 
