@@ -37,8 +37,8 @@ emailTextHtml: The HTML content of the email.
 
 ###### Responses
 
-200 OK:
-\Email sent successfully
+200 OK:\
+Email sent successfully
 
 ```json
 {
@@ -68,8 +68,8 @@ emailTextHtml: The HTML content of the email.
 
 ###### Response
 
-200 OK:
-\Returns "Hello world from email service"
+200 OK:\
+Returns "Hello world from email service"
 
 #### Usage
 To use this API, send HTTP requests to the appropriate endpoints. Make sure to include all required parameters in your requests.
