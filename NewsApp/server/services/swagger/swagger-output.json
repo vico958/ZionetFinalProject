@@ -1,8 +1,8 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "NewsApp service api",
-    "description": "NewsApp service api",
+    "title": "NewsApp Service API",
+    "description": "API for managing users and their news preferences in the NewsApp service",
     "version": "1.0.0"
   },
   "host": "localhost:3001",
@@ -13,7 +13,7 @@
   "paths": {
     "/news/register": {
       "post": {
-        "description": "",
+        "description": "Register a new user with email, password, full name, preferences, and categories.",
         "parameters": [
           {
             "name": "body",
@@ -24,26 +24,16 @@
                 "userToRegister": {
                   "type": "object",
                   "properties": {
-                    "email": {
-                      "type": "string"
-                    },
-                    "password": {
-                      "type": "string"
-                    },
-                    "fullName": {
-                      "type": "string"
-                    },
+                    "email": { "type": "string" },
+                    "password": { "type": "string" },
+                    "fullName": { "type": "string" },
                     "preferences": {
                       "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
+                      "items": { "type": "string" }
                     },
                     "categories": {
                       "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
+                      "items": { "type": "string" }
                     }
                   }
                 }
@@ -52,15 +42,42 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
-          }
+          "200": {
+            "description": "User registered successfully and a confirmation message sent.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": { "type": "string" },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "email": { "type": "string" },
+                    "password": { "type": "string" },
+                    "fullName": { "type": "string" },
+                    "preferences": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    },
+                    "categories": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    },
+                    "_id": { "type": "string" },
+                    "createdAt": { "type": "string", "format": "date-time" },
+                    "updatedAt": { "type": "string", "format": "date-time" },
+                    "__v": { "type": "integer" }
+                  }
+                }
+              }
+            }
+          },
+          "default": { "description": "Unexpected error" }
         }
       }
     },
     "/news/remove-user-from-receiving-news": {
       "delete": {
-        "description": "",
+        "description": "Remove a user from receiving news updates.",
         "parameters": [
           {
             "name": "body",
@@ -71,12 +88,8 @@
                 "user": {
                   "type": "object",
                   "properties": {
-                    "email": {
-                      "type": "string"
-                    },
-                    "password": {
-                      "type": "string"
-                    }
+                    "email": { "type": "string" },
+                    "password": { "type": "string" }
                   }
                 }
               }
@@ -84,15 +97,29 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
-          }
+          "200": {
+            "description": "User removed successfully and a confirmation message sent.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": { "type": "string" },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "acknowledged": { "type": "boolean" },
+                    "deletedCount": { "type": "integer" }
+                  }
+                }
+              }
+            }
+          },
+          "default": { "description": "Unexpected error" }
         }
       }
     },
     "/news/change-user-categories-and-preferences": {
       "put": {
-        "description": "",
+        "description": "Change user categories and preferences.",
         "parameters": [
           {
             "name": "body",
@@ -103,23 +130,15 @@
                 "userWithNewSettings": {
                   "type": "object",
                   "properties": {
-                    "email": {
-                      "type": "string"
-                    },
-                    "password": {
-                      "type": "string"
-                    },
+                    "email": { "type": "string" },
+                    "password": { "type": "string" },
                     "newPreferences": {
                       "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
+                      "items": { "type": "string" }
                     },
                     "newCategories": {
                       "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
+                      "items": { "type": "string" }
                     }
                   }
                 }
@@ -128,15 +147,42 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
-          }
+          "200": {
+            "description": "User preferences and categories updated successfully and a confirmation message sent.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": { "type": "string" },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "email": { "type": "string" },
+                    "password": { "type": "string" },
+                    "fullName": { "type": "string" },
+                    "preferences": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    },
+                    "categories": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    },
+                    "_id": { "type": "string" },
+                    "createdAt": { "type": "string", "format": "date-time" },
+                    "updatedAt": { "type": "string", "format": "date-time" },
+                    "__v": { "type": "integer" }
+                  }
+                }
+              }
+            }
+          },
+          "default": { "description": "Unexpected error" }
         }
       }
     },
     "/news/change-user-preferences": {
       "put": {
-        "description": "",
+        "description": "Change user preferences.",
         "parameters": [
           {
             "name": "body",
@@ -147,17 +193,11 @@
                 "userWithNewPreferences": {
                   "type": "object",
                   "properties": {
-                    "email": {
-                      "type": "string"
-                    },
-                    "password": {
-                      "type": "string"
-                    },
+                    "email": { "type": "string" },
+                    "password": { "type": "string" },
                     "newPreferences": {
                       "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
+                      "items": { "type": "string" }
                     }
                   }
                 }
@@ -166,15 +206,42 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
-          }
+          "200": {
+            "description": "User preferences updated successfully and a confirmation message sent.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": { "type": "string" },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "email": { "type": "string" },
+                    "password": { "type": "string" },
+                    "fullName": { "type": "string" },
+                    "preferences": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    },
+                    "categories": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    },
+                    "_id": { "type": "string" },
+                    "createdAt": { "type": "string", "format": "date-time" },
+                    "updatedAt": { "type": "string", "format": "date-time" },
+                    "__v": { "type": "integer" }
+                  }
+                }
+              }
+            }
+          },
+          "default": { "description": "Unexpected error" }
         }
       }
     },
     "/news/change-user-email": {
       "put": {
-        "description": "",
+        "description": "Change user email.",
         "parameters": [
           {
             "name": "body",
@@ -185,15 +252,9 @@
                 "userWithNewEmail": {
                   "type": "object",
                   "properties": {
-                    "email": {
-                      "type": "string"
-                    },
-                    "password": {
-                      "type": "string"
-                    },
-                    "newEmail": {
-                      "type": "string"
-                    }
+                    "email": { "type": "string" },
+                    "password": { "type": "string" },
+                    "newEmail": { "type": "string" }
                   }
                 }
               }
@@ -201,15 +262,42 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
-          }
+          "200": {
+            "description": "User email updated successfully and a confirmation message sent.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": { "type": "string" },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "email": { "type": "string" },
+                    "password": { "type": "string" },
+                    "fullName": { "type": "string" },
+                    "preferences": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    },
+                    "categories": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    },
+                    "_id": { "type": "string" },
+                    "createdAt": { "type": "string", "format": "date-time" },
+                    "updatedAt": { "type": "string", "format": "date-time" },
+                    "__v": { "type": "integer" }
+                  }
+                }
+              }
+            }
+          },
+          "default": { "description": "Unexpected error" }
         }
       }
     },
     "/news/change-password": {
       "put": {
-        "description": "",
+        "description": "Change user password.",
         "parameters": [
           {
             "name": "body",
@@ -220,15 +308,9 @@
                 "userWithNewPassword": {
                   "type": "object",
                   "properties": {
-                    "email": {
-                      "type": "string"
-                    },
-                    "newPassword": {
-                      "type": "string"
-                    },
-                    "oldPassword": {
-                      "type": "string"
-                    }
+                    "email": { "type": "string" },
+                    "newPassword": { "type": "string" },
+                    "oldPassword": { "type": "string" }
                   }
                 }
               }
@@ -236,15 +318,42 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
-          }
+          "200": {
+            "description": "User password updated successfully and a confirmation message sent.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": { "type": "string" },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "email": { "type": "string" },
+                    "password": { "type": "string" },
+                    "fullName": { "type": "string" },
+                    "preferences": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    },
+                    "categories": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    },
+                    "_id": { "type": "string" },
+                    "createdAt": { "type": "string", "format": "date-time" },
+                    "updatedAt": { "type": "string", "format": "date-time" },
+                    "__v": { "type": "integer" }
+                  }
+                }
+              }
+            }
+          },
+          "default": { "description": "Unexpected error" }
         }
       }
     },
     "/news/get-news-now": {
       "post": {
-        "description": "",
+        "description": "Get the latest news for a user.",
         "parameters": [
           {
             "name": "body",
@@ -255,12 +364,8 @@
                 "user": {
                   "type": "object",
                   "properties": {
-                    "email": {
-                      "type": "string"
-                    },
-                    "password": {
-                      "type": "string"
-                    }
+                    "email": { "type": "string" },
+                    "password": { "type": "string" }
                   }
                 }
               }
@@ -269,17 +374,27 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
-          }
+            "description": "Request received, and if the user is in the system, news will be sent shortly.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": { "type": "string" }
+              }
+            }
+          },
+          "default": { "description": "Unexpected error" }
         }
       }
     },
     "/news/": {
       "get": {
-        "description": "",
+        "description": "Hello world to check server works.",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Hello world from news app",
+            "schema": {
+              "type": "string"
+            }
           }
         }
       }
