@@ -7,7 +7,7 @@ This API provides functionality for sending emails. It is designed to be a simpl
 ## Endpoints
 
 ### 1. Send Email
-- **URL**: `/email/send-email`
+- **URL**: `http://localhost:3006//email/send-email`
 - **Method**: POST
 - **Description**: Send an email with the specified details.
 
@@ -38,7 +38,7 @@ emailTextHtml: The HTML content of the email.
 ###### Responses
 
 200 OK:
-Email sent successfully
+\Email sent successfully
 
 ```json
 {
@@ -62,14 +62,14 @@ Email sent successfully
 
 ### 2. Health Check
 
-URL: /email/\
-Method: GET\
-Description: Health check endpoint for the email service.
+- **URL**: `http://localhost:3006//email/`
+- **Method**: GET
+- **Description**: Health check endpoint for the email service.
 
 ###### Response
 
 200 OK:
-Returns "Hello world from email service"
+\Returns "Hello world from email service"
 
 #### Usage
 To use this API, send HTTP requests to the appropriate endpoints. Make sure to include all required parameters in your requests.
