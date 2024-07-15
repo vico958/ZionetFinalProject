@@ -26,16 +26,16 @@ The request body should contain the following structure:
 ```json
 {
   "emailInfo": {
-    "emailHost": "string",       // The email server host.
-    "emailUser": "string",       // The email account user (must be a valid email).
-    "emailPassword": "string",   // The email account password.
-    "emailFrom": "string",       // The sender's email address (must be a valid email).
-    "emailTo": "string",         // The recipient's email address (must be a valid email).
-    "emailSubject": "string",    // The subject of the email.
+    "emailHost": "string",      // The email server host.
+    "emailUser": "user@example.com",       // The email account user (must be a valid email).
+    "emailPassword": "string",         // The email account password.
+    "emailFrom": "user@example.com",      // The sender's email address (must be a valid email).
+    "emailTo": "user@example.com",   // The recipient's email address (must be a valid email).
+    "emailSubject": "string",          // The subject of the email.
     "emailTextHtml": "string"    // The HTML content of the email.
   }
 }
-
+```
 
 Responses
 200 OK
@@ -43,23 +43,24 @@ Responses
 Description: Email sent successfully.
 Schema:
 
-
+```json
 {
   "message": "string",
   "info": "string"
 }
+```
 
 Default
 
 Description: Unexpected error.
 Schema:
 
-
+```json
 {
   "message": "string",
   "error": "string"
 }
-
+```
 
 2. Health Check
 Endpoint: /email/
@@ -70,13 +71,13 @@ Responses
 Description: Hello world from email service
 Schema:
 
-
+```json
 
 {
   "message": "Hello world from email service"
 }
 
-
+```
 
 Usage
 To use the Email Service API, you need to send HTTP requests to the specified endpoints with the required parameters and request bodies.
