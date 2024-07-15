@@ -3,9 +3,8 @@
 ## Overview
 This API provides functionality for determining the best articles based on user preferences. It is designed to help filter and personalize news content for users.
 
-Version: 1.0.0
-Host: localhost:3005
-Base Path: /
+Host: localhost:3005\
+You can go to `localhost:3005\api-docs and` test this api with the swagger
 
 ## Endpoints
 
