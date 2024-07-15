@@ -3,9 +3,8 @@
 ## Overview
 The NewsData Service API provides functionality for fetching news articles based on categories and user preferences, as well as retrieving rules for news categories.
 
-Version: 1.0.0
-Host: localhost:3004
-Base Path: /
+Host: localhost:3004\
+You can go to localhost:3004\api-docs and test this api with the swagger
 
 ## Endpoints
 
@@ -21,14 +20,17 @@ Base Path: /
   "preferences": ["string"]
 }
 ```
-Parameters
+##### Parameters
 
-categories: An array of strings representing categories to filter news articles.
-preferences: An array of strings representing user preferences to filter news articles.
+###### categories:
+An array of strings representing categories to filter news articles.
+###### preferences:
+An array of strings representing user preferences to filter news articles.
 
-Response
+#### Response
 
-200 OK: News articles fetched successfully.
+200 OK:\
+News articles fetched successfully.
 
 ```json
 {
@@ -64,15 +66,16 @@ Response
 }
 ```
 
-2. Get Category Rules
+### 2. Get Category Rules
 
-URL: /news-data/categories-rules
-Method: GET
-Description: Get the rules for news categories.
+- **URL**: `/news-data/categories-rules`
+- **Method**: GET
+- **Description**: Get the rules for news categories.
 
-Response
+#### Response
 
-200 OK: Categories rules fetched successfully.
+200 OK:\
+Categories rules fetched successfully.
 
 ```json
 {
@@ -81,19 +84,24 @@ Response
 }
 ```
 
-3. Health Check
 
-URL: /news-data/
-Method: GET
-Description: Health check endpoint for the NewsData service.
 
-Response
+### 3. Health Check
 
-200 OK: Returns "Hello world from news data service"
+- **URL**: `/news-data/`
+- **Method**: GET
+- **Description**: Health check endpoint for the NewsData service.
 
-Usage
+#### Response
+
+200 OK:\
+Returns "Hello world from news data service"
+
+#### Usage
 To use this API, send HTTP requests to the appropriate endpoints. Ensure you include all required parameters in your requests.
 
-Security Considerations
+#### Security Considerations
 While this API doesn't handle sensitive user data directly, consider implementing proper security measures such as rate limiting and input validation to protect against potential abuse.
-Support
+
+#### Support
+For any issues or questions regarding this API, please contact the development team.
