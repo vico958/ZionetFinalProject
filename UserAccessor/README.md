@@ -52,7 +52,7 @@ Request Body
 }
 ```
 ### 2. Log In a User
-- **Endpoint:** /user-accessor/login
+- **Endpoint:** `/user-accessor/login`
 - **Method:** POST
 - **Description:** Log in a user with email and password.
 
@@ -92,7 +92,7 @@ Request Body
 }
 ```
 ### 3. Get All Users
-- **Endpoint:** /user-accessor/get-all-users
+- **Endpoint:** `/user-accessor/get-all-users`
 - **Method:** GET
 - **Description:** Get all registered users.
 
@@ -120,7 +120,7 @@ Request Body
 }
 ```
 ### 4. Change User Categories and Preferences
-- **Endpoint:** /user-accessor/change-categories-and-preferences
+- **Endpoint:** `/user-accessor/change-categories-and-preferences`
 - **Method:** PUT
 - **Description:** Change user categories and preferences.
 
@@ -162,7 +162,7 @@ Request Body
 }
 ```
 ### 5. Change User Preferences
-- **Endpoint:** /user-accessor/change-preferences
+- **Endpoint:** `/user-accessor/change-preferences`
 - **Method:** PUT
 - **Description:** Change user preferences.
 
@@ -204,7 +204,7 @@ Request Body
 ```
 
 ### 6. Change User Password
-- **Endpoint:** /user-accessor/change-password
+- **Endpoint:** `/user-accessor/change-password`
 - **Method:** PUT
 - **Description:** Change user password.
 
@@ -245,7 +245,7 @@ Request Body
 }
 ```
 ### 7. Change User Email
-- **Endpoint:** /user-accessor/change-email
+- **Endpoint:** `/user-accessor/change-email`
 - **Method:** PUT
 - **Description:** Change user email.
 
@@ -286,7 +286,7 @@ Request Body
 }
 ```
 ### 8. Delete a User
-- **Endpoint:** /user-accessor/delete-user
+- **Endpoint:** `/user-accessor/delete-user`
 - **Method:** DELETE
 - **Description:** Delete a user.
 
@@ -319,7 +319,7 @@ Request Body
 }
 ```
 ### 9. Health Check
-- **Endpoint:** /user-accessor/
+- **Endpoint:** `/user-accessor/`
 - **Method:** GET
 - **Description:** Health check endpoint for the UserAccessor service.
 
