@@ -22,7 +22,7 @@ async function sendEmail(req, res, next){
         // emailLogger.info({
         //     messageId: info.messageId
         // }, 'Email sent successfully');
-        res.status(200).send({ message: 'Email sent successfully', info: info }); // TODO : to remove before final project send
+        // res.status(200).send({ message: 'Email sent successfully', info: info }); // TODO : to remove before final project send
         res.status(200).send({ message: 'Email sent successfully', info: "info" });
         emailLogger.info('Email sent successfully')
     } catch (error) {
