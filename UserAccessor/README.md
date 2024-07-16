@@ -65,7 +65,7 @@ Request Body
   }
 }
 ```
-Responses
+##### Responses
 200 OK
 ```json
 {
@@ -83,7 +83,7 @@ Responses
   }
 }
 ```
-Default Error
+##### Default Error
 
 ```json
 {
@@ -91,15 +91,12 @@ Default Error
   "error": "string"
 }
 ```
-3. Get All Users
-- **URL:** `/user/register`
-- **Method:** POST
-- **Description:**
-Endpoint: /user-accessor/get-all-users
-Method: GET
-Description: Get all registered users.
+### 3. Get All Users
+- **Endpoint:** /user-accessor/get-all-users
+- **Method:** GET
+- **Description:** Get all registered users.
 
-Responses
+##### Responses
 200 OK
 ```json
 {
@@ -114,7 +111,7 @@ Responses
   ]
 }
 ```
-Default Error
+##### Default Error
 
 ```json
 {
@@ -122,13 +119,10 @@ Default Error
   "error": "string"
 }
 ```
-4. Change User Categories and Preferences
-- **URL:** `/user/register`
-- **Method:** POST
-- **Description:**
-Endpoint: /user-accessor/change-categories-and-preferences
-Method: PUT
-Description: Change user categories and preferences.
+### 4. Change User Categories and Preferences
+- **Endpoint:** /user-accessor/change-categories-and-preferences
+- **Method:** PUT
+- **Description:** Change user categories and preferences.
 
 Request Body
 ```json
@@ -141,7 +135,7 @@ Request Body
   }
 }
 ```
-Responses
+##### Responses
 200 OK
 ```json
 {
@@ -159,7 +153,7 @@ Responses
   }
 }
 ```
-Default Error
+##### Default Error
 
 ```json
 {
@@ -167,13 +161,10 @@ Default Error
   "error": "string"
 }
 ```
-5. Change User Preferences
-- **URL:** `/user/register`
-- **Method:** POST
-- **Description:**
-Endpoint: /user-accessor/change-preferences
-Method: PUT
-Description: Change user preferences.
+### 5. Change User Preferences
+- **Endpoint:** /user-accessor/change-preferences
+- **Method:** PUT
+- **Description:** Change user preferences.
 
 Request Body
 ```json
@@ -185,7 +176,7 @@ Request Body
   }
 }
 ```
-Responses
+##### Responses
 200 OK
 ```json
 {
@@ -203,7 +194,7 @@ Responses
   }
 }
 ```
-Default Error
+##### Default Error
 
 ```json
 {
@@ -212,13 +203,10 @@ Default Error
 }
 ```
 
-6. Change User Password
-- **URL:** `/user/register`
-- **Method:** POST
-- **Description:**
-Endpoint: /user-accessor/change-password
-Method: PUT
-Description: Change user password.
+### 6. Change User Password
+- **Endpoint:** /user-accessor/change-password
+- **Method:** PUT
+- **Description:** Change user password.
 
 Request Body
 ```json
@@ -230,7 +218,7 @@ Request Body
   }
 }
 ```
-Responses
+##### Responses
 200 OK
 ```json
 {
@@ -248,7 +236,7 @@ Responses
   }
 }
 ```
-Default Error
+##### Default Error
 
 ```json
 {
@@ -256,13 +244,10 @@ Default Error
   "error": "string"
 }
 ```
-7. Change User Email
-- **URL:** `/user/register`
-- **Method:** POST
-- **Description:**
-Endpoint: /user-accessor/change-email
-Method: PUT
-Description: Change user email.
+### 7. Change User Email
+- **Endpoint:** /user-accessor/change-email
+- **Method:** PUT
+- **Description:** Change user email.
 
 Request Body
 ```json
@@ -274,7 +259,7 @@ Request Body
   }
 }
 ```
-Responses
+##### Responses
 200 OK
 ```json
 {
@@ -292,7 +277,7 @@ Responses
   }
 }
 ```
-Default Error
+##### Default Error
 
 ```json
 {
@@ -300,13 +285,10 @@ Default Error
   "error": "string"
 }
 ```
-8. Delete a User
-- **URL:** `/user/register`
-- **Method:** POST
-- **Description:**
-Endpoint: /user-accessor/delete-user
-Method: DELETE
-Description: Delete a user.
+### 8. Delete a User
+- **Endpoint:** /user-accessor/delete-user
+- **Method:** DELETE
+- **Description:** Delete a user.
 
 Request Body
 ```json
@@ -317,7 +299,7 @@ Request Body
   }
 }
 ```
-Responses
+##### Responses
 200 OK
 ```json
 {
@@ -328,7 +310,7 @@ Responses
   }
 }
 ```
-Default Error
+##### Default Error
 
 ```json
 {
@@ -336,15 +318,12 @@ Default Error
   "error": "string"
 }
 ```
-9. Health Check
-- **URL:** `/user/register`
-- **Method:** POST
-- **Description:**
-Endpoint: /user-accessor/
-Method: GET
-Description: Health check endpoint for the UserAccessor service.
+### 9. Health Check
+- **Endpoint:** /user-accessor/
+- **Method:** GET
+- **Description:** Health check endpoint for the UserAccessor service.
 
-Responses
+##### Responses
 200 OK
 ```json
 "Hello world from user accessor service"
