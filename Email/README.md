@@ -9,7 +9,7 @@ You can go to [localhost:3006\api-docs](http://localhost:3006/api-docs) and test
 ## Endpoints
 
 ### 1. Send Email
-- **URL**: `http://localhost:3006//email/send-email`
+- **Endpoint**: `http://localhost:3006//email/send-email`
 - **Method**: POST
 - **Description**: Send an email with the specified details.
 
@@ -64,7 +64,7 @@ Email sent successfully
 
 ### 2. Health Check
 
-- **URL**: `http://localhost:3006//email/`
+- **Endpoint**: `http://localhost:3006//email/`
 - **Method**: GET
 - **Description**: Health check endpoint for the email service.
 

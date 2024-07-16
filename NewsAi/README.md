@@ -8,7 +8,7 @@ You can go to [localhost:3005\api-docs](http://localhost:3005/api-docs) and test
 ## Endpoints
 
 ### 1. Get Best Articles
-- **URL**: `/news-ai/best-articles`
+- **Endpoint**: `/news-ai/best-articles`
 - **Method**: POST
 - **Description**: Get the best articles based on user preferences.
 
@@ -63,7 +63,7 @@ Best articles based on preferences
 
 ### 2. Health Check
 
-- **URL**: `/news-ai/`
+- **Endpoint**: `/news-ai/`
 - **Method**: GET
 - **Description**: Health check endpoint for the NewsAi service.
 
