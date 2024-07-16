@@ -341,5 +341,5 @@ User deleted successfully and a confirmation message sent.
 ### Usage
 To use this API, send HTTP requests to the appropriate endpoints. Make sure to include all required parameters in your requests.
 
-Security
+### Security
 This API handles sensitive user data, including passwords. Implement proper security measures such as rate limiting, input validation, and encryption to protect against potential abuse. Ensure that passwords are stored securely using hashing algorithms like bcrypt.
