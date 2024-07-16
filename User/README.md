@@ -10,7 +10,7 @@ You can go to [localhost:3002\api-docs](http://localhost:3002/api-docs) and test
 
 ### 1. Register User
 
-- **URL:** `/user/register`
+- **Endpoint:** `/user/register`
 - **Method:** POST
 - **Description:** Register a new user with email, password, full name, preferences, and categories.
 
@@ -58,7 +58,7 @@ User registered successfully and a confirmation message sent.
 ```
 
 ### 2. Login User
-- **URL:** `/user/login`
+- **Endpoint:** `/user/login`
 - **Method:** POST
 - **Description:** Log in a user with email and password.
 
@@ -101,7 +101,7 @@ User logged in successfully and the user object is returned.
 }
 ```
 ### 3. Get All Users
-- **URL:** `/user/get-all-users`
+- **Endpoint:** `/user/get-all-users`
 - **Method:** GET
 - **Description:** Get all registered users.
 
@@ -130,7 +130,7 @@ Users fetched successfully.
 ```
 
 ### 4. Change Categories and Preferences
-- **URL:** `/user/change-categories-and-preferences`
+- **Endpoint:** `/user/change-categories-and-preferences`
 - **Method:** PUT
 - **Description:** Change user categories and preferences.
 Request Body
@@ -172,7 +172,7 @@ User categories and preferences updated successfully and a confirmation message 
 }
 ```
 ### 5. Change Preferences
-- **URL:** `/user/change-preferences`
+- **Endpoint:** `/user/change-preferences`
 - **Method:** PUT
 - **Description:** Change user preferences.
 Request Body
@@ -213,7 +213,7 @@ User preferences updated successfully and a confirmation message sent.
 }
 ```
 ### 6. Change Password
-- **URL:** `/user/change-password`
+- **Endpoint:** `/user/change-password`
 - **Method:** PUT
 - **Description:** Change user password.
 Request Body
@@ -254,7 +254,7 @@ User password updated successfully and a confirmation message sent.
 }
 ```
 ### 7. Change Email
-- **URL:** `/user/change-email`
+- **Endpoint:** `/user/change-email`
 - **Method:** PUT
 - **Description:** Change user email.
 Request Body
@@ -295,7 +295,7 @@ User email updated successfully and a confirmation message sent.
 }
 ```
 ### 8. Delete User
-- **URL:** /user/delete-user
+- **Endpoint:** /user/delete-user
 - **Method:** DELETE
 - **Description:** Delete a user.
 Request Body
@@ -328,7 +328,7 @@ User deleted successfully and a confirmation message sent.
 }
 ```
 ### 9. Health Check
-- **URL:** `/user/`
+- **Endpoint:** `/user/`
 - **Method:** GET
 - **Description:** Health check endpoint for the User service.
 ##### Response

@@ -9,7 +9,7 @@ You can go to [localhost:3004\api-docs](http://localhost:3004/api-docs) and test
 ## Endpoints
 
 ### 1. Fetch News Articles
-- **URL**: `/news-data/get-news`
+- **Endpoint**: `/news-data/get-news`
 - **Method**: POST
 - **Description**: Fetch news articles based on categories and preferences.
 
@@ -68,7 +68,7 @@ News articles fetched successfully.
 
 ### 2. Get Category Rules
 
-- **URL**: `/news-data/categories-rules`
+- **Endpoint**: `/news-data/categories-rules`
 - **Method**: GET
 - **Description**: Get the rules for news categories.
 
@@ -88,7 +88,7 @@ Categories rules fetched successfully.
 
 ### 3. Health Check
 
-- **URL**: `/news-data/`
+- **Endpoint**: `/news-data/`
 - **Method**: GET
 - **Description**: Health check endpoint for the NewsData service.
 
