@@ -12,7 +12,7 @@ const emailFrom = process.env.EMAIL_FROM;
 
 async function sendEmailWithNews(newsData, clientEmail, clientName){
     try{
-
+        console.log("newsss dataaaaaaaaa ", newsData)
         newsAppLogger.info("Send email with news in emailFunctions event")
         const emailTo = clientEmail;
         const { emailSubject, emailTextHtml} = createEmailNewsContent(newsData, clientName);  
@@ -64,7 +64,6 @@ function createEmailNewsContent(newsData, clientName){
 
 function formattedNewsData(news){
     newsAppLogger.info("Formatted news data in emailFunctions event")
-
     return news.map((item) => {
         return `<p><strong style="color: black;">${item.title}</strong></p>
                 <p style="color: black;">${item.summary}</p>

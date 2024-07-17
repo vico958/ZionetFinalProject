@@ -8,7 +8,9 @@ async function sendNewsToClient(categories, preferences, clientEmail, clientFull
     try{
         newsAppLogger.info("Send news to client event")
         const news = await getNews(categories, preferences);
-        const bestNews = await bestFitNewsWithAi(news, preferences);
+        console.log("newssss before ai is ", news)
+        let bestNews = await bestFitNewsWithAi(news, preferences);
+        console.log("newssss afterrrrrrrrrrrrrrrrrrrrrrrrrr ai is ", bestNews)
         sendEmailWithNews(bestNews, clientEmail, clientFullName);
     }catch(error){
         newsAppLogger.fatal({

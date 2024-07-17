@@ -6,7 +6,7 @@ const { errorHandler } = require("./server/middleware/errorHandler");
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocs = require("./server/services/swagger/swagger-output.json");
 const mongoose = require('mongoose');
-const dbUri = 'mongodb://mongoDb:27017/userDb';
+const dbUrl = process.env.DB_URL;
 const userAccessorLogger = require("./server/services/logger/logger");
 const bodyParser = require("body-parser");
 const userAccessor = require("./server/routes/userAccessor");
@@ -27,7 +27,7 @@ const connectToDatabase = async (retries = 3) => {
     while (retries) {
         try {
             userAccessorLogger.info("Trying to connect to db and start server");
-            await mongoose.connect(dbUri);
+            await mongoose.connect(dbUrl);
             userAccessorLogger.info("Connected to db");
             app.listen(port, () => {
                 userAccessorLogger.info(`User accessor server started on port - ${port}`);
