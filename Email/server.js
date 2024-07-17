@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use("/email", email)
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
-const port = process.env.port || "3006";
+const port = process.env.PORT;
 
 app.use(errorHandler);
 app.listen(port, async () =>{

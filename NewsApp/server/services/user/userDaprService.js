@@ -3,10 +3,10 @@ const { DaprClient, HttpMethod } = require("@dapr/dapr");
 const newsAppLogger = require("../logger/logger");
 class DaprUserService {
     constructor() {
-        this.userDaprHostAndServiceAppId = "user"; // Dapr Sidecar Host
-        this.daprPort = "3500"; // Dapr Sidecar Port for user service
+        this.userDaprHostAndServiceAppId = process.env.USER_DAPR_HOST_ANDS_ERVICE_APP_ID; // Dapr Sidecar Host
+        this.daprPort = process.env.DAPR_PORT; // Dapr Sidecar Port for user service
         this.userClientDapr = new DaprClient({ userDaprHostAndServiceAppId: this.userDaprHostAndServiceAppId, daprPort: this.daprPort });
-        this.userUrlMethodBeggining = "user";
+        this.userUrlMethodBeggining = process.env.USER_URL_METHOD_BEGGINING;
     }
 
     async registerUserUsingAccessor(userToRegister) {

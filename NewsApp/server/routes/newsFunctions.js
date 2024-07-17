@@ -1,4 +1,3 @@
-require("dotenv").config();
 const DaprUserService = require("../services/user/userDaprService");
 const { sendNewsToClient } = require("../services/general/general");
 const {

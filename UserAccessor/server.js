@@ -11,7 +11,7 @@ const userAccessorLogger = require("./server/services/logger/logger");
 const bodyParser = require("body-parser");
 const userAccessor = require("./server/routes/userAccessor");
 const app = express();
-const port = process.env.port || "3003";
+const port = process.env.PORT;
 
 app.use(loggerMiddleware);
 app.use(express.json());

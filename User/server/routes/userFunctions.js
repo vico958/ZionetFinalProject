@@ -1,10 +1,10 @@
 require("dotenv").config()
 const { DaprClient, HttpMethod } = require("@dapr/dapr");
-const daprHostAndServiceAppId = "useraccessor"; // Dapr Sidecar Host
-const daprPort = "3500"; // Dapr Sidecar Port for user service
-const client = new DaprClient({ daprHostAndServiceAppId, daprPort });
 const userLogger = require("../services/logger/logger");
-const urlMethodBeggining = "user-accessor"
+const daprHostAndServiceAppId = process.env.DAPR_HOST_AND_SERVICE_APP_ID;
+const daprPort = process.env.DAPR_PORT;
+const urlMethodBeggining = process.env.URL_METHOD_BEGGINING;
+const client = new DaprClient({ daprHostAndServiceAppId, daprPort });
 
 async function hellowWorldCheck(req, res){
     userLogger.info("Hello world from user service")
