@@ -8,9 +8,7 @@ async function sendNewsToClient(categories, preferences, clientEmail, clientFull
     try{
         newsAppLogger.info("Send news to client event")
         const news = await getNews(categories, preferences);
-        console.log("newssss before ai is ", news)
-        let bestNews = await bestFitNewsWithAi(news, preferences);
-        console.log("newssss afterrrrrrrrrrrrrrrrrrrrrrrrrr ai is ", bestNews)
+        const bestNews = await bestFitNewsWithAi(news, preferences);
         sendEmailWithNews(bestNews, clientEmail, clientFullName);
     }catch(error){
         newsAppLogger.fatal({
@@ -21,7 +19,7 @@ async function sendNewsToClient(categories, preferences, clientEmail, clientFull
 }
 
 async function sendDailyNews(){
-    try{//TODO: a retry for the ones that fail
+    try{
         newsAppLogger.info("Send daily news event")
         const allUsers = await DaprUserService.getAllUsersInSystem();
         for (const user of allUsers.data) {

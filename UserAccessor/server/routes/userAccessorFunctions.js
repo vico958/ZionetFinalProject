@@ -73,7 +73,7 @@ async function userLogin(req, res, next){
 }
 
 async function changePassword(req, res, next) {
-    try{//TODO :TEST
+    try{
         userAccessorLogger.info("Enter changePassword end point")
         const {newPassword, oldPassword, email} = req.body.userWithNewPassword;
         const user = await getUserByEmailAndIfNotFoundThrowError(email);
@@ -95,7 +95,7 @@ async function changePassword(req, res, next) {
 
 
 async function chagePreferences(req, res, next){
-    try{//TODO :TEST
+    try{
         userAccessorLogger.info("Enter chagePreferences end point")
         const {email, password, newPreferences} = req.body.userWithNewPreferences;
         const user = await getUserByEmailAndIfNotFoundThrowError(email);
@@ -116,11 +116,11 @@ async function chagePreferences(req, res, next){
 }
 
 async function chageCategoriesAndPreferences(req, res, next){
-    try{//TODO :TEST
+    try{
         userAccessorLogger.info("Enter chageCategoriesAndPreferences end point")
         const {email, password, newCategories, newPreferences} = req.body.userWithNewSettings;
         const user = await getUserByEmailAndIfNotFoundThrowError(email);
-        if(password === user.password){//TODO: check first categories change and only then change preferences
+        if(password === user.password){
             const {_id} = user
             const answerCategories = await userAccessorManger.changeUserCategories(_id, newCategories)
             const answerPreferences = await userAccessorManger.changeUserPreferences(_id, newPreferences)
@@ -139,11 +139,11 @@ async function chageCategoriesAndPreferences(req, res, next){
 }
 
 async function changeEmail(req, res, next){
-    try{//TODO :TEST
+    try{
         userAccessorLogger.info("Enter changeEmail end point")
         const {email, password, newEmail } = req.body.userWithNewEmail;
         const user = await getUserByEmailAndIfNotFoundThrowError(email);
-        if(password === user.password){//TODO: check first categories change and only then change preferences
+        if(password === user.password){
             const newEmailInLowerCase = newEmail.toLowerCase();
             const userWithNewEmail = await userAccessorManger.getUserByEmail(newEmailInLowerCase);
             if(userWithNewEmail){
@@ -200,6 +200,11 @@ async function getUserByEmailAndIfNotFoundThrowError(email){
     }
 }
 
+/*
+Checking if the return result from accessor is ok and if yes return it and if not 
+throw error
+call changeAfter because its for the changeXYZ... functions
+*/
 function changeAfterHavingUserHelper(res, messageSuccess, messageFail, answer){
     if(answer === null){
         throw createError(messageFail, 400);
@@ -208,6 +213,7 @@ function changeAfterHavingUserHelper(res, messageSuccess, messageFail, answer){
     }
 }
 
+//Had to write this code in few places so i made a function to send res from endpoint back
 function returnResAnswer(res, messageToSend, dataToSend){
     res.status(200).send(JSON.stringify({
         message: messageToSend,

@@ -19,7 +19,7 @@ const port = process.env.PORT;
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
-app.use(errorHandler);
+app.use(errorHandler); // errorHandler middleware should be the last one the app use
 
 app.listen(port, () => {
     newsDataLogger.info(`News data server started on port - ${port}`)

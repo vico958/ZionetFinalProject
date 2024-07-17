@@ -54,7 +54,7 @@ async function changeCategoriesAndPreferences(req, res, next) {
         const userWithNewSettings = req.body.userWithNewSettings;
         const { newCategories, newPreferences } = userWithNewSettings;
         await isChangeCategoriesAndPreferencesValidIfNotThrowError(newCategories, newPreferences);
-        const answer = await DaprUserService.changeCategoriesAndPreferences(userWithNewSettings); // TODO: TO TEST
+        const answer = await DaprUserService.changeCategoriesAndPreferences(userWithNewSettings);
         returnResAnswerHelper(res, answer.message, answer.data)
     } catch (error) {
         newsAppLogger.fatal({
@@ -69,7 +69,7 @@ async function changePreferences(req, res, next) {
         newsAppLogger.info("Change preferences end point event in newsFunctions");
         const userWithNewPreferences = req.body.userWithNewPreferences;
         isChangePreferencesValidIfNotThrowError(userWithNewPreferences.newPreferences);
-        const answer = await DaprUserService.changePreferences(userWithNewPreferences); // TODO: TO TEST
+        const answer = await DaprUserService.changePreferences(userWithNewPreferences);
         returnResAnswerHelper(res, answer.message, answer.data)
     } catch (error) {
         newsAppLogger.fatal({
@@ -84,7 +84,7 @@ async function changeEmail(req, res, next) {
         newsAppLogger.info("Change email end point event in newsFunctions");
         const userWithNewEmail = req.body.userWithNewEmail;
         isChangeEmailValidIfNotThrowError(userWithNewEmail.newEmail);
-        const answer = await DaprUserService.changeEmail(userWithNewEmail); // TODO: TO TEST
+        const answer = await DaprUserService.changeEmail(userWithNewEmail);
         returnResAnswerHelper(res, answer.message, answer.data)
     } catch (error) {
         newsAppLogger.fatal({
@@ -99,7 +99,7 @@ async function changePassword(req, res, next) {
         newsAppLogger.info("Change password end point event in newsFunctions")
         const userWithNewPassword = req.body.userWithNewPassword;
         isChangePasswordValidIfNotThrowError(userWithNewPassword.newPassword);
-        const answer = await DaprUserService.changePassword(userWithNewPassword); // TODO: TO TEST
+        const answer = await DaprUserService.changePassword(userWithNewPassword);
         returnResAnswerHelper(res, answer.message, answer.data)
     } catch (error) {
         newsAppLogger.fatal({
@@ -110,7 +110,7 @@ async function changePassword(req, res, next) {
 }
 
 async function getNewsNow(req, res, next) {
-    try {//TODO: check what happen if user is not legit, i think its problems
+    try {
         newsAppLogger.info("Get news now end point event in newsFunctions")
         res.status(200).send("We received your request. If you are in the system, you will receive news shortly.");
         const user = req.body.user;

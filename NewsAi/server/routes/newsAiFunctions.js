@@ -18,8 +18,7 @@ async function whichOneIsTheBestArticle(req, res, next){
         const articles = req.body.articles;
         let response = await talkWithAi(articles, preferences);
         if(response && response.articles){
-            //Some times ai return the result with articles and not just arr of results
-            console.log("we are heree because this is newssss", bestNews.articles);
+            //Sometimes ai return the result with articles and not just arr of results so this is a fix for it
             response = response.articles 
         }
         res.status(200).send(JSON.stringify(response));
@@ -33,10 +32,10 @@ async function whichOneIsTheBestArticle(req, res, next){
     }
 }
 
+
 async function talkWithAi(articlesInfo, preferences){
     try{
         newsAiLogger.info("News Ai talk with ai event at the top of event")
-        // TODO: make ai to give me results only about my preferences
         const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash", generationConfig: { responseMimeType: "application/json" }});
         const prompt =`take this list, for each link in the list,
         please enter to that and make a summary of each article inside them.
