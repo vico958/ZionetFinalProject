@@ -29,6 +29,10 @@ async function getNews(req, res, next) {
                 newsDataLogger.info("News data get news event returned data");
                 return // Exit the function if successful
             } else {
+                /*
+                If didnt work with preferences its because maybe its not connection to the categories
+                so i choose to try once without it
+                */
                 newsDataLogger.info("News data get news event failed in first query, trying second one");
                 urlWithQuery = `${url}&category=${categories.toString()}&language=en`;
                 response = await fetch(urlWithQuery);
@@ -55,7 +59,7 @@ async function getNews(req, res, next) {
 function checkReturnedData(response, data){
     return response.ok && data.results.length >= 1;
 }
-
+// had to write this code in 2 places so made a function for it
 function returnResultForGetNews(res, data){
     res.status(200).send(data);
     newsDataLogger.info("News data get news event after sending back the news");

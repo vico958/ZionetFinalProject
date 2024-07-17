@@ -13,17 +13,16 @@ async function sendEmail(req, res, next){
         emailLogger.info("Email send email event at the top of event")
         const { emailHost, emailUser, emailPassword, emailFrom, emailTo, emailSubject, emailTextHtml } = req.body.emailInfo
         const transporter = createTransporter(emailHost, emailUser, emailPassword);
-        // const info = await transporter.sendMail({
-        //     from: emailFrom, // sender address
-        //     to: emailTo, // list of receivers
-        //     subject: emailSubject, // Subject line
-        //     html: emailTextHtml,
-        // });
-        // emailLogger.info({
-        //     messageId: info.messageId
-        // }, 'Email sent successfully');
-        // res.status(200).send({ message: 'Email sent successfully', info: info }); // TODO : to remove before final project send
-        res.status(200).send({ message: 'Email sent successfully', info: "info" });
+        const info = await transporter.sendMail({
+            from: emailFrom,
+            to: emailTo,
+            subject: emailSubject,
+            html: emailTextHtml,
+        });
+        emailLogger.info({
+            messageId: info.messageId
+        }, 'Email sent successfully');
+        res.status(200).send({ message: 'Email sent successfully', info: info });
         emailLogger.info('Email sent successfully')
     } catch (error) {
         const err = handleEmailError(error)
@@ -39,7 +38,7 @@ function createTransporter(emailHost, emailUser, emailPassword){
     const transporter = nodemailer.createTransport({
         host: emailHost,
         port: 465,
-        secure: true, // Use `true` for port 465, `false` for all other ports
+        secure: true,
         auth: {
           user: emailUser,
           pass: emailPassword,

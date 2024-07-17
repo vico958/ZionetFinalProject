@@ -20,7 +20,7 @@ app.use("/email", email)
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 const port = process.env.PORT;
 
-app.use(errorHandler);
+app.use(errorHandler); // errorHandler middleware should be the last one the app use
 app.listen(port, async () =>{
     emailLogger.info(`Email server started on port - ${port}`)
 })

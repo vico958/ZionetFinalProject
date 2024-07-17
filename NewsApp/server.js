@@ -24,8 +24,11 @@ app.listen(port, () => {
   newsAppLogger.info(`News app server started on port - ${port}`)
 })
 
-app.use(errorHandler);
+app.use(errorHandler); // errorHandler middleware should be the last one the app use
 
+/*
+was not asked in project for but i think its good idea to send news each day as well
+*/
 cron.schedule('0 22 * * *', () => {
   newsAppLogger.info('Running daily news job at 10:00 PM Israel Time');
   sendDailyNews();

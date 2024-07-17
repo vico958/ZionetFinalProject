@@ -12,15 +12,13 @@ const emailFrom = process.env.EMAIL_FROM;
 
 async function sendEmailWithNews(newsData, clientEmail, clientName){
     try{
-        console.log("newsss dataaaaaaaaa ", newsData)
         newsAppLogger.info("Send email with news in emailFunctions event")
         const emailTo = clientEmail;
         const { emailSubject, emailTextHtml} = createEmailNewsContent(newsData, clientName);  
         const emailInfo = {
             emailHost, emailUser, emailPassword, emailFrom, emailTo, emailSubject, emailTextHtml
         };
-        // await sendEmail(emailInfo); // TODO : to remove before send to check my final project
-        newsAppLogger.info({emailInfo:emailInfo},"send email but right now i will just log it");// TODO : remove as well
+        await sendEmail(emailInfo);
         newsAppLogger.info("Email sent");
     }catch(error){
         newsAppLogger.fatal({
@@ -46,6 +44,9 @@ async function sendEmail(emailInfo){
     }
 }
 
+/*
+Made it like that so i can shape the email to be nice looking so i add html tags to it
+*/
 function createEmailNewsContent(newsData, clientName){
     newsAppLogger.info("Create email news content in emailFunctions event");
 
@@ -61,7 +62,9 @@ function createEmailNewsContent(newsData, clientName){
     emailTextHtml
   };
 }
-
+/*
+Made it like that so i can shape the email to be nice looking so i add html tags to it
+*/
 function formattedNewsData(news){
     newsAppLogger.info("Formatted news data in emailFunctions event")
     return news.map((item) => {

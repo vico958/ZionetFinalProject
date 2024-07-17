@@ -22,7 +22,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use("/user", user)
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
-app.use(errorHandler);
+app.use(errorHandler); // errorHandler middleware should be the last one the app use
 
 app.listen(port, async () =>{
     userLogger.info(`User server started on port - ${port}`)

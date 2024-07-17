@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use("/user-accessor", userAccessor);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
-app.use(errorHandler);
+app.use(errorHandler); // errorHandler middleware should be the last one the app use
 
 const connectToDatabase = async (retries = 3) => {
     while (retries) {
