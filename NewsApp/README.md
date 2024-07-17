@@ -283,11 +283,11 @@ You can go to [localhost:3001\api-docs](http://localhost:3001/api-docs) and test
   - `200 OK`:\
 We received your request. If you are in the system, you will receive news shortly.
 
-### Test
+## Test
 This API uses Jest for testing its validation functions. To run the tests, follow these steps:
 
-##### 1.Navigate to the root of the folder, which is the NewsApp folder.
-##### 2.Run the command:
+##### 1. Navigate to the root of the folder, which is the NewsApp folder.
+##### 2. Run the command:
 npm test
 
 This will execute the tests.
