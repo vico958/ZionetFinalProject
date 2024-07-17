@@ -24,7 +24,7 @@ async function sendDailyNews(){
     try{//TODO: a retry for the ones that fail
         newsAppLogger.info("Send daily news event")
         const allUsers = await DaprUserService.getAllUsersInSystem();
-        for (const user of allUsers) {
+        for (const user of allUsers.data) {
             const {categories, preferences, email, fullName} = user
             await sendNewsToClient(categories, preferences, email, fullName)
         }

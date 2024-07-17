@@ -71,3 +71,7 @@ mongoose: MongoDB object modeling tool.
 @dapr/dapr: Dapr SDK for Node.js.
 
 mongoose: MongoDB object modeling tool.
+
+
+# What next:
+In this project, you will notice that some loggers and middleware are repeated across different services. In the future, these common components will be moved to an npm package that I will upload, allowing each server to utilize it. For now, I have chosen to implement them separately within each service to adhere to the concept of service autonomy. This approach aligns with the principle we learned during the course: it's acceptable to have some code repetition, such as with middleware, to maintain service independence and avoid tight coupling between services.

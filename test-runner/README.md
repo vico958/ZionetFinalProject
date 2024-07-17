@@ -8,9 +8,17 @@ This repository contains integration tests for the NewsApp service, designed to 
 
 The tests are designed to run automatically when the project starts using Docker Compose.
 
-the tests will run 2 minutes after you do docker-compose up.
+The tests will run 2 minutes after you execute docker-compose up.
 
-There is no need to run `npm test` manually, as the tests will execute automatically as part of the Docker Compose setup.
+There is no need to run npm test manually, as the tests will execute automatically as part of the Docker Compose setup. Please note that manually running npm test will not work.
+
+If the container exits, you can restart it using:
+```bash
+docker start <container_name>
+```
+
+The tests will run again 2 minutes after the container restarts.
+
 
 ## Test Descriptions
 
