@@ -21,42 +21,53 @@ docker-compose up
 5. After running the docker-compose up command, you can access the Swagger documentation of NewsApp by visiting [localhost:3001\api-docs](http://localhost:3001/api-docs). Here, you can test the project as you wish.
 
 
-### Technologies Used:
-# Common Technologies Across Multiple Services:
+# Technologies Used:
+## Common Technologies Across Multiple Services:
 body-parser: Middleware for parsing incoming request bodies in a middleware before your handlers.
+
 cors: Middleware for enabling CORS (Cross-Origin Resource Sharing).
+
 dotenv: Module for loading environment variables from a .env file.
+
 express: Web framework for Node.js.
+
 pino, pino-multi-stream, pino-pretty: Logging libraries.
+
 swagger-ui-express: Middleware for serving auto-generated Swagger API docs.
 
-# Service-Specific Technologies
-## Email Service:
+## Service-Specific Technologies
+### Email Service:
 
 nodemailer: Module for sending emails.
 
-## NewsAI Service:
+### NewsAI Service:
 
 @google/generative-ai: Google Generative AI library.
 
-## NewsApp Service:
+### NewsApp Service:
 
 @dapr/dapr: Dapr SDK for Node.js.
+
 node-cron: Cron jobs for Node.js.
+
 jest: Testing framework.
 
-## Test-Runner Service:
+### Test-Runner Service:
 
 chai: Assertion library for Node.js.
+
 chai-http: Plugin for testing HTTP services.
+
 mocha: Test framework.
 
-## User Service:
+### User Service:
 
 @dapr/dapr: Dapr SDK for Node.js.
+
 mongoose: MongoDB object modeling tool.
 
-## UserAccessor Service:
+### UserAccessor Service:
 
 @dapr/dapr: Dapr SDK for Node.js.
+
 mongoose: MongoDB object modeling tool.
