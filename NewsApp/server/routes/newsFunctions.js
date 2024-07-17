@@ -19,7 +19,7 @@ async function userRegister(req, res, next) {
     try {
         newsAppLogger.info("User register end point event in newsFunctions");
         const { userToRegister } = req.body;
-        isRegisterUserValidIfNotThrowError(userToRegister);
+        await isRegisterUserValidIfNotThrowError(userToRegister);
         newsAppLogger.info("Passed validation");
         const returnedUser = await DaprUserService.registerUserUsingAccessor(userToRegister);
         const { email, fullName, preferences, categories } = returnedUser.data;
@@ -54,7 +54,7 @@ async function changeCategoriesAndPreferences(req, res, next) {
         newsAppLogger.info("Change categories and preferences end point event in newsFunctions");
         const userWithNewSettings = req.body.userWithNewSettings;
         const { newCategories, newPreferences } = userWithNewSettings;
-        isChangeCategoriesAndPreferencesValidIfNotThrowError(newCategories, newPreferences);
+        await isChangeCategoriesAndPreferencesValidIfNotThrowError(newCategories, newPreferences);
         const answer = await DaprUserService.changeCategoriesAndPreferences(userWithNewSettings); // TODO: TO TEST
         returnResAnswerHelper(res, answer.message, answer.data)
     } catch (error) {

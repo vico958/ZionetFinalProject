@@ -31,6 +31,27 @@ async function getNews(categories, preferences){
     }
 }
 
+async function getCategoriesRules(){
+    try{
+        newsAppLogger.info("Get categories rules in newsDataFunctions event")
+        const serviceMethod = `${newsDataUrlMethodBeggining}/categories-rules`;
+        const categoriesRules = await newsDataClientDapr.invoker.invoke(
+            newsDaprHostAndServiceAppId,
+            serviceMethod,
+            HttpMethod.GET
+        );
+        newsAppLogger.info("Return categories rules news")
+        return categoriesRules;
+    }catch(error){
+        newsAppLogger.fatal({
+            error: error
+        }, "Error occurred during getNews event");
+        throw error;
+    }
+}
+
+
 module.exports = {
     getNews,
+    getCategoriesRules
 }
