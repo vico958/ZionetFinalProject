@@ -11,7 +11,7 @@ node_modules
 dist
 dist-ssr
 *.local
-.env
+# .env // should be but for project i remove it so i can put in git the file easy
 
 # Editor directories and files
 .vscode/*

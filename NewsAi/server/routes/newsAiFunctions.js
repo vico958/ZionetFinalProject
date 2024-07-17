@@ -16,7 +16,12 @@ async function whichOneIsTheBestArticle(req, res, next){
         newsAiLogger.info("News Ai which one is the best article event at the top of event")
         const preferences = req.body.preferences;
         const articles = req.body.articles;
-        const response = await talkWithAi(articles, preferences);
+        let response = await talkWithAi(articles, preferences);
+        if(response && response.articles){
+            //Some times ai return the result with articles and not just arr of results
+            console.log("we are heree because this is newssss", bestNews.articles);
+            response = response.articles 
+        }
         res.status(200).send(JSON.stringify(response));
         res.end();
         newsAiLogger.info("News Ai which one is the best article event after send answer")
@@ -38,11 +43,11 @@ async function talkWithAi(articlesInfo, preferences){
     after that choose for me the best 3 articles that will fit this preferences`;
     const newPromt = `${prompt} ${preferences.toString()} and return to me this 3 and only this 3.
     when you return to me the 3 articles please return them with all the info.
-    please add the summary you did for each one of them with a field name summary and dont start
-    the summary with something like the article talk or summary is, just start the summary.
+    please add the summary you did for each one of them with a field name summary.
     in addition to that, if there is not enough articles to return because they dont talk about
     the preferences i told you,
-    just return up to 3 that talk about this preferences, if its none of them its ok as well.
+    just return up to 3 that talk about this preferences, if its none of them its ok as well, just return
+    to me the one that you think is the best 3 in this case and only this case.
     i dont want to see an article about food with preferences for lets say pizza and that you
     return to me article that is about food but talk about ice cream`
     const result = await model.generateContent([newPromt, JSON.stringify(articlesInfo)])

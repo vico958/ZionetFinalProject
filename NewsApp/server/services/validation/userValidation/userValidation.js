@@ -1,5 +1,6 @@
 const {isListAndFromStringTypeAndNotEmpty, isEmailValidAsEmail} = require("../general/generalValidation")
 const {createError} = require("../../general/general");
+const {getCategoriesRules} = require("../../newsData/newsDataFunctions");
 const newsAppLogger = require("../../logger/logger");
 function isUserPasswordValidIfNotThrowError(password) {
   newsAppLogger.info("Password validtion")
@@ -48,24 +49,36 @@ function isPreferencesValidIfNotThrowError(preferences){
 
 }
 
-function isCategoriesValidIfNotThrowError(categories){
+async function isCategoriesValidIfNotThrowError(categories){
   newsAppLogger.info("Categories validtion");
     if(isListAndFromStringTypeAndNotEmpty(categories) === false){
       const errorMessage = "Categories must be an array of strings."
       throw createError(errorMessage, 400)
     }
+    const categoriesRules = await getCategoriesRules();
+    const {categoriesAmount, categoriesList} = categoriesRules;
+    if(categories.length > categoriesAmount){
+      const errorMessage = `Categories can be up to ${categoriesAmount} size.`
+      throw createError(errorMessage, 400)
+    }
+    for (let category of categories) {
+      if (!categoriesList.includes(category.toLowerCase())) {
+        const errorMessage = `Categories can be only from this ${categoriesList.toString()}.`
+        throw createError(errorMessage, 400)
+      }
+    }
     newsAppLogger.info("Passed categories validtion");
 }
 
-function isRegisterUserValidIfNotThrowError(userToRegister){
+async function isRegisterUserValidIfNotThrowError(userToRegister){
   const {email, password, fullName, preferences, categories} = userToRegister
   try{
   newsAppLogger.info("Register user validtion");
-    isCategoriesValidIfNotThrowError(categories);
-    isPreferencesValidIfNotThrowError(preferences);
-    isUserEmailValidIfNotThrowError(email);
-    isUserFullNameValidIfNotThrowError(fullName);
-    isUserPasswordValidIfNotThrowError(password);
+  isPreferencesValidIfNotThrowError(preferences);
+  isUserEmailValidIfNotThrowError(email);
+  isUserFullNameValidIfNotThrowError(fullName);
+  isUserPasswordValidIfNotThrowError(password);
+  await isCategoriesValidIfNotThrowError(categories);
   newsAppLogger.info("Passed register user validtion");
   }catch(error){
     newsAppLogger.fatal(error);
@@ -73,11 +86,11 @@ function isRegisterUserValidIfNotThrowError(userToRegister){
   }
 }
 
-function isChangeCategoriesAndPreferencesValidIfNotThrowError(categories, preferences){
+async function isChangeCategoriesAndPreferencesValidIfNotThrowError(categories, preferences){
   try{
   newsAppLogger.info("Change categories and preferences validtion");
-    isCategoriesValidIfNotThrowError(categories);
-    isPreferencesValidIfNotThrowError(preferences);
+  isPreferencesValidIfNotThrowError(preferences);
+  await isCategoriesValidIfNotThrowError(categories);
   newsAppLogger.info("Passed change categories and preferences validtion");
 
   }catch(error){

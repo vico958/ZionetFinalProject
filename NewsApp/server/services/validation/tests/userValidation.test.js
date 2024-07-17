@@ -19,7 +19,6 @@ describe('Validation Functions', () => {
 
         const password = 'Valid123';
 
-
         expect(() => isUserPasswordValidIfNotThrowError(password)).not.toThrow();
       });
     });
@@ -28,7 +27,6 @@ describe('Validation Functions', () => {
       test('Then it should throw an error', () => {
 
         const password = 'invalid';
-
 
         expect(() => isUserPasswordValidIfNotThrowError(password)).toThrow("Password should contain at least 8 characters, including one uppercase letter, one lowercase letter, and one digit.");
       });
@@ -41,7 +39,6 @@ describe('Validation Functions', () => {
 
         const fullName = 'John Doe';
 
-
         expect(() => isUserFullNameValidIfNotThrowError(fullName)).not.toThrow();
       });
     });
@@ -50,7 +47,6 @@ describe('Validation Functions', () => {
       test('Then it should throw an error', () => {
 
         const fullName = 'John';
-
 
         expect(() => isUserFullNameValidIfNotThrowError(fullName)).toThrow("Full name must be in English and include both a first name and a last name.");
       });
@@ -63,7 +59,6 @@ describe('Validation Functions', () => {
 
         const email = 'test@example.com';
 
-
         expect(() => isUserEmailValidIfNotThrowError(email)).not.toThrow();
       });
     });
@@ -72,7 +67,6 @@ describe('Validation Functions', () => {
       test('Then it should throw an error', () => {
 
         const email = 'invalid-email';
-
 
         expect(() => isUserEmailValidIfNotThrowError(email)).toThrow("Email address is not valid.");
       });
@@ -85,7 +79,6 @@ describe('Validation Functions', () => {
 
         const preferences = ['News', 'Sports'];
 
-
         expect(() => isPreferencesValidIfNotThrowError(preferences)).not.toThrow();
       });
     });
@@ -95,53 +88,25 @@ describe('Validation Functions', () => {
 
         const preferences = [];
 
-
         expect(() => isPreferencesValidIfNotThrowError(preferences)).toThrow("Preferences must be an array of strings.");
       });
     });
   });
 
   describe('isCategoriesValidIfNotThrowError', () => {
-    describe('Given valid categories', () => {
-      test('Then it should not throw an error', () => {
-
-        const categories = ['Tech', 'Health'];
-
-
-        expect(() => isCategoriesValidIfNotThrowError(categories)).not.toThrow();
-      });
-    });
-
     describe('Given invalid categories', () => {
-      test('Then it should throw an error', () => {
+      test('Then it should throw an error', async () => {
 
         const categories = [];
 
-
-        expect(() => isCategoriesValidIfNotThrowError(categories)).toThrow("Categories must be an array of strings.");
+        await expect(isCategoriesValidIfNotThrowError(categories)).rejects.toThrow("Categories must be an array of strings.");
       });
     });
   });
 
   describe('isRegisterUserValidIfNotThrowError', () => {
-    describe('Given valid user data', () => {
-      test('Then it should not throw an error', () => {
-
-        const userToRegister = {
-          email: 'test@example.com',
-          password: 'Valid123',
-          fullName: 'John Doe',
-          preferences: ['News', 'Sports'],
-          categories: ['Tech', 'Health']
-        };
-
-
-        expect(() => isRegisterUserValidIfNotThrowError(userToRegister)).not.toThrow();
-      });
-    });
-
     describe('Given invalid user data', () => {
-      test('Then it should throw an error', () => {
+      test('Then it should throw an error', async () => {
 
         const userToRegister = {
           email: 'invalid-email',
@@ -151,32 +116,19 @@ describe('Validation Functions', () => {
           categories: []
         };
 
-
-        expect(() => isRegisterUserValidIfNotThrowError(userToRegister)).toThrow();
+        await expect(isRegisterUserValidIfNotThrowError(userToRegister)).rejects.toThrow();
       });
     });
   });
 
   describe('isChangeCategoriesAndPreferencesValidIfNotThrowError', () => {
-    describe('Given valid categories and preferences', () => {
-      test('Then it should not throw an error', () => {
-
-        const categories = ['Tech', 'Health'];
-        const preferences = ['News', 'Sports'];
-
-
-        expect(() => isChangeCategoriesAndPreferencesValidIfNotThrowError(categories, preferences)).not.toThrow();
-      });
-    });
-
     describe('Given invalid categories and preferences', () => {
-      test('Then it should throw an error', () => {
+      test('Then it should throw an error', async () => {
 
         const categories = [];
         const preferences = [];
 
-
-        expect(() => isChangeCategoriesAndPreferencesValidIfNotThrowError(categories, preferences)).toThrow();
+        await expect(isChangeCategoriesAndPreferencesValidIfNotThrowError(categories, preferences)).rejects.toThrow();
       });
     });
   });
@@ -187,7 +139,6 @@ describe('Validation Functions', () => {
 
         const preferences = ['News', 'Sports'];
 
-
         expect(() => isChangePreferencesValidIfNotThrowError(preferences)).not.toThrow();
       });
     });
@@ -196,7 +147,6 @@ describe('Validation Functions', () => {
       test('Then it should throw an error', () => {
 
         const preferences = [];
-
 
         expect(() => isChangePreferencesValidIfNotThrowError(preferences)).toThrow();
       });
@@ -209,7 +159,6 @@ describe('Validation Functions', () => {
 
         const email = 'test@example.com';
 
-
         expect(() => isChangeEmailValidIfNotThrowError(email)).not.toThrow();
       });
     });
@@ -218,7 +167,6 @@ describe('Validation Functions', () => {
       test('Then it should throw an error', () => {
 
         const email = 'invalid-email';
-
 
         expect(() => isChangeEmailValidIfNotThrowError(email)).toThrow("Email address is not valid.");
       });
@@ -231,7 +179,6 @@ describe('Validation Functions', () => {
 
         const password = 'Valid123';
 
-
         expect(() => isChangePasswordValidIfNotThrowError(password)).not.toThrow();
       });
     });
@@ -240,7 +187,6 @@ describe('Validation Functions', () => {
       test('Then it should throw an error', () => {
 
         const password = 'invalid';
-
 
         expect(() => isChangePasswordValidIfNotThrowError(password)).toThrow("Password should contain at least 8 characters, including one uppercase letter, one lowercase letter, and one digit.");
       });

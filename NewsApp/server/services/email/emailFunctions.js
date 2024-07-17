@@ -1,10 +1,10 @@
 require("dotenv").config()
 const { DaprClient, HttpMethod } = require("@dapr/dapr");
 const newsAppLogger = require("../logger/logger");
-const emailDaprHostAndServiceAppId = "email"
-const daprPort = "3500"; // Dapr Sidecar Port for user service
+const emailDaprHostAndServiceAppId = process.env.EMAIL_DAPR_HOST_AND_SERVICE_APP_ID;
+const daprPort = process.env.DAPR_PORT;
 const emailClientDapr = new DaprClient({ emailDaprHostAndServiceAppId, daprPort });
-const emailUrlMethodBeggining = "email"
+const emailUrlMethodBeggining = process.env.EMAIL_URL_METHOD_BEGGINING;
 const emailHost = process.env.EMAIL_HOST;
 const emailUser = process.env.EMAIL_USER;
 const emailPassword = process.env.EMAIL_PASSWORD;
@@ -12,7 +12,7 @@ const emailFrom = process.env.EMAIL_FROM;
 
 async function sendEmailWithNews(newsData, clientEmail, clientName){
     try{
-
+        console.log("newsss dataaaaaaaaa ", newsData)
         newsAppLogger.info("Send email with news in emailFunctions event")
         const emailTo = clientEmail;
         const { emailSubject, emailTextHtml} = createEmailNewsContent(newsData, clientName);  
@@ -64,7 +64,6 @@ function createEmailNewsContent(newsData, clientName){
 
 function formattedNewsData(news){
     newsAppLogger.info("Formatted news data in emailFunctions event")
-
     return news.map((item) => {
         return `<p><strong style="color: black;">${item.title}</strong></p>
                 <p style="color: black;">${item.summary}</p>
